@@ -1,7 +1,12 @@
 import { Links } from '../enum/Links';
 import CustomLink from './UI/CustomLink';
+import AuthButton from './auth/AuthButton';
 
-const Header = () => {
+interface HeaderProps {
+  isLogged: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isLogged }) => {
   return (
     <header className="container mx-auto">
       <nav className="flex items-center justify-between px-6 py-4">
@@ -14,14 +19,20 @@ const Header = () => {
           <CustomLink to={Links.OTHER}>Інше</CustomLink>
         </ul>
         <ul className="flex items-center space-x-4">
-          <CustomLink to={Links.PROFILE}>Профіль</CustomLink>
-          <CustomLink to={Links.PROFILE}>
-            <img
-              className="w-8 h-8 rounded-full"
-              src="person1.jpg"
-              alt="profilePicture"
-            />
-          </CustomLink>
+          {isLogged ? (
+            <>
+              <CustomLink to={Links.PROFILE}>Профіль</CustomLink>
+              <CustomLink to={Links.PROFILE}>
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src="person1.jpg"
+                  alt="profilePicture"
+                />
+              </CustomLink>
+            </>
+          ) : (
+            <AuthButton isLogged={false} />
+          )}
         </ul>
       </nav>
     </header>
