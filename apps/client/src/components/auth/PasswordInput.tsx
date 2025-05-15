@@ -21,7 +21,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, type }) => {
       <div className="relative">
         <input
           type={isPasswordVisible ? 'text' : 'password'}
-          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
         />
         <button
           type="button"

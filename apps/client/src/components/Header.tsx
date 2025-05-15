@@ -8,8 +8,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ isLogged }) => {
   return (
-    <header className="container mx-auto">
-      <nav className="flex items-center justify-between px-6 py-4">
+    <header className=" bg-white">
+      <nav className="container mx-auto flex items-center justify-between px-6 py-4">
         <ul className="flex items-center space-x-6">
           <CustomLink to={Links.ROOT}>
             <img className="w-8 h-8" src="mainLogo.png" alt="mainLogo" />
