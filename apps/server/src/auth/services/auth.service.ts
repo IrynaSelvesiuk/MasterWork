@@ -36,7 +36,15 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
     const payload = this.generatePayload(tutor);
-    return this.tokenService.generateTokens(payload);
+    const tokens = await this.tokenService.generateTokens(payload);
+
+    return {
+      ...tokens,
+      user: {
+        id: tutor.id,
+        email: tutor.email,
+      },
+    };
   }
 
   public async register(createTutorDto: CreateTutorDto) {

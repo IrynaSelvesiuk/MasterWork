@@ -4,6 +4,11 @@ import CustomInput from '../../components/UI/FormInput';
 import { loginInputFields } from '../../components/auth/loginInputFields';
 import { useState } from 'react';
 import { apiService } from '../../services/apiService';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../context/store';
+import { useNavigate } from 'react-router';
+import { login } from '../../context/slices/authSlice';
+import { LoginResponse } from './types/loginResponse';
 
 interface LoginFormData {
   email: string;
@@ -12,20 +17,31 @@ interface LoginFormData {
 
 const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormData>();
 
-  const onSubmit = (data: LoginFormData) => {
+  const onSubmit = async (data: LoginFormData) => {
     try {
       setLoading(true);
 
-      const response = apiService.post('/auth/login', {
+      const response = await apiService.post<LoginResponse>('/auth/login', {
         email: data.email,
         password: data.password,
       });
+
+      dispatch(
+        login({
+          user: response.user,
+        })
+      );
+
+      navigate('/tutors');
     } catch (error: any) {
       console.error(error.message || 'Failed to login');
     } finally {

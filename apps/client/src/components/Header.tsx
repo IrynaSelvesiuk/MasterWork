@@ -1,12 +1,12 @@
+import { useSelector } from 'react-redux';
 import { Links } from '../enum/Links';
 import CustomLink from './UI/CustomLink';
 import AuthButton from './auth/AuthButton';
+import { RootState } from '../context/store';
 
-interface HeaderProps {
-  isLogged: boolean;
-}
-
-const Header: React.FC<HeaderProps> = ({ isLogged }) => {
+const Header = () => {
+  const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
+  console.log(isLogged);
   return (
     <header className=" bg-white">
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">

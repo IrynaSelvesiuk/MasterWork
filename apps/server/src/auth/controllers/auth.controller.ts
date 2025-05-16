@@ -46,7 +46,7 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginDto: LoginTutorDto, @Res() res: Response) {
-    const { accessToken, refreshToken } = await this.authService.login(
+    const { accessToken, refreshToken, user } = await this.authService.login(
       loginDto.email,
       loginDto.password,
     );
@@ -65,7 +65,7 @@ export class AuthController {
       maxAge: REFRESH_TOKEN_EXPIRATION,
     });
 
-    return res.send({ message: 'Login successful' });
+    return res.send({ message: 'Login successful', user });
   }
 
   @Post('logout')
