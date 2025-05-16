@@ -5,6 +5,8 @@ const configuration = () => ({
 
   nodeEnv: process.env.NODE_ENV === Environment.DEVELOPMENT,
 
+  frontEndUrl: process.env.FRONT_END_URL,
+
   database: {
     port: Number(process.env.DB_PORT),
     host: process.env.DB_HOST,
@@ -15,6 +17,14 @@ const configuration = () => ({
 
   hash: {
     salt: Number(process.env.SALT_ROUNDS),
+  },
+
+  jwt: {
+    accessSecret: process.env.ACCESS_SECRET,
+    accessExpiresIn: process.env.ACCESS_EXPIRES_IN,
+
+    refreshSecret: process.env.REFRESH_SECRET,
+    refreshExpiresIn: process.env.REFRESH_EXPIRES_IN,
   },
 });
 

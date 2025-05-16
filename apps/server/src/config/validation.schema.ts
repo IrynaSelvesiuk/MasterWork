@@ -8,6 +8,8 @@ export const validationSchema = Joi.object({
 
   PORT: Joi.number().default(3005),
 
+  FRONT_END_URL: Joi.string().required(),
+
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().required(),
   DB_USER: Joi.string().required(),
@@ -15,4 +17,9 @@ export const validationSchema = Joi.object({
   DB_NAME: Joi.string().required(),
 
   SALT_ROUNDS: Joi.number().required().default(10),
+
+  ACCESS_SECRET: Joi.string().required(),
+  ACCESS_EXPIRES_IN: Joi.string().required(),
+  REFRESH_SECRET: Joi.string().required(),
+  REFRESH_EXPIRES_IN: Joi.string().required(),
 });

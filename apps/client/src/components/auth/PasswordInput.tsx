@@ -1,12 +1,16 @@
-import { FC, useState } from 'react';
+import { FC, useState, forwardRef, InputHTMLAttributes } from 'react';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 
-interface PasswordInputProps extends React.HTMLProps<HTMLInputElement> {
+interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
   label: string;
+  error?: string;
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, type }) => {
+const PasswordInput: FC<PasswordInputProps> = forwardRef<
+  HTMLInputElement,
+  PasswordInputProps
+>(({ id, label, error, ...inputProps }, ref) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => {
@@ -20,7 +24,10 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, type }) => {
       </label>
       <div className="relative">
         <input
+          id={id}
           type={isPasswordVisible ? 'text' : 'password'}
+          ref={ref}
+          {...inputProps}
           className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
         />
         <button
@@ -35,8 +42,11 @@ const PasswordInput: React.FC<PasswordInputProps> = ({ id, label, type }) => {
           )}
         </button>
       </div>
+      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
-};
+});
+
+PasswordInput.displayName = 'PasswordInput';
 
 export default PasswordInput;

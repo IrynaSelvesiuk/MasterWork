@@ -4,6 +4,8 @@ import { DatabaseModule } from './database/database.module';
 import configuration from './config/env.config';
 import { validationSchema } from './config/validation.schema';
 import { HashModule } from './shared/hash/hash.module';
+import { AuthModule } from './auth/auth.module';
+import { TutorModule } from './tutor/tutor.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { HashModule } from './shared/hash/hash.module';
     }),
     DatabaseModule,
     HashModule,
+    TutorModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
