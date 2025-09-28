@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-import "./globals.css";
+import { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Tutors App",
-  description: "Created by Irene",
+  title: 'Tutors App',
+  description: 'Created by Irene',
 };
 
 export default function RootLayout({
@@ -13,11 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`antialiased`}>{children}</body>
     </html>
   );
 }
