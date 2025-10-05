@@ -1,5 +1,4 @@
 import { CategoriesSlider } from '@/widgets/categories-slider';
-import { SearchBox } from '@/widgets/search-box';
 
 const categories = [
   { id: 'en', label: 'Англійська мова', icon: 'EN' },
@@ -16,11 +15,9 @@ const categories = [
 const SearchSection = () => {
   return (
     <div className="flex flex-col items-center pt-8 pb-12 w-full max-w-5xl mx-auto">
-      <h1 className="text-5xl font-bold text-superprofText mt-12 mb-6 text-center">
+      <h1 className="text-5xl font-bold text-superprofText mt-12 mb-6 text-center text-green-700">
         Знайдіть ідеального вчителя
       </h1>
-
-      <SearchBox placeholder="Оберіть свій напрямок" />
 
       <CategoriesSlider categories={categories} />
     </div>
