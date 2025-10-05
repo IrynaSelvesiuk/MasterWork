@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import './globals.css';
+import { Header } from '@/widgets/header';
+import { Footer } from '@/widgets/footer';
 
 export const metadata: Metadata = {
   title: 'Tutors App',
@@ -13,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>{children}</body>
+      <body className={`antialiased`}>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

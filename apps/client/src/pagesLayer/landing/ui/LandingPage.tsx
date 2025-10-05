@@ -1,7 +1,5 @@
 import { SearchSection } from '@/features/search-section';
 import { whyUsCards } from '@/shared/data/whyUs';
-import { Footer } from '@/widgets/footer';
-import { Header } from '@/widgets/header';
 import { WhyUsCard } from '@/widgets/why-us-card';
 
 const LandingPage = () => {
@@ -13,7 +11,6 @@ const LandingPage = () => {
           'linear-gradient(180deg, rgba(232, 255, 232, 1) 0%, rgba(210, 245, 210, 0.6) 50%, rgba(255, 255, 255, 1) 100%)',
       }}
     >
-      <Header />
       <main className="main-content">
         <SearchSection />
 
@@ -33,7 +30,6 @@ const LandingPage = () => {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   );
 };
