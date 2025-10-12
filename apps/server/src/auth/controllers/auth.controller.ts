@@ -16,6 +16,8 @@ import {
 } from '../constants/token-maxAge';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
+import { plainToInstance } from 'class-transformer';
+import { UserResponseDto } from 'src/user/dto/user-response.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -23,7 +25,7 @@ export class AuthController {
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
-    const { accessToken, refreshToken } =
+    const { accessToken, refreshToken, user } =
       await this.authService.register(createUserDto);
 
     res.cookie(TokenName.ACCESS, accessToken, {
@@ -40,16 +42,18 @@ export class AuthController {
       maxAge: REFRESH_TOKEN_EXPIRATION,
     });
 
-    return res.send({ message: 'Registration successful' });
+    const userDto = plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
+
+    return res.send({ message: 'Registration successful', userDto });
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
-    const { accessToken, refreshToken, user } = await this.authService.login(
-      loginUserDto.email,
-      loginUserDto.password,
-    );
+    const { accessToken, refreshToken, user } =
+      await this.authService.login(loginUserDto);
 
     res.cookie(TokenName.ACCESS, accessToken, {
       httpOnly: true,
@@ -65,7 +69,11 @@ export class AuthController {
       maxAge: REFRESH_TOKEN_EXPIRATION,
     });
 
-    return res.send({ message: 'Login successful', user });
+    const userDto = plainToInstance(UserResponseDto, user, {
+      excludeExtraneousValues: true,
+    });
+
+    return res.send({ message: 'Login successful', userDto });
   }
 
   @Post('logout')

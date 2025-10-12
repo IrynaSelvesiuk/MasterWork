@@ -12,5 +12,6 @@ export const ROUTES = {
   WALLET: '/profile/waller',
   MESSAGES: '/profile/messages',
 
+  TUTORS: '/tutors',
   TUTOR_ONBOARDING: '/tutor/onboarding',
 } as const;

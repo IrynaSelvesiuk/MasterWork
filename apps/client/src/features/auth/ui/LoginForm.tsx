@@ -5,6 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { loginSchema, LoginFormData } from '../model/schemas/login-schema';
 import { ROUTES } from '@/shared/router/routes';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/entities/user/model/store';
+import { useLogin } from '../model/mutations/useLogin';
+import toast from 'react-hot-toast';
 
 export const LoginForm = () => {
   const {
@@ -16,9 +20,23 @@ export const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    console.log('Login data:', data);
-    reset();
+  const router = useRouter();
+  const { setUser } = useAuthStore();
+
+  const { mutate: login, isPending, error } = useLogin();
+
+  const onSubmit = (data: LoginFormData) => {
+    login(data, {
+      onSuccess: (response) => {
+        setUser(response.user);
+        toast.success('Logged in successfully!');
+        reset();
+        router.push(ROUTES.TUTORS);
+      },
+      onError: () => {
+        toast.error(error?.message || 'Login failed');
+      },
+    });
   };
 
   return (
@@ -71,7 +89,7 @@ export const LoginForm = () => {
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-60"
       >
         {isSubmitting ? 'Увійти...' : 'Увійти'}

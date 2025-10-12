@@ -6,6 +6,7 @@ import { UserService } from 'src/user/user.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { User } from 'src/user/user.entity';
 import { Role } from 'src/enums/roles.enum';
+import { LoginUserDto } from 'src/user/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,21 +20,19 @@ export class AuthService {
     return { sub: user.id, email: user.email };
   }
 
-  public async login(
-    email: string,
-    password: string,
-  ): Promise<{
+  public async login(loginUser: LoginUserDto): Promise<{
     user: { id: number; email: string; role?: Role };
     accessToken: string;
     refreshToken: string;
   }> {
-    const user = await this.userService.findOneBy('email', email);
+    const user = await this.userService.findOneBy('email', loginUser.email);
+
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
     const passwordMatch = await this.hashService.compare(
-      password,
+      loginUser.password,
       user.password,
     );
     if (!passwordMatch) {
@@ -44,21 +43,21 @@ export class AuthService {
     const tokens = await this.tokenService.generateTokens(payload);
 
     return {
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.roles,
-      },
+      user,
       ...tokens,
     };
   }
 
-  public async register(
-    createUserDto: CreateUserDto,
-  ): Promise<{ accessToken: string; refreshToken: string }> {
+  public async register(createUserDto: CreateUserDto): Promise<{
+    user: User;
+    accessToken: string;
+    refreshToken: string;
+  }> {
     const user = await this.userService.createUser(createUserDto);
     const payload = this.generatePayload(user);
-    return this.tokenService.generateTokens(payload);
+    const tokens = await this.tokenService.generateTokens(payload);
+
+    return { user, ...tokens };
   }
 
   public async logout() {}

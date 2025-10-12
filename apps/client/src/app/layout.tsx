@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import './globals.css';
 import { Header } from '@/widgets/header';
 import { Footer } from '@/widgets/footer';
+import { Toaster } from 'react-hot-toast';
+import { QueryProvider } from '@/shared/providers/query-provider';
 
 export const metadata: Metadata = {
   title: 'Tutors App',
@@ -16,9 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <Header />
-        {children}
-        <Footer />
+        <QueryProvider>
+          <Header />
+          {children}
+          <Footer />
+          <Toaster />
+        </QueryProvider>
       </body>
     </html>
   );

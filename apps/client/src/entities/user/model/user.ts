@@ -1,9 +1,8 @@
 export interface User {
-  name: string;
+  userId: number;
+  firstName: string;
+  lastName: string;
   email: string;
   joinedDate: string;
-  languages: string[];
-  image: string;
-  totalLessons: number;
-  walletBalance: number;
+  image?: string | null;
 }
