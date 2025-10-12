@@ -1,60 +1,63 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { HashService } from 'src/shared/hash/services/hash.service';
-import { CreateTutorDto } from 'src/tutor/dto/createTutor.dto';
-import { TutorService } from 'src/tutor/services/tutor.service';
 import { TokenService } from './token.service';
 import { JwtPayload } from '../types/jwt-payload.interface';
-import { Tutor } from 'src/tutor/entities/tutor.entity';
+import { UserService } from 'src/user/user.service';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { User } from 'src/user/user.entity';
+import { Role } from 'src/enums/roles.enum';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly tutorService: TutorService,
     private readonly hashService: HashService,
     private readonly tokenService: TokenService,
+    private readonly userService: UserService,
   ) {}
 
-  private generatePayload(tutor: Tutor): JwtPayload {
-    return { sub: tutor.id, email: tutor.email };
+  private generatePayload(user: User): JwtPayload {
+    return { sub: user.id, email: user.email };
   }
 
-  public async login(email: string, password: string) {
-    const tutor = await this.tutorService.findOneBy('email', email);
-    if (!tutor) {
-      throw new NotFoundException('Invalid credentials');
+  public async login(
+    email: string,
+    password: string,
+  ): Promise<{
+    user: { id: number; email: string; role?: Role };
+    accessToken: string;
+    refreshToken: string;
+  }> {
+    const user = await this.userService.findOneBy('email', email);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
     }
 
     const passwordMatch = await this.hashService.compare(
       password,
-      tutor.password,
+      user.password,
     );
     if (!passwordMatch) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    const payload = this.generatePayload(tutor);
+
+    const payload = this.generatePayload(user);
     const tokens = await this.tokenService.generateTokens(payload);
 
     return {
-      ...tokens,
       user: {
-        id: tutor.id,
-        email: tutor.email,
+        id: user.id,
+        email: user.email,
+        role: user.roles,
       },
+      ...tokens,
     };
   }
 
-  public async register(createTutorDto: CreateTutorDto) {
-    console.log(createTutorDto);
-    const hashedPassword = await this.hashService.hash(createTutorDto.password);
-    const tutor = await this.tutorService.create({
-      ...createTutorDto,
-      password: hashedPassword,
-    });
-    const payload = this.generatePayload(tutor);
+  public async register(
+    createUserDto: CreateUserDto,
+  ): Promise<{ accessToken: string; refreshToken: string }> {
+    const user = await this.userService.createUser(createUserDto);
+    const payload = this.generatePayload(user);
     return this.tokenService.generateTokens(payload);
   }
 

@@ -8,23 +8,23 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from '../services/auth.service';
-import { CreateTutorDto } from 'src/tutor/dto/createTutor.dto';
-import { LoginTutorDto } from 'src/tutor/dto/login-tutor.dto';
 import { Environment } from 'src/enums/env.enum';
 import { TokenName } from '../enums/token-name.enum';
 import {
   ACCESS_TOKEN_EXPIRATION,
   REFRESH_TOKEN_EXPIRATION,
 } from '../constants/token-maxAge';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { LoginUserDto } from 'src/user/dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() createTutorDto: CreateTutorDto, @Res() res: Response) {
+  async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
     const { accessToken, refreshToken } =
-      await this.authService.register(createTutorDto);
+      await this.authService.register(createUserDto);
 
     res.cookie(TokenName.ACCESS, accessToken, {
       httpOnly: true,
@@ -45,10 +45,10 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async login(@Body() loginDto: LoginTutorDto, @Res() res: Response) {
+  async login(@Body() loginUserDto: LoginUserDto, @Res() res: Response) {
     const { accessToken, refreshToken, user } = await this.authService.login(
-      loginDto.email,
-      loginDto.password,
+      loginUserDto.email,
+      loginUserDto.password,
     );
 
     res.cookie(TokenName.ACCESS, accessToken, {
@@ -69,7 +69,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Res() res: Response) {
+  logout(@Res() res: Response) {
     res.clearCookie(TokenName.ACCESS);
     res.clearCookie(TokenName.REFRESH);
     return res.send({ message: 'Logged out successfully' });

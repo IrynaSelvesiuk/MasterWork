@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { JwtService } from '@nestjs/jwt';
+import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { ConfigType } from 'src/config/env.config';
 import { JwtPayload } from '../types/jwt-payload.interface';
 
@@ -56,8 +56,16 @@ export class TokenService {
       return await this.jwtService.verifyAsync(token, {
         secret: this.accessSecret,
       });
-    } catch (e) {
-      throw new UnauthorizedException('Invalid access token');
+    } catch (e: unknown) {
+      if (e instanceof TokenExpiredError) {
+        throw new UnauthorizedException('Access token has expired');
+      }
+      if (e instanceof JsonWebTokenError) {
+        throw new UnauthorizedException('Invalid access token');
+      }
+      throw new UnauthorizedException(
+        'An unknown error occurred with the access token',
+      );
     }
   }
 
@@ -66,8 +74,16 @@ export class TokenService {
       return await this.jwtService.verifyAsync(token, {
         secret: this.refreshSecret,
       });
-    } catch (e) {
-      throw new UnauthorizedException('Invalid refresh token');
+    } catch (e: unknown) {
+      if (e instanceof TokenExpiredError) {
+        throw new UnauthorizedException('Refresh token has expired');
+      }
+      if (e instanceof JsonWebTokenError) {
+        throw new UnauthorizedException('Invalid refresh token');
+      }
+      throw new UnauthorizedException(
+        'An unknown error occurred with the refresh token',
+      );
     }
   }
 }
