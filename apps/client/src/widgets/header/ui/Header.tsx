@@ -4,15 +4,14 @@ import Link from 'next/link';
 import { GiOpenBook } from 'react-icons/gi';
 import { GuestActions } from './GuestActions';
 import { UserActions } from './UserActions';
+import { useAuthStore } from '@/entities/user/model/store';
 
-interface HeaderProps {
-  isAuthenticated?: boolean;
-}
+const Header = () => {
+  const user = useAuthStore((state) => state.user);
+  const isAuthenticated = !!user;
 
-const Header = ({ isAuthenticated = false }: HeaderProps) => {
   return (
     <header className="flex justify-between items-center p-6 md:px-16 bg-white shadow-sm sticky top-0 z-10">
-      {/* Logo / Brand */}
       <Link
         href="/"
         className="flex items-center gap-2 cursor-pointer group p-1 rounded
@@ -25,7 +24,6 @@ const Header = ({ isAuthenticated = false }: HeaderProps) => {
         </span>
       </Link>
 
-      {/* Conditional Navigation */}
       {isAuthenticated ? <UserActions /> : <GuestActions />}
     </header>
   );

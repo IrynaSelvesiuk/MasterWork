@@ -1,5 +1,6 @@
 import { Role } from 'src/enums/roles.enum';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Teacher } from 'src/teacher/teacher.entity';
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -19,7 +20,7 @@ export class User {
   lastName: string;
 
   @Column('simple-array', { default: 'STUDENT' })
-  roles: Role;
+  role: Role;
 
   @Column({ default: false })
   verifiedTutor: boolean;
@@ -29,4 +30,7 @@ export class User {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   updatedAt: Date;
+
+  @OneToOne(() => Teacher, (teacher) => teacher.user)
+  teacher?: Teacher;
 }

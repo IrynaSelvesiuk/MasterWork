@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthFormWrapper, RegisterForm } from '@/features/auth';
+import { AuthFormWrapper, RegisterForm } from '@/features/auth/student';
 
 export const RegisterPage = () => {
   return (

@@ -4,7 +4,7 @@ export const registerSchema = z.object({
   firstName: z.string().min(2, 'Ім’я має містити щонайменше 2 символи'),
   lastName: z.string().min(2, 'Ім’я має містити щонайменше 2 символи'),
   email: z.email('Невірний формат email'),
-  password: z.string().min(6, 'Пароль має містити щонайменше 6 символів'),
+  password: z.string().min(8, 'Пароль має містити щонайменше 8 символів'),
 });
 
 export type RegisterFormData = z.infer<typeof registerSchema>;

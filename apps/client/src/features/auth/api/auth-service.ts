@@ -1,6 +1,6 @@
 import { axiosClient } from '@/shared/config/axios-config';
-import { LoginFormData } from './schemas/login-schema';
-import { RegisterFormData } from './schemas/register-schema';
+import { LoginFormData } from '../student/model/schemas/login-schema';
+import { RegisterFormData } from '../student/model/schemas/register-schema';
 import { API_URL } from '@/shared/constants/api-url';
 import { UserResponse } from '@/entities/user/model/user-response';
 

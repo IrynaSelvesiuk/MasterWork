@@ -1,6 +1,6 @@
 'use client';
 
-import { AuthFormWrapper, LoginForm } from '@/features/auth';
+import { AuthFormWrapper, LoginForm } from '@/features/auth/student';
 
 export const LoginPage = () => {
   return (

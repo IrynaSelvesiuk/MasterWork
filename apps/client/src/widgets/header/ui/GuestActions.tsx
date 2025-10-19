@@ -16,7 +16,7 @@ export const GuestActions = () => (
 
     {/* 2. Become a Tutor Link (Kept) */}
     <Link
-      href={ROUTES.LOGIN}
+      href={ROUTES.REGISTER_TEACHER}
       className="text-base font-medium text-green-800 hover:text-green-900 hover:underline transition-colors"
     >
       Стати репетитором

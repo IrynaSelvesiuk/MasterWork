@@ -2,7 +2,8 @@ export const ROUTES = {
   BASE: '/',
 
   LOGIN: '/login',
-  REGISTER: '/register',
+  REGISTER: '/auth/register',
+  REGISTER_TEACHER: '/auth/register-teacher',
 
   HELP: '/help',
   NOTIFICATIONS: '/notifications',

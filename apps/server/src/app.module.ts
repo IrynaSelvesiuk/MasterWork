@@ -7,6 +7,7 @@ import { HashModule } from './shared/hash/hash.module';
 import { AuthModule } from './auth/auth.module';
 import { TutorModule } from './tutor/tutor.module';
 import { UserModule } from './user/user.module';
+import { TeacherModule } from './teacher/teacher.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserModule } from './user/user.module';
     TutorModule,
     AuthModule,
     UserModule,
+    TeacherModule,
   ],
   controllers: [],
   providers: [],
