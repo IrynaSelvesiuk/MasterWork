@@ -43,6 +43,7 @@ export const RegisterForm = () => {
           lastName: responseData.userDto.lastName,
           email: responseData.userDto.email,
           joinedDate: responseData.userDto.createdAt,
+          role: responseData.userDto.role,
           image: null,
         });
 

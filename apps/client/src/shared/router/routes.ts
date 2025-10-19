@@ -13,6 +13,10 @@ export const ROUTES = {
   WALLET: '/profile/waller',
   MESSAGES: '/profile/messages',
 
+  TEACHER_CLASSES: '/teacher/classes',
+  TEACHER_STUDENTS: '/teacher/students',
+  TEACHER_SCHEDULE: '/teacher/schedule',
+
   TUTORS: '/tutors',
   TUTOR_ONBOARDING: '/tutor/onboarding',
 } as const;

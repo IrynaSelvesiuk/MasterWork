@@ -5,10 +5,20 @@ import { GiOpenBook } from 'react-icons/gi';
 import { GuestActions } from './GuestActions';
 import { UserActions } from './UserActions';
 import { useAuthStore } from '@/entities/user/model/store';
+import { TeacherActions } from './teacher-actions';
+import { Role } from '@/shared/enums/role.enum';
 
 const Header = () => {
   const user = useAuthStore((state) => state.user);
-  const isAuthenticated = !!user;
+
+  const renderActions = () => {
+    if (!user) return <GuestActions />;
+
+    if (user.role.includes(Role.Student)) return <UserActions />;
+    if (user.role.includes(Role.Teacher)) return <TeacherActions />;
+
+    return <GuestActions />;
+  };
 
   return (
     <header className="flex justify-between items-center p-6 md:px-16 bg-white shadow-sm sticky top-0 z-10">
@@ -24,7 +34,7 @@ const Header = () => {
         </span>
       </Link>
 
-      {isAuthenticated ? <UserActions /> : <GuestActions />}
+      {renderActions()}
     </header>
   );
 };
