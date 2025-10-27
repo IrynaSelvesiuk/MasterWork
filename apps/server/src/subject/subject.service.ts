@@ -8,6 +8,7 @@ import { Subject } from './subject.entity';
 import { In, Repository } from 'typeorm';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
+import { SEED_SUBJECTS } from './data/seed-subjects';
 
 @Injectable()
 export class SubjectService {
@@ -15,6 +16,30 @@ export class SubjectService {
     @InjectRepository(Subject)
     private readonly subjectRepository: Repository<Subject>,
   ) {}
+
+  async onModuleInit() {
+    await this.seedSubjects();
+  }
+
+  private async seedSubjects() {
+    try {
+      const count = await this.subjectRepository.count();
+
+      if (count === 0) {
+        console.log('No subjects found. Seeding database with initial list...');
+
+        // Створюємо сутності з масиву об'єктів
+        const subjectsToCreate = SEED_SUBJECTS.map((subjectData) =>
+          this.subjectRepository.create(subjectData),
+        );
+
+        await this.subjectRepository.save(subjectsToCreate);
+        console.log(`Successfully seeded ${subjectsToCreate.length} subjects.`);
+      }
+    } catch (error) {
+      console.error('Error seeding subjects:', error);
+    }
+  }
 
   async create(data: CreateSubjectDto): Promise<Subject> {
     const subjectExists = await this.subjectRepository.find({
