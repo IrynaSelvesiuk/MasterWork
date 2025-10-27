@@ -1,71 +1,100 @@
 import {
-  ArrayPath,
   Control,
   FieldErrors,
   FieldValues,
   Path,
-  useFieldArray,
-  UseFormRegister,
+  Controller,
 } from 'react-hook-form';
+import Select from 'react-select';
+import { useMemo } from 'react';
+import { useGetSubjects } from '../teacher/hooks/useGetSubjects';
 
-type FormValuesWithArray = FieldValues;
+type SubjectOption = {
+  value: string;
+  label: string;
+};
 
-interface Props<T extends FormValuesWithArray> {
+interface Props<T extends FieldValues> {
   label: string;
   name: Path<T>;
   control: Control<T>;
-  register: UseFormRegister<T>;
   errors?: FieldErrors<T>;
 }
 
-const ChooseSubjectsInput = <T extends FormValuesWithArray>({
+const ChooseSubjectsInput = <T extends FieldValues>({
   label,
   name,
   control,
-  register,
   errors,
 }: Props<T>) => {
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: name as ArrayPath<T>,
-  });
+  const { data: subjects, isLoading, isError } = useGetSubjects();
 
-  const fieldErrors = errors && errors[name];
+  const options = useMemo(
+    () =>
+      subjects
+        ? subjects
+            .map((subject) => ({
+              value: subject.id,
+              label: subject.name,
+            }))
+            .sort((a, b) => a.label.localeCompare(b.label))
+        : [],
+    [subjects]
+  );
+
+  const fieldError = errors && errors[name];
+
+  if (isError) {
+    return (
+      <div className="mb-4 text-red-500">Не вдалося завантажити предмети.</div>
+    );
+  }
 
   return (
     <div className="mb-4">
       <label className="block mb-1 font-medium">{label}</label>
 
-      {fields.map((field, index) => (
-        <div key={field.id} className="flex items-center gap-2 mb-2">
-          <input
-            type="text"
-            {...register(`${name}.${index}` as Path<T>)}
-            className={`w-full px-2 py-1 border rounded ${
-              fieldErrors ? 'border-red-500' : 'border-gray-300'
-            }`}
-          />
-          <button
-            type="button"
-            onClick={() => remove(index)}
-            className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-          >
-            Remove
-          </button>
-        </div>
-      ))}
+      <Controller
+        name={name}
+        control={control}
+        rules={{
+          required: 'Будь ласка, оберіть хоча б один предмет',
+          validate: (selectedIds: string[]) =>
+            selectedIds.length <= 5 || 'Ви можете обрати до 5 предметів',
+        }}
+        render={({ field }) => {
+          const selectedValue = options.filter((option) =>
+            field.value?.includes(option.value)
+          );
 
-      <button
-        type="button"
-        onClick={() => append('' as T[typeof name][number])}
-        className="px-3 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-      >
-        Add {label.slice(0, -1)}
-      </button>
+          const handleChange = (selectedOptions: readonly SubjectOption[]) => {
+            field.onChange(selectedOptions.map((option) => option.value));
+          };
 
-      {errors && errors[name] && (
+          return (
+            <Select
+              {...field}
+              value={selectedValue}
+              onChange={handleChange}
+              options={options}
+              isMulti
+              isLoading={isLoading}
+              placeholder="Оберіть предмети..."
+              closeMenuOnSelect={false}
+              styles={{
+                control: (base) => ({
+                  ...base,
+                  borderColor: fieldError ? 'rgb(239 68 68)' : '#cbd5e1',
+                }),
+              }}
+            />
+          );
+        }}
+      />
+
+      {fieldError && (
         <p className="text-red-500 text-sm mt-1">
-          {errors[name]?.message as string}
+          {fieldError.message as string}
         </p>
       )}
     </div>

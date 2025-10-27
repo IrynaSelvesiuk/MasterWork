@@ -1,15 +1,15 @@
-import { Expose } from 'class-transformer';
+import { Subject } from '../subject.entity';
 
 export class SubjectResponseDto {
-  @Expose()
-  id: number;
-
-  @Expose()
+  id: string;
   name: string;
-
-  @Expose()
+  category: string;
   description: string;
 
-  @Expose()
-  category: string;
+  constructor(subject: Subject) {
+    this.id = subject.id;
+    this.name = subject.name;
+    this.category = subject.category;
+    this.description = subject.description;
+  }
 }

@@ -135,7 +135,6 @@ const TeacherRegisterForm = () => {
           label="Subjects"
           name="subjects"
           control={control}
-          register={register}
           errors={errors}
         />
       </div>
