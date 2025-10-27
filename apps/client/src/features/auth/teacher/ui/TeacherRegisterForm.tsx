@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 import InputForm from '../../ui/input-form';
 import TextAreaForm from '../../ui/text-area-form';
 import ChooseSubjectsInput from '../../ui/choose-subjects-input';
-import { useTeacherRegister } from '../model/useTeacherRegister';
+import { useTeacherRegister } from '../hooks/useTeacherRegister';
 import { useAuthStore } from '@/entities/user/model/store';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/router/routes';
@@ -31,7 +31,7 @@ const TeacherRegisterForm = () => {
       firstName: '',
       lastName: '',
       bio: '',
-      subjects: [''],
+      subjectIds: [''],
       yearsOfExperience: undefined,
       hourlyRate: undefined,
       location: '',
@@ -133,7 +133,7 @@ const TeacherRegisterForm = () => {
       <div className="md:col-span-2">
         <ChooseSubjectsInput
           label="Subjects"
-          name="subjects"
+          name="subjectIds"
           control={control}
           errors={errors}
         />
