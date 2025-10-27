@@ -11,7 +11,7 @@ import LogoutButton from './logout-button';
 
 const TeacherProfileIcon = () => (
   <Link
-    href={ROUTES.PROFILE || '#'}
+    href={ROUTES.TEACHER.DASHBOARD}
     className="text-gray-600 hover:text-green-700 transition-colors p-2"
     title="Мій профіль"
   >

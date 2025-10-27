@@ -4,6 +4,7 @@ import { Header } from '@/widgets/header';
 import { Footer } from '@/widgets/footer';
 import { Toaster } from 'react-hot-toast';
 import { QueryProvider } from '@/shared/providers/query-provider';
+import { StoreHydrator } from './store-hydrator';
 
 export const metadata: Metadata = {
   title: 'Tutors App',
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`antialiased`}>
         <QueryProvider>
+          <StoreHydrator />
           <Header />
           {children}
           <Footer />

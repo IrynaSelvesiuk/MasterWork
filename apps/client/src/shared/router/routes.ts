@@ -13,6 +13,11 @@ export const ROUTES = {
   WALLET: '/profile/waller',
   MESSAGES: '/profile/messages',
 
+  TEACHER: {
+    DASHBOARD: '/dashboard',
+    CALENDAR: '/calendar',
+  },
+
   TEACHER_CLASSES: '/teacher/classes',
   TEACHER_STUDENTS: '/teacher/students',
   TEACHER_SCHEDULE: '/teacher/schedule',
