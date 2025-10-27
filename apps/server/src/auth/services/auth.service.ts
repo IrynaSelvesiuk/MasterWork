@@ -55,16 +55,9 @@ export class AuthService {
     const user = await this.userService.createUser(data);
 
     let teacher: Teacher | undefined;
+
     if ('bio' in data || data.role === Role.Teacher) {
-      const teacherData = data as CreateTeacherDto;
-      teacher = await this.teacherService.createTeacher({
-        user,
-        bio: teacherData.bio,
-        subjects: teacherData.subjects,
-        yearsOfExperience: teacherData.yearsOfExperience,
-        hourlyRate: teacherData.hourlyRate,
-        location: teacherData.location,
-      });
+      teacher = await this.teacherService.createTeacher(data, user);
     }
 
     const payload = this.generatePayload(user);

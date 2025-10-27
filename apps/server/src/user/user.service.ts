@@ -27,7 +27,7 @@ export class UserService {
   }
 
   async getUserInfo(id: string): Promise<User | null> {
-    const user = await this.userRepository.findOneBy({ id: Number(id) });
+    const user = await this.userRepository.findOneBy({ id });
 
     if (!user) {
       throw new NotFoundException(`User with ${id} is not found`);
@@ -62,7 +62,7 @@ export class UserService {
     data: UpdateUserDto,
   ): Promise<{ success: boolean; message: string }> {
     try {
-      const user = await this.userRepository.findOneBy({ id: Number(id) });
+      const user = await this.userRepository.findOneBy({ id });
       if (!user) {
         throw new NotFoundException(`User with id ${id} not found`);
       }
@@ -98,7 +98,7 @@ export class UserService {
 
   async deleteUser(id: string): Promise<{ success: boolean; message: string }> {
     try {
-      await this.userRepository.delete({ id: Number(id) });
+      await this.userRepository.delete({ id });
 
       return {
         success: true,

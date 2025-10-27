@@ -2,12 +2,12 @@ import { ROUTES } from '@/shared/router/routes';
 import Link from 'next/link';
 import {
   FaBell,
-  FaSignOutAlt,
   FaChalkboardTeacher,
   FaUsers,
   FaCalendarAlt,
   FaUserCircle,
 } from 'react-icons/fa';
+import LogoutButton from './logout-button';
 
 const TeacherProfileIcon = () => (
   <Link
@@ -56,12 +56,6 @@ export const TeacherActions = () => (
       <FaChalkboardTeacher size={20} />
     </Link>
 
-    <button
-      onClick={() => console.log('Handle Logout')}
-      className="text-base font-medium bg-gray-200 text-green-800 px-4 py-2 rounded-xl shadow-sm hover:bg-gray-300 transition flex items-center gap-1"
-    >
-      <FaSignOutAlt className="w-4 h-4" />
-      Вийти
-    </button>
+    <LogoutButton />
   </nav>
 );

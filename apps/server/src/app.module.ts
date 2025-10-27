@@ -5,7 +5,6 @@ import configuration from './config/env.config';
 import { validationSchema } from './config/validation.schema';
 import { HashModule } from './shared/hash/hash.module';
 import { AuthModule } from './auth/auth.module';
-import { TutorModule } from './tutor/tutor.module';
 import { UserModule } from './user/user.module';
 import { TeacherModule } from './teacher/teacher.module';
 
@@ -18,7 +17,6 @@ import { TeacherModule } from './teacher/teacher.module';
     }),
     DatabaseModule,
     HashModule,
-    TutorModule,
     AuthModule,
     UserModule,
     TeacherModule,

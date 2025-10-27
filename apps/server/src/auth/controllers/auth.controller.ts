@@ -14,19 +14,19 @@ import {
   ACCESS_TOKEN_EXPIRATION,
   REFRESH_TOKEN_EXPIRATION,
 } from '../constants/token-maxAge';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { UserResponseDto } from 'src/user/dto/user-response.dto';
+import { CreateTeacherDto } from 'src/teacher/dto/create-teacher.dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto, @Res() res: Response) {
+  async register(@Body() data: CreateTeacherDto, @Res() res: Response) {
     const { accessToken, refreshToken, user } =
-      await this.authService.register(createUserDto);
+      await this.authService.register(data);
 
     res.cookie(TokenName.ACCESS, accessToken, {
       httpOnly: true,
