@@ -1,6 +1,10 @@
 import { Subject } from '@/entities/subject';
 import { User } from '@/entities/user';
 
+export interface TeacherResponse {
+  data: TeacherProfile[];
+}
+
 export type TeacherProfile = {
   id: string;
   bio: string;

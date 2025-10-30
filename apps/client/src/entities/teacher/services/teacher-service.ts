@@ -1,7 +1,8 @@
 import { axiosClient } from '@/shared/config/axios-config';
-import { TeacherProfile } from '../model/teacher-entity';
+import { TeacherProfile, TeacherResponse } from '../model/teacher-entity';
 import { API_URL } from '@/shared/constants/api-url';
 import { TeacherProfileFormSchema } from '../schemas/teacher-profile-form-schema';
+import { TutorQueryParams } from '../types/tutor-query-params';
 
 class TeacherService {
   constructor() {}
@@ -16,6 +17,17 @@ class TeacherService {
     const response = await axiosClient.patch(API_URL.TEACHER.ME, data);
 
     return response.data;
+  }
+
+  async getTeachers(params: TutorQueryParams) {
+    const response = await axiosClient.get<TeacherResponse>(
+      API_URL.TEACHER.ALL,
+      {
+        params,
+      }
+    );
+
+    return response.data.data;
   }
 }
 

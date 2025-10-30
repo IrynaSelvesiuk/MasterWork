@@ -5,6 +5,7 @@ import {
   NotFoundException,
   Param,
   Patch,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 import { RequestWithUser } from 'src/shared/types/request-with-user';
 import { UserService } from 'src/user/user.service';
 import { UpdateTeacherProfileDto } from './dto/update-teacher-profile.dto';
+import { GetTeachersQueryDto } from './dto/get-teachers-query.dto';
 
 @Controller('teachers')
 export class TeacherController {
@@ -20,11 +22,6 @@ export class TeacherController {
     private readonly teacherService: TeacherService,
     private readonly userService: UserService,
   ) {}
-
-  @Get()
-  async getTeachers() {
-    return this.teacherService.findAll();
-  }
 
   @Get('profile/me')
   @UseGuards(JwtAuthGuard)
@@ -58,5 +55,10 @@ export class TeacherController {
     }
 
     return this.teacherService.updateProfile(teacher.id, updateDto);
+  }
+
+  @Get()
+  async getTeachers(@Query() query: GetTeachersQueryDto) {
+    return this.teacherService.findAllSorted(query);
   }
 }

@@ -119,4 +119,76 @@ export class TeacherService {
 
     return this.findProfileByUserId(teacher.user.id);
   }
+
+  async findAllSorted(options: {
+    page?: number;
+    limit?: number;
+    sortBy?: 'rating' | 'experience' | 'hourlyRate' | 'createdAt';
+    order?: 'ASC' | 'DESC';
+    subjectId?: string;
+    location?: string;
+  }) {
+    const {
+      page = 1,
+      limit = 10,
+      sortBy = 'createdAt',
+      order = 'DESC',
+      subjectId,
+      location,
+    } = options;
+
+    const qb = this.teacherRepository
+      .createQueryBuilder('teacher')
+      .leftJoinAndSelect('teacher.user', 'user')
+      .leftJoinAndSelect('teacher.subjects', 'subject')
+      .leftJoinAndSelect('teacher.reviews', 'review')
+      .loadRelationCountAndMap('teacher.reviewCount', 'teacher.reviews')
+      .skip((page - 1) * limit)
+      .take(limit);
+
+    // Filtering
+    if (subjectId) {
+      qb.andWhere('subject.id = :subjectId', { subjectId });
+    }
+
+    if (location) {
+      qb.andWhere('teacher.location ILIKE :location', {
+        location: `%${location}%`,
+      });
+    }
+
+    // Sorting
+    switch (sortBy) {
+      case 'rating':
+        qb.addSelect('AVG(review.rating)', 'avgRating')
+          .groupBy('teacher.id')
+          .addGroupBy('user.id')
+          .addGroupBy('subject.id')
+          .orderBy('avgRating', order);
+        break;
+
+      case 'experience':
+        qb.orderBy('teacher.yearsOfExperience', order);
+        break;
+
+      case 'hourlyRate':
+        qb.orderBy('teacher.hourlyRate', order);
+        break;
+
+      case 'createdAt':
+      default:
+        qb.orderBy('teacher.createdAt', order);
+        break;
+    }
+
+    const [teachers, total] = await qb.getManyAndCount();
+
+    return {
+      data: teachers,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
 }
