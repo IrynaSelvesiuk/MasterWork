@@ -28,7 +28,14 @@ export const LoginForm = () => {
   const onSubmit = (data: LoginFormData) => {
     login(data, {
       onSuccess: (response) => {
-        setUser(response.user);
+        setUser({
+          userId: response.userDto.id,
+          firstName: response.userDto.firstName,
+          lastName: response.userDto.lastName,
+          email: response.userDto.email,
+          joinedDate: response.userDto.createAt,
+          role: response.userDto.role,
+        });
         toast.success('Logged in successfully!');
         reset();
         router.push(ROUTES.TUTORS);

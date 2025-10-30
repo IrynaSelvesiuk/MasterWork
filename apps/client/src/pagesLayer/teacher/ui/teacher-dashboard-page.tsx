@@ -13,6 +13,7 @@ import {
   FaBell,
   FaEdit,
 } from 'react-icons/fa';
+import { StatCard } from './stat-card';
 
 const mockStats = {
   totalStudents: 14,
@@ -47,24 +48,6 @@ const mockActivity = [
   { id: 2, text: 'Ви отримали новий відгук' },
   { id: 3, text: 'Студент "Олена П." скасувала урок' },
 ];
-
-const StatCard = ({
-  title,
-  value,
-  icon: Icon,
-}: {
-  title: string;
-  value: string | number;
-  icon: React.ElementType;
-}) => (
-  <div className="rounded-xl border bg-white p-6 shadow-sm">
-    <div className="flex items-center justify-between">
-      <p className="text-sm font-medium text-gray-500">{title}</p>
-      <Icon className="h-6 w-6 text-green-600" />{' '}
-    </div>
-    <p className="mt-2 text-3xl font-bold text-gray-800">{value}</p>
-  </div>
-);
 
 export function DashboardPage() {
   const { user } = useAuthStore();

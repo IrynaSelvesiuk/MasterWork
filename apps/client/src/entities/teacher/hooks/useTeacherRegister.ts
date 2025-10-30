@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { teacherAuthService } from '../model/teacher-auth-service';
-import { TeacherRegisterSchema } from '../model/schemas/teacher-register-schema';
 import { MUTATION_KEY } from '@/shared/constants/mutation-key';
+import { TeacherRegisterSchema } from '../schemas/teacher-register-schema';
+import { teacherAuthService } from '../services/teacher-auth-service';
 
 export const useTeacherRegister = () => {
   return useMutation({

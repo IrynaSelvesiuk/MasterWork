@@ -7,7 +7,7 @@ import {
 } from 'react-hook-form';
 import Select from 'react-select';
 import { useMemo } from 'react';
-import { useGetSubjects } from '../teacher/hooks/useGetSubjects';
+import { useGetSubjects } from '@/entities/subject/hooks/useGetSubjects';
 
 type SubjectOption = {
   value: string;
@@ -21,7 +21,7 @@ interface Props<T extends FieldValues> {
   errors?: FieldErrors<T>;
 }
 
-const ChooseSubjectsInput = <T extends FieldValues>({
+export const ChooseSubjectsInput = <T extends FieldValues>({
   label,
   name,
   control,
@@ -100,5 +100,3 @@ const ChooseSubjectsInput = <T extends FieldValues>({
     </div>
   );
 };
-
-export default ChooseSubjectsInput;

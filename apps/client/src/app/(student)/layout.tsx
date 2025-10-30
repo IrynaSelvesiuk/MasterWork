@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/entities/user/model/store';
-import { LoadingSpinner } from '@/widgets/spinner';
+import { LoadingSpinner } from '@/shared/ui/spinner';
 import { Role } from '@/shared/enums/role.enum';
 import { ROUTES } from '@/shared/router/routes';
 import { ProfilePage } from '@/pagesLayer/profile';

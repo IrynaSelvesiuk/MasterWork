@@ -2,19 +2,20 @@
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import {
-  teacherRegisterSchema,
-  TeacherRegisterSchema,
-} from '../model/schemas/teacher-register-schema';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import toast from 'react-hot-toast';
 import InputForm from '../../ui/input-form';
 import TextAreaForm from '../../ui/text-area-form';
-import ChooseSubjectsInput from '../../ui/choose-subjects-input';
-import { useTeacherRegister } from '../hooks/useTeacherRegister';
 import { useAuthStore } from '@/entities/user/model/store';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/router/routes';
+import {
+  teacherRegisterSchema,
+  TeacherRegisterSchema,
+} from '@/entities/teacher';
+import { useTeacherRegister } from '@/entities/teacher/hooks/useTeacherRegister';
+import { ChooseSubjectsInput } from '@/features/select-subjects';
 
 const TeacherRegisterForm = () => {
   const {

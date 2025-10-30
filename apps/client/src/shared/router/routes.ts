@@ -16,6 +16,8 @@ export const ROUTES = {
   TEACHER: {
     DASHBOARD: '/dashboard',
     CALENDAR: '/calendar',
+    PROFILE: '/teacher-profile',
+    ME: '/teacher-me',
   },
 
   TEACHER_CLASSES: '/teacher/classes',

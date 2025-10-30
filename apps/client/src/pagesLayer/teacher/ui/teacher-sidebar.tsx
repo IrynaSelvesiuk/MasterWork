@@ -1,21 +1,33 @@
 'use client';
 
+import { useGetMyProfile } from '@/entities/teacher';
+import { ROUTES } from '@/shared/router/routes';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-const links = [
-  { href: '/dashboard', label: 'Головна (Dashboard)' },
-  { href: '/profile', label: 'Мій публічний профіль' },
-  { href: '/calendar', label: 'Розклад та Календар' },
-  { href: '/students', label: 'Мої студенти' },
-  { href: '/settings', label: 'Налаштування' },
-];
+import { useMemo } from 'react';
 
 export function TeacherSidebar() {
   const pathname = usePathname();
+  const { data: teacher, isLoading } = useGetMyProfile();
+  console.log(teacher);
+  const links = useMemo(() => {
+    const teacherId = teacher?.id;
+
+    return [
+      { href: ROUTES.TEACHER.DASHBOARD, label: 'Головна (Dashboard)' },
+      {
+        href: `${ROUTES.TEACHER.PROFILE}/${teacherId}`,
+        label: 'Мій публічний профіль',
+      },
+      { href: ROUTES.TEACHER.CALENDAR, label: 'Розклад та Календар' },
+      { href: ROUTES.TEACHER.ME, label: 'Мій особистий профіль' },
+      { href: '/students', label: 'Мої студенти' },
+      { href: '/settings', label: 'Налаштування' },
+    ];
+  }, [teacher]);
 
   return (
-    <nav className="w-64 h-full bg-gray-50 border-r p-6 flex flex-col">
+    <nav className="w-64 h-screen sticky top-24 bg-gray-50 border-r p-6 flex flex-col">
       <h2 className="text-xl font-bold text-green-700 mb-8">Кабінет Вчителя</h2>
       <ul className="space-y-2">
         {links.map((link) => (

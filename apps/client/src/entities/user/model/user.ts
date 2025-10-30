@@ -1,7 +1,7 @@
 import { Role } from '@/shared/enums/role.enum';
 
 export interface User {
-  userId: number;
+  userId: string;
   firstName: string;
   lastName: string;
   email: string;

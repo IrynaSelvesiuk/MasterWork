@@ -10,7 +10,7 @@ import { TeacherService } from 'src/teacher/services/teacher.service';
 import { AuthResponse } from '../types/auth-response';
 import { CreateTeacherDto } from 'src/teacher/dto/create-teacher.dto';
 import { Role } from 'src/enums/roles.enum';
-import { Teacher } from 'src/teacher/teacher.entity';
+import { Teacher } from 'src/teacher/entities/teacher.entity';
 
 @Injectable()
 export class AuthService {

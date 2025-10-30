@@ -1,5 +1,5 @@
 import { Role } from 'src/enums/roles.enum';
-import { Teacher } from 'src/teacher/teacher.entity';
+import { Teacher } from 'src/teacher/entities/teacher.entity';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('users')

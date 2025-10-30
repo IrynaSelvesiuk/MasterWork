@@ -1,6 +1,6 @@
 import { axiosClient } from '@/shared/config/axios-config';
-import { TeacherRegisterSchema } from './schemas/teacher-register-schema';
 import { API_URL } from '@/shared/constants/api-url';
+import { TeacherRegisterSchema } from '../schemas/teacher-register-schema';
 
 class TeacherAuthService {
   constructor() {}

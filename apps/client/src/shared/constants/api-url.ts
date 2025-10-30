@@ -8,4 +8,8 @@ export const API_URL = {
   SUBJECT: {
     ALL: '/subjects',
   },
+
+  TEACHER: {
+    ME: '/teachers/profile/me',
+  },
 } as const;
