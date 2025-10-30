@@ -1,4 +1,5 @@
 import { StudentResponse } from '@/entities/student/model/student';
+import Link from 'next/link';
 import { FaUserEdit, FaGlobe } from 'react-icons/fa';
 
 interface Props {
@@ -24,8 +25,11 @@ export const StudentProfileCard = ({ student }: Props) => (
       </p>
     </div>
 
-    <button className="mt-5 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition flex items-center justify-center gap-2">
+    <Link
+      href="/update-profile"
+      className="mt-5 w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition flex items-center justify-center gap-2"
+    >
       <FaUserEdit /> Редагувати профіль
-    </button>
+    </Link>
   </div>
 );

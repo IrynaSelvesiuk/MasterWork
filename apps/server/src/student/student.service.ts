@@ -4,6 +4,7 @@ import { Student } from './student.entity';
 import { DeleteResult, Repository } from 'typeorm';
 import { User } from 'src/user/user.entity';
 import { CreateStudentDto } from './dto/create-student.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Injectable()
 export class StudentService {
@@ -50,6 +51,21 @@ export class StudentService {
     });
 
     return this.studentRepository.save(newStudent);
+  }
+
+  async updateStudent(id: string, data: UpdateStudentDto): Promise<Student> {
+    const student = await this.studentRepository.findOne({
+      where: { id },
+      relations: { user: true },
+    });
+
+    if (!student) {
+      throw new NotFoundException(`Student with id ${id} not found`);
+    }
+
+    const updatedStudent = this.studentRepository.merge(student, data);
+
+    return this.studentRepository.save(updatedStudent);
   }
 
   async delete(id: string): Promise<DeleteResult> {

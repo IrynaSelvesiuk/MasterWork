@@ -1,7 +1,8 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { StudentService } from './student.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 import { RequestWithUser } from 'src/shared/types/request-with-user';
+import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Controller('students')
 export class StudentController {
@@ -13,5 +14,15 @@ export class StudentController {
     const userId = req.user.id;
 
     return this.studentService.findOneByUserId(userId);
+  }
+
+  @Patch('me')
+  @UseGuards(JwtAuthGuard)
+  async updateMe(@Body() data: UpdateStudentDto, @Req() req: RequestWithUser) {
+    const userId = req.user.id;
+
+    const student = await this.studentService.findOneByUserId(userId);
+
+    return this.studentService.updateStudent(student.id, data);
   }
 }

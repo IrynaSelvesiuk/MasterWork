@@ -1,6 +1,5 @@
 'use client';
 
-import { User } from '@/entities/user';
 import { StudentProfileCard } from './StudentProfileCard';
 import { ProfileNavigation } from './ProfileNavigation';
 import { BecomeTutorSection } from './BecomeTutors';

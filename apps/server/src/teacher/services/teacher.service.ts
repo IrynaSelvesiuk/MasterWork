@@ -89,7 +89,6 @@ export class TeacherService {
     if (!teacher) {
       throw new NotFoundException(`Вчителя з ID ${teacherId} не знайдено`);
     }
-    console.log('Teacher from service ->', teacher.user.id);
 
     this.teacherRepository.merge(teacher, simpleProfileData);
     await this.teacherRepository.save(teacher);
