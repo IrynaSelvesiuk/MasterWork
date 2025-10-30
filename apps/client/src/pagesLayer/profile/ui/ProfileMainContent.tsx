@@ -1,14 +1,14 @@
 import { SettingsSection } from '@/widgets/settings-section';
 import { WalletSummary } from './WalletSummary';
-import { User } from '@/entities/user';
+import { StudentResponse } from '@/entities/student/model/student';
 
 interface Props {
-  user: User;
+  student: StudentResponse;
 }
 
-export const ProfileMainContent = ({ user }: Props) => (
+export const ProfileMainContent = ({ student }: Props) => (
   <section className="lg:col-span-2 space-y-8">
-    <WalletSummary walletBalance={user.walletBalance} />
+    <WalletSummary walletBalance={student.walletBalance} />
     <SettingsSection />
   </section>
 );

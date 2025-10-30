@@ -7,16 +7,18 @@ import { ROUTES } from '@/shared/router/routes';
 import {
   registerSchema,
   RegisterFormData,
-} from '../model/schemas/register-schema';
-import { useRegister } from '../model/mutations/useRegister';
+} from '../../../../entities/student/schemas/register-schema';
+import { useRegister } from '../../../../entities/student/hooks/mutations/useRegister';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/entities/user/model/store';
+import { ChooseLanguagesInput } from '@/features/select-languages';
 
 export const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<RegisterFormData>({
@@ -26,6 +28,8 @@ export const RegisterForm = () => {
       firstName: '',
       lastName: '',
       password: '',
+      learningGoals: '',
+      languages: [],
     },
   });
 
@@ -38,11 +42,11 @@ export const RegisterForm = () => {
       onSuccess: (responseData) => {
         reset();
         setUser({
-          userId: responseData.userDto.id,
+          id: responseData.userDto.id,
           firstName: responseData.userDto.firstName,
           lastName: responseData.userDto.lastName,
           email: responseData.userDto.email,
-          joinedDate: responseData.userDto.createdAt,
+          createdAt: responseData.userDto.createdAt,
           role: responseData.userDto.role,
           image: null,
         });
@@ -148,6 +152,39 @@ export const RegisterForm = () => {
           <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
         )}
       </div>
+
+      <div>
+        <label
+          htmlFor="learningGoals"
+          className="block text-sm font-medium text-green-800 mb-1"
+        >
+          Ваші навчальні цілі (необов&apos;язково)
+        </label>
+        <textarea
+          id="learningGoals"
+          rows={3}
+          {...register('learningGoals')}
+          className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 ${
+            errors.learningGoals
+              ? 'border-red-400 ring-red-300'
+              : 'focus:ring-green-500'
+          }`}
+          placeholder="Наприклад: 'Хочу вільно спілкуватися англійською у подорожах'"
+        />
+        {errors.learningGoals && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.learningGoals.message}
+          </p>
+        )}
+      </div>
+
+      {/* 5. 👇 Додайте поле Choose Languages */}
+      <ChooseLanguagesInput<RegisterFormData>
+        label="Мови, якими ви володієте"
+        name="languages"
+        control={control}
+        errors={errors}
+      />
 
       <button
         type="submit"

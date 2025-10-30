@@ -3,7 +3,6 @@ import { HashService } from 'src/shared/hash/services/hash.service';
 import { TokenService } from './token.service';
 import { JwtPayload } from '../types/jwt-payload.interface';
 import { UserService } from 'src/user/user.service';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { User } from 'src/user/user.entity';
 import { LoginUserDto } from 'src/user/dto/login-user.dto';
 import { TeacherService } from 'src/teacher/services/teacher.service';
@@ -11,6 +10,9 @@ import { AuthResponse } from '../types/auth-response';
 import { CreateTeacherDto } from 'src/teacher/dto/create-teacher.dto';
 import { Role } from 'src/enums/roles.enum';
 import { Teacher } from 'src/teacher/entities/teacher.entity';
+import { StudentService } from 'src/student/student.service';
+import { Student } from 'src/student/student.entity';
+import { CreateStudentDto } from 'src/student/dto/create-student.dto';
 
 @Injectable()
 export class AuthService {
@@ -19,6 +21,7 @@ export class AuthService {
     private readonly tokenService: TokenService,
     private readonly userService: UserService,
     private readonly teacherService: TeacherService,
+    private readonly studentService: StudentService,
   ) {}
 
   private generatePayload(user: User): JwtPayload {
@@ -50,20 +53,24 @@ export class AuthService {
   }
 
   public async register(
-    data: CreateUserDto | CreateTeacherDto,
+    data: CreateStudentDto | CreateTeacherDto,
   ): Promise<AuthResponse> {
+    let teacher: Teacher | undefined;
+    let student: Student | undefined;
     const user = await this.userService.createUser(data);
 
-    let teacher: Teacher | undefined;
-
-    if ('bio' in data || data.role === Role.Teacher) {
+    if (data.role === Role.Teacher) {
       teacher = await this.teacherService.createTeacher(data, user);
+    }
+
+    if (data.role === Role.Student) {
+      student = await this.studentService.createStudent(data, user);
     }
 
     const payload = this.generatePayload(user);
     const tokens = await this.tokenService.generateTokens(payload);
 
-    return { user, teacher, ...tokens };
+    return { user, teacher, student, ...tokens };
   }
 
   public async logout() {}

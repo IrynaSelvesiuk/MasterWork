@@ -1,11 +1,22 @@
 import { Role } from '@/shared/enums/role.enum';
 
 export interface User {
-  userId: string;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
-  joinedDate: string;
+  createdAt: string;
   image?: string | null;
   role: Role[];
+}
+
+export interface UserResponse {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: Role[];
+  verifiedTutor: boolean;
+  createdAt: string;
+  updatedAt: string;
 }

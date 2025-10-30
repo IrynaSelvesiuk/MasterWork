@@ -1,29 +1,26 @@
-import { User } from '@/entities/user';
-import { FaUserEdit, FaGlobe, FaChalkboardTeacher } from 'react-icons/fa';
+import { StudentResponse } from '@/entities/student/model/student';
+import { FaUserEdit, FaGlobe } from 'react-icons/fa';
 
 interface Props {
-  user: User;
+  student: StudentResponse;
 }
 
-export const StudentProfileCard = ({ user }: Props) => (
+export const StudentProfileCard = ({ student }: Props) => (
   <div className="bg-white p-6 rounded-xl shadow-lg text-center border-t-4 border-green-500">
     <img
-      src={user.image}
-      alt={user.name}
+      src={student.avatarUrl}
+      alt={student.user.firstName}
       className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-gray-100"
     />
-    <h2 className="text-2xl font-bold text-gray-800">{user.name}</h2>
-    <p className="text-sm text-gray-600 mb-4">{user.email}</p>
+    <h2 className="text-2xl font-bold text-gray-800">
+      {student.user.firstName}
+    </h2>
+    <p className="text-sm text-gray-600 mb-4">{student.user.email}</p>
 
     <div className="space-y-2 text-left text-sm mt-4">
       <p className="flex items-center text-gray-700">
         <FaGlobe className="mr-2 text-green-500" />
-        Мови: {user.languages.join(', ')}
-      </p>
-      <p className="flex items-center text-gray-700">
-        <FaChalkboardTeacher className="mr-2 text-green-500" />
-        Уроків завершено:{' '}
-        <span className="font-semibold ml-1">{user.totalLessons}</span>
+        Мови: {student.languages.join(', ')}
       </p>
     </div>
 

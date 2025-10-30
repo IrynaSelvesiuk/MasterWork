@@ -1,4 +1,5 @@
 import { Role } from 'src/enums/roles.enum';
+import { Student } from 'src/student/student.entity';
 import { Teacher } from 'src/teacher/entities/teacher.entity';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -33,4 +34,7 @@ export class User {
 
   @OneToOne(() => Teacher, (teacher) => teacher.user)
   teacher?: Teacher;
+
+  @OneToOne(() => Teacher, (student) => student.user)
+  student?: Student;
 }

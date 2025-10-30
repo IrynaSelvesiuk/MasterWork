@@ -6,6 +6,7 @@ import { AuthModule } from 'src/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { TeacherModule } from 'src/teacher/teacher.module';
+import { StudentModule } from 'src/student/student.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { TeacherModule } from 'src/teacher/teacher.module';
     HashModule,
     forwardRef(() => AuthModule),
     forwardRef(() => TeacherModule),
+    forwardRef(() => StudentModule),
   ],
   providers: [UserService],
   controllers: [UserController],

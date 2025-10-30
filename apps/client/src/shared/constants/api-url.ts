@@ -12,4 +12,8 @@ export const API_URL = {
   TEACHER: {
     ME: '/teachers/profile/me',
   },
+
+  STUDENT: {
+    ME: 'students/me',
+  },
 } as const;

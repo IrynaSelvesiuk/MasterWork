@@ -3,11 +3,14 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { loginSchema, LoginFormData } from '../model/schemas/login-schema';
+import {
+  loginSchema,
+  LoginFormData,
+} from '../../../../entities/student/schemas/login-schema';
 import { ROUTES } from '@/shared/router/routes';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/entities/user/model/store';
-import { useLogin } from '../model/mutations/useLogin';
+import { useLogin } from '../../../../entities/student/hooks/mutations/useLogin';
 import toast from 'react-hot-toast';
 
 export const LoginForm = () => {
@@ -29,11 +32,11 @@ export const LoginForm = () => {
     login(data, {
       onSuccess: (response) => {
         setUser({
-          userId: response.userDto.id,
+          id: response.userDto.id,
           firstName: response.userDto.firstName,
           lastName: response.userDto.lastName,
           email: response.userDto.email,
-          joinedDate: response.userDto.createAt,
+          createdAt: response.userDto.createAt,
           role: response.userDto.role,
         });
         toast.success('Logged in successfully!');

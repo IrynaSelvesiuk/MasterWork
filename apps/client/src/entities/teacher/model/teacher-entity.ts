@@ -7,7 +7,7 @@ export type TeacherProfile = {
   headline: string;
   avatarUrl: string | null;
   yearsOfExperience: number;
-  hourlyRate: string;
+  hourlyRate: number;
   location: string;
   status: TeacherStatus;
   createdAt: string;

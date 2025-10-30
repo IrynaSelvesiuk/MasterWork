@@ -6,20 +6,17 @@ import { useAuthStore } from '@/entities/user/model/store';
 import { LoadingSpinner } from '@/shared/ui/spinner';
 import { Role } from '@/shared/enums/role.enum';
 import { ROUTES } from '@/shared/router/routes';
-import { ProfilePage } from '@/pagesLayer/profile';
 
-export default function TeacherLayout({
+export default function StudentLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { user, isAuthLoading } = useAuthStore((state) => ({
-    user: state.user,
-    isAuthLoading: state.isLoading,
-  }));
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isLoading);
 
-  const isTeacher =
+  const isStudent =
     user?.role?.includes(Role.Student) && user?.role?.length == 1;
 
   useEffect(() => {
@@ -27,20 +24,18 @@ export default function TeacherLayout({
       return;
     }
 
-    if (!user || !isTeacher) {
+    if (!user || !isStudent) {
       router.replace(ROUTES.LOGIN);
     }
-  }, [user, isTeacher, isAuthLoading, router]);
+  }, [user, isStudent, isAuthLoading, router]);
 
   if (isAuthLoading) {
     return <LoadingSpinner />;
   }
 
-  if (isTeacher && user) {
+  if (isStudent && user) {
     return (
       <div className="flex h-screen bg-white">
-        <ProfilePage />
-
         <main className="flex-1 overflow-y-auto p-8">{children}</main>
       </div>
     );

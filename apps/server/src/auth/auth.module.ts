@@ -7,6 +7,7 @@ import { AuthController } from './controllers/auth.controller';
 import { UserModule } from 'src/user/user.module';
 import { JwtAuthGuard } from './jwt-auth-guard';
 import { TeacherModule } from 'src/teacher/teacher.module';
+import { StudentModule } from 'src/student/student.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { TeacherModule } from 'src/teacher/teacher.module';
     JwtModule,
     forwardRef(() => UserModule),
     forwardRef(() => TeacherModule),
+    forwardRef(() => StudentModule),
   ],
   providers: [AuthService, TokenService, JwtAuthGuard],
   controllers: [AuthController],
