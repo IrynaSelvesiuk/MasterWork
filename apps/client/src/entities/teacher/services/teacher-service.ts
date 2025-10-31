@@ -3,6 +3,7 @@ import { TeacherProfile, TeacherResponse } from '../model/teacher-entity';
 import { API_URL } from '@/shared/constants/api-url';
 import { TeacherProfileFormSchema } from '../schemas/teacher-profile-form-schema';
 import { TutorQueryParams } from '../types/tutor-query-params';
+import { Booking } from '@/entities/booking';
 
 class TeacherService {
   constructor() {}
@@ -28,6 +29,12 @@ class TeacherService {
     );
 
     return response.data.data;
+  }
+
+  async getMyBookings() {
+    const response = await axiosClient.get<Booking[]>(API_URL.BOOKINGS.TEACHER);
+
+    return response.data;
   }
 }
 

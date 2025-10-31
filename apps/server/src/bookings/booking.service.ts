@@ -30,4 +30,14 @@ export class BookingService {
 
     return this.bookingRepository.save(booking);
   }
+
+  async getBookingsForTeacher(userId: string) {
+    const teacher = await this.teacherService.findProfileByUserId(userId);
+
+    return this.bookingRepository.find({
+      where: { teacher: { id: teacher.id } },
+      relations: { student: true },
+      order: { date: 'ASC' },
+    });
+  }
 }

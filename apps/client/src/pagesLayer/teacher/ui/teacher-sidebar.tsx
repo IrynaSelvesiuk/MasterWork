@@ -21,8 +21,7 @@ export function TeacherSidebar() {
       },
       { href: ROUTES.TEACHER.CALENDAR, label: 'Розклад та Календар' },
       { href: ROUTES.TEACHER.ME, label: 'Мій особистий профіль' },
-      { href: '/students', label: 'Мої студенти' },
-      { href: '/settings', label: 'Налаштування' },
+      { href: ROUTES.TEACHER.MY_STUDENTS, label: 'Мої студенти' },
     ];
   }, [teacher]);
 

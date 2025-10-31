@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 import { RequestWithUser } from 'src/shared/types/request-with-user';
@@ -17,5 +17,12 @@ export class BookingController {
     const userId = req.user.id;
 
     return this.bookingService.createBooking(userId, data);
+  }
+
+  @Get('teacher')
+  @UseGuards(JwtAuthGuard)
+  async getTeacherBookings(@Req() req: RequestWithUser) {
+    const teacherId = req.user.id;
+    return this.bookingService.getBookingsForTeacher(teacherId);
   }
 }

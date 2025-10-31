@@ -18,5 +18,8 @@ export const API_URL = {
     ME: 'students/me',
   },
 
-  BOOKINGS: '/bookings',
+  BOOKINGS: {
+    BASE: '/bookings',
+    TEACHER: '/bookings/teacher',
+  },
 } as const;

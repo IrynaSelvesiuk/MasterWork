@@ -3,4 +3,5 @@ export const QUERY_KEY = {
   TEACHER_PROFILE: 'teacher-profile',
   TEACHERS: 'teachers',
   STUDENT_PROFILE: 'student-profile',
+  BOOKINGS: 'bookings',
 } as const;

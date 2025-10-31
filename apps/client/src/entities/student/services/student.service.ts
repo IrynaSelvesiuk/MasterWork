@@ -27,7 +27,7 @@ class StudentService {
   }
 
   async bookLesson({ teacherId, date, note }: BookingRequest) {
-    const res = await axiosClient.post(API_URL.BOOKINGS, {
+    const res = await axiosClient.post(API_URL.BOOKINGS.BASE, {
       teacherId,
       date,
       note,
