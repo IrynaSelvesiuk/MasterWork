@@ -5,6 +5,7 @@ import { TutorBadge } from './TutorBadge';
 import { TutorActions } from './TutorActions';
 import { TutorStats } from './TutorStats';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
+import Link from 'next/link';
 
 interface Props {
   teacher: TeacherProfile;
@@ -16,26 +17,21 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
   const subjectNames =
     teacher.subjects.map((s) => s.name).join(', ') || 'Немає';
 
-  const flag = displayName.includes('Amelia')
-    ? '🇬🇧'
-    : displayName.includes('Ivan')
-      ? '🇺🇦'
-      : '🇺🇸';
-
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-md hover:shadow-lg transition duration-300 flex space-x-5 relative">
       <div className="flex-shrink-0 flex flex-col items-center w-36">
         <div className="w-28 h-28 mb-3">
-          <img
-            src={teacher.avatarUrl || '/placeholder-avatar.png'}
-            alt={displayName}
-            className="w-full h-full object-cover rounded-full border-4 border-green-500"
-          />
+          <Link href={`/teacher-profile/${teacher.id}`}>
+            <img
+              src={teacher.avatarUrl || '/placeholder-avatar.png'}
+              alt={displayName}
+              className="w-full h-full object-cover rounded-full border-4 border-green-500"
+            />
+          </Link>
         </div>
         <div className="text-center">
           <div className="flex items-center justify-center space-x-1">
             <h3 className="text-xl font-bold text-gray-800">{displayName}</h3>
-            <span className="text-xl">{flag}</span>
           </div>
           <p className="text-sm text-gray-600 mt-1 flex items-center justify-center">
             <FaGlobe className="mr-1 text-green-500" />

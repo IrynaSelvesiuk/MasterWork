@@ -8,7 +8,7 @@ export const teacherRegisterSchema = z.object({
     .string()
     .min(8, 'Password must be at least 8 characters long')
     .max(16, 'Password is too long'),
-
+  avatarUrl: z.string().optional(),
   subjectIds: z.array(z.string().min(1, 'Subject is required')),
   yearsOfExperience: z
     .number()

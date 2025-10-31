@@ -13,8 +13,12 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/entities/user/model/store';
 import { ChooseLanguagesInput } from '@/features/select-languages';
+import { ImagePicker } from '@/features/image-picker/ui/image-picker';
+import { useState } from 'react';
 
 export const RegisterForm = () => {
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
   const {
     register,
     handleSubmit,
@@ -30,6 +34,7 @@ export const RegisterForm = () => {
       password: '',
       learningGoals: '',
       languages: [],
+      avatarUrl: '',
     },
   });
 
@@ -38,30 +43,41 @@ export const RegisterForm = () => {
   const { user, setUser } = useAuthStore();
 
   const onSubmit = (data: RegisterFormData) => {
-    mutate(data, {
-      onSuccess: (responseData) => {
-        reset();
-        setUser({
-          id: responseData.userDto.id,
-          firstName: responseData.userDto.firstName,
-          lastName: responseData.userDto.lastName,
-          email: responseData.userDto.email,
-          createdAt: responseData.userDto.createdAt,
-          role: responseData.userDto.role,
-          image: null,
-        });
+    mutate(
+      { ...data, avatarUrl: avatarUrl || '' },
+      {
+        onSuccess: (responseData) => {
+          reset();
+          setUser({
+            id: responseData.userDto.id,
+            firstName: responseData.userDto.firstName,
+            lastName: responseData.userDto.lastName,
+            email: responseData.userDto.email,
+            createdAt: responseData.userDto.createdAt,
+            role: responseData.userDto.role,
+            image: null,
+          });
 
-        toast.success(`Привіт ${user?.firstName}!`);
-        router.push(ROUTES.TUTORS);
-      },
-      onError: () => {
-        toast.error(error?.message || 'Something went wrong while registering');
-      },
-    });
+          toast.success(`Привіт ${user?.firstName}!`);
+          router.push(ROUTES.TUTORS);
+        },
+        onError: () => {
+          toast.error(
+            error?.message || 'Something went wrong while registering'
+          );
+        },
+      }
+    );
   };
-
+  console.log(avatarUrl);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <div className="md:col-span-2 flex flex-col items-center gap-3">
+        <ImagePicker onUpload={(url) => setAvatarUrl(url)} />
+        {avatarUrl && (
+          <p className="text-sm text-green-600">Фото завантажено ✅</p>
+        )}
+      </div>
       {/* Name */}
       <div>
         <label

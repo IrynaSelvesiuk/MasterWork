@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,8 +16,10 @@ import {
 } from '@/entities/teacher';
 import { useTeacherRegister } from '@/entities/teacher/hooks/useTeacherRegister';
 import { ChooseSubjectsInput } from '@/features/select-subjects';
+import { ImagePicker } from '@/features/image-picker/ui/image-picker';
 
 const TeacherRegisterForm = () => {
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const {
     register,
     control,
@@ -36,6 +38,7 @@ const TeacherRegisterForm = () => {
       yearsOfExperience: undefined,
       hourlyRate: undefined,
       location: '',
+      avatarUrl: '',
     },
   });
   const { mutate, error } = useTeacherRegister();
@@ -43,32 +46,44 @@ const TeacherRegisterForm = () => {
   const router = useRouter();
 
   const onSubmit = (data: TeacherRegisterSchema) => {
-    mutate(data, {
-      onSuccess: (responseData) => {
-        reset();
-        setUser({
-          userId: responseData.userDto.id,
-          firstName: responseData.userDto.firstName,
-          lastName: responseData.userDto.lastName,
-          email: responseData.userDto.email,
-          joinedDate: responseData.userDto.createdAt,
-          role: responseData.userDto.role,
-          image: null,
-        });
+    mutate(
+      { ...data, avatarUrl: avatarUrl ? avatarUrl : '' },
+      {
+        onSuccess: (responseData) => {
+          reset();
+          setUser({
+            id: responseData.userDto.id,
+            firstName: responseData.userDto.firstName,
+            lastName: responseData.userDto.lastName,
+            email: responseData.userDto.email,
+            createdAt: responseData.userDto.createdAt,
+            role: responseData.userDto.role,
+            image: null,
+          });
 
-        toast.success(`Привіт ${responseData.userDto.firstName}!`);
-        router.push(ROUTES.TUTORS);
-      },
-      onError: () => {
-        toast.error(error?.message || 'Something went wrong while registering');
-      },
-    });
+          toast.success(`Привіт ${responseData.userDto.firstName}!`);
+          router.push(ROUTES.TUTORS);
+        },
+        onError: () => {
+          toast.error(
+            error?.message || 'Something went wrong while registering'
+          );
+        },
+      }
+    );
   };
+  console.log(avatarUrl);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 p-6 border border-gray-300 rounded-lg shadow-md bg-white"
     >
+      <div className="md:col-span-2 flex flex-col items-center gap-3">
+        <ImagePicker onUpload={(url) => setAvatarUrl(url)} />
+        {avatarUrl && (
+          <p className="text-sm text-green-600">Фото завантажено ✅</p>
+        )}
+      </div>
       {/* Personal info */}
       <InputForm
         label="First Name"

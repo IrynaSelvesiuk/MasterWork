@@ -15,6 +15,10 @@ export class CreateTeacherDto extends CreateUserDto {
   bio?: string;
 
   @IsOptional()
+  @IsString()
+  avatarUrl: string;
+
+  @IsOptional()
   @IsArray()
   @IsUUID('all', { each: true })
   subjectIds?: string[];
