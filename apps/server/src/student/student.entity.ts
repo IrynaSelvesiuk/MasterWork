@@ -1,9 +1,11 @@
+import { Booking } from 'src/bookings/booking.entity';
 import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -38,4 +40,7 @@ export class Student {
     default: 0,
   })
   walletBalance: number;
+
+  @OneToMany(() => Booking, (booking) => booking.student)
+  bookings: Booking[];
 }

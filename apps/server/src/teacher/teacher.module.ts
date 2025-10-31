@@ -10,6 +10,7 @@ import { Review } from './entities/review.entity';
 import { Availability } from './entities/availability.enitity';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
+import { BookingModule } from 'src/bookings/booking.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserModule } from 'src/user/user.module';
     forwardRef(() => SubjectModule),
     forwardRef(() => AuthModule),
     forwardRef(() => UserModule),
+    forwardRef(() => BookingModule),
   ],
   exports: [TeacherService],
   controllers: [TeacherController],

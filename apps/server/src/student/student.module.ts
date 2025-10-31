@@ -5,12 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Student } from './student.entity';
 import { StudentController } from './student.controller';
 import { AuthModule } from 'src/auth/auth.module';
+import { BookingModule } from 'src/bookings/booking.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Student]),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
+    forwardRef(() => BookingModule),
   ],
   providers: [StudentService],
   exports: [StudentService],

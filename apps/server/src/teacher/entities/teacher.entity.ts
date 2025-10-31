@@ -16,6 +16,7 @@ import { Experience } from './experience.entity';
 import { Review } from './review.entity';
 import { Availability } from './availability.enitity';
 import { TeacherStatus } from '../types/teacher-status';
+import { Booking } from 'src/bookings/booking.entity';
 
 @Entity('teacher')
 export class Teacher {
@@ -46,6 +47,9 @@ export class Teacher {
 
   @ManyToMany(() => Subject, (subject) => subject.teachers)
   subjects: Subject[];
+
+  @OneToMany(() => Booking, (booking) => booking.teacher)
+  bookings: Booking[];
 
   @Column({
     type: 'enum',

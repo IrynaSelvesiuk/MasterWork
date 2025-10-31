@@ -3,6 +3,11 @@ import { API_URL } from '@/shared/constants/api-url';
 import { StudentResponse } from '../model/student';
 import { UpdateStudentSchema } from '../schemas/update-student-schema';
 
+export type BookingRequest = {
+  teacherId: string;
+  date: string;
+  note?: string;
+};
 class StudentService {
   constructor() {}
 
@@ -19,6 +24,16 @@ class StudentService {
     );
 
     return response.data;
+  }
+
+  async bookLesson({ teacherId, date, note }: BookingRequest) {
+    const res = await axiosClient.post(API_URL.BOOKINGS, {
+      teacherId,
+      date,
+      note,
+    });
+
+    return res.data;
   }
 }
 

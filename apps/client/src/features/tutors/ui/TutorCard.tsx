@@ -67,6 +67,7 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
 
         <div className="mt-3">
           <TutorActions
+            teacherId={teacher.id}
             pricePer60Min={teacher.hourlyRate ? Number(teacher.hourlyRate) : 0}
           />
         </div>

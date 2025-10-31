@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { StudentModule } from './student/student.module';
+import { BookingModule } from './bookings/booking.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { StudentModule } from './student/student.module';
     UserModule,
     TeacherModule,
     StudentModule,
+    BookingModule,
   ],
   controllers: [],
   providers: [],
