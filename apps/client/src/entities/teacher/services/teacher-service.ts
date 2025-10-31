@@ -4,6 +4,7 @@ import { API_URL } from '@/shared/constants/api-url';
 import { TeacherProfileFormSchema } from '../schemas/teacher-profile-form-schema';
 import { TutorQueryParams } from '../types/tutor-query-params';
 import { Booking } from '@/entities/booking';
+import { BookingStatus } from '@/entities/booking/model/booking';
 
 class TeacherService {
   constructor() {}
@@ -33,6 +34,15 @@ class TeacherService {
 
   async getMyBookings() {
     const response = await axiosClient.get<Booking[]>(API_URL.BOOKINGS.TEACHER);
+
+    return response.data;
+  }
+
+  async updateBooking(id: string, status: BookingStatus) {
+    const response = await axiosClient.patch(
+      API_URL.BOOKINGS.BASE_ID(id),
+      status
+    );
 
     return response.data;
   }

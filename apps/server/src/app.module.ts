@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { TeacherModule } from './teacher/teacher.module';
 import { StudentModule } from './student/student.module';
 import { BookingModule } from './bookings/booking.module';
+import { MailModule } from './shared/mail/mail.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { BookingModule } from './bookings/booking.module';
     }),
     DatabaseModule,
     HashModule,
+    MailModule,
     AuthModule,
     UserModule,
     TeacherModule,

@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booking } from './booking.entity';
+import { Booking, BookingStatus } from './booking.entity';
 import { Repository } from 'typeorm';
 import { TeacherService } from 'src/teacher/services/teacher.service';
 import { StudentService } from 'src/student/student.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
+import { MailService } from 'src/shared/mail/mail.service';
 
 @Injectable()
 export class BookingService {
@@ -13,6 +14,7 @@ export class BookingService {
     private readonly bookingRepository: Repository<Booking>,
     private readonly teacherService: TeacherService,
     private readonly studentService: StudentService,
+    private readonly mailService: MailService,
   ) {}
 
   async createBooking(studentId: string, dto: CreateBookingDto) {
@@ -39,5 +41,36 @@ export class BookingService {
       relations: { student: true },
       order: { date: 'ASC' },
     });
+  }
+
+  async updateBookingStatus(id: string, status: 'confirmed' | 'rejected') {
+    const booking = await this.bookingRepository.findOne({
+      where: { id },
+      relations: {
+        student: {
+          user: true,
+        },
+        teacher: {
+          user: true,
+        },
+      },
+    });
+
+    if (!booking) throw new NotFoundException('Booking not found');
+
+    const mappedStatus =
+      status === 'confirmed' ? BookingStatus.CONFIRMED : BookingStatus.REJECTED;
+
+    booking.status = mappedStatus;
+    await this.bookingRepository.save(booking);
+
+    await this.mailService.sendBookingStatusEmail(
+      booking.student.user.email,
+      status,
+      `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,
+      booking.date,
+    );
+
+    return booking;
   }
 }

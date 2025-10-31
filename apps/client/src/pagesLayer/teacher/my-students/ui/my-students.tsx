@@ -5,9 +5,12 @@ import { LoadingSpinner } from '@/shared/ui/spinner';
 import Image from 'next/image';
 import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
+import { BookingModal } from '@/features/teacher/booking-modal';
+import { useState } from 'react';
 
 export function MyStudentsPage() {
   const { data: bookings, isLoading } = useGetMyBookings();
+  const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
 
   if (isLoading) return <LoadingSpinner />;
   if (!bookings?.length) return <p>No bookings yet.</p>;
@@ -17,6 +20,7 @@ export function MyStudentsPage() {
       {bookings.map((booking) => (
         <div
           key={booking.id}
+          onClick={() => setSelectedBooking(booking)}
           className="border rounded-xl p-4 flex items-center justify-between shadow-sm"
         >
           <div className="flex items-center gap-4">
@@ -62,6 +66,12 @@ export function MyStudentsPage() {
           </div>
         </div>
       ))}
+
+      <BookingModal
+        booking={selectedBooking}
+        open={!!selectedBooking}
+        onClose={() => setSelectedBooking(null)}
+      />
     </div>
   );
 }

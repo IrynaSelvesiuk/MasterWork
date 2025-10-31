@@ -7,10 +7,12 @@ import { BookingController } from './booking.controller';
 import { BookingService } from './booking.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { UserModule } from 'src/user/user.module';
+import { MailModule } from 'src/shared/mail/mail.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Booking]),
+    MailModule,
     forwardRef(() => TeacherModule),
     forwardRef(() => StudentModule),
     forwardRef(() => AuthModule),

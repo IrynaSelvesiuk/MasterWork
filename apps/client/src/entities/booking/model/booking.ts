@@ -31,3 +31,5 @@ export interface Booking {
   student: StudentInfo;
   teacher: TeacherInfo;
 }
+
+export type BookingStatus = 'confirmed' | 'rejected';

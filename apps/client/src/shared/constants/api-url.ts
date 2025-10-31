@@ -20,6 +20,7 @@ export const API_URL = {
 
   BOOKINGS: {
     BASE: '/bookings',
+    BASE_ID: (id: string) => `/bookings/${id}`,
     TEACHER: '/bookings/teacher',
   },
 } as const;
