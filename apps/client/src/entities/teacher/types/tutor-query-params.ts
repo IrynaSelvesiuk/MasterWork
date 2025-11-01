@@ -1,9 +1,9 @@
 export interface TutorQueryParams {
-  page?: number;
-  limit?: number;
+  page: number;
+  limit: number;
   sortBy: 'createdAt' | 'hourlyRate' | 'experience' | 'rating';
   order: 'ASC' | 'DESC';
-  subjectId?: string;
+  subject?: string;
   location?: string;
   search?: string;
 }

@@ -1,6 +1,6 @@
 import { ROUTES } from '@/shared/router/routes';
 import Link from 'next/link';
-import { FaBell, FaUserCircle } from 'react-icons/fa';
+import { FaBell, FaHome, FaUserCircle } from 'react-icons/fa';
 import LogoutButton from './logout-button';
 
 const UserProfileIcon = () => (
@@ -16,6 +16,14 @@ const UserProfileIcon = () => (
 export const UserActions = () => {
   return (
     <nav className="flex items-center space-x-6">
+      <Link
+        href={ROUTES.TUTORS || '/tutors'}
+        className="text-gray-600 hover:text-green-700 transition-colors flex items-center gap-1"
+        title="На головну"
+      >
+        <FaHome size={20} />
+        <span className="hidden sm:inline font-medium">На головну</span>
+      </Link>
       <Link
         href={ROUTES.NOTIFICATIONS || '#'}
         className="text-gray-600 hover:text-green-700 transition-colors p-2 relative"

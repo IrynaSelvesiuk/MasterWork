@@ -59,6 +59,7 @@ export class TeacherController {
 
   @Get()
   async getTeachers(@Query() query: GetTeachersQueryDto) {
+    console.log(query);
     return this.teacherService.findAllSorted(query);
   }
 

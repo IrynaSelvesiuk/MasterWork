@@ -3,6 +3,10 @@ import { User } from '@/entities/user';
 
 export interface TeacherResponse {
   data: TeacherProfile[];
+  limit: string;
+  page: string;
+  total: number;
+  totalPages: number;
 }
 
 export type TeacherProfile = {

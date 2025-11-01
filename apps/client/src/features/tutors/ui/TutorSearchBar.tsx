@@ -1,81 +1,33 @@
 'use client';
 
 import { TutorQueryParams } from '@/entities/teacher/types/tutor-query-params';
+import { FilterDropdown } from '@/widgets/filter-dropdown';
 import React, { useState } from 'react';
-import { FaSearch, FaChevronDown } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 
 type SortBy = TutorQueryParams['sortBy'];
 type Order = TutorQueryParams['order'];
 
-interface FilterDropdownProps<T extends string> {
-  label: string;
-  options: T[];
-  selected: T;
-  onChange: (value: T) => void;
-}
-
-const FilterDropdown = <T extends string>({
-  label,
-  options,
-  selected,
-  onChange,
-}: FilterDropdownProps<T>) => {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="relative w-full">
-      <button
-        onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex justify-between items-center w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-      >
-        <span>
-          {label}: <span className="font-semibold">{selected}</span>
-        </span>
-        <FaChevronDown className="ml-2 h-4 w-4" />
-      </button>
-
-      {open && (
-        <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
-          {options.map((option) => (
-            <button
-              key={option}
-              onClick={() => {
-                onChange(option as T); // cast ensures type safety
-                setOpen(false);
-              }}
-              className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
-                selected === option ? 'font-semibold text-green-600' : ''
-              }`}
-            >
-              {option}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
-
 export const TutorSearchBar = ({
   onFilterChange,
 }: {
-  onFilterChange: (filters: TutorQueryParams) => void;
+  onFilterChange: (filters: Partial<TutorQueryParams>) => void;
 }) => {
-  const [sortBy, setSortBy] = useState<SortBy>('createdAt');
-  const [order, setOrder] = useState<Order>('DESC');
-  const [search, setSearch] = useState<string | undefined>(undefined);
-  const [location, setLocation] = useState<string | undefined>(undefined);
-  const [subjectId, setSubjectId] = useState<string | undefined>(undefined);
+  const [sortBy, setSortBy] = useState<SortBy | undefined>(undefined);
+  const [order, setOrder] = useState<Order | undefined>(undefined);
+  const [subject, setSubject] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
 
   const handleSearch = () => {
     onFilterChange({
-      search,
+      subject: subject || undefined,
       sortBy,
       order,
-      location,
-      subjectId,
+      location: location || undefined,
     });
   };
+
+  const isDisabled = !sortBy && !order && !subject && !location;
 
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
@@ -83,48 +35,64 @@ export const TutorSearchBar = ({
         Знайдіть найкращого онлайн-репетитора 🚀
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        {/* Search input */}
         <div className="relative">
           <input
             type="text"
             placeholder="Я хочу вивчати..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
           />
           <FaSearch className="absolute left-3 top-3 text-gray-400" />
         </div>
 
+        {/* Sort dropdown */}
         <FilterDropdown<SortBy>
           label="Сортувати"
           options={['createdAt', 'hourlyRate', 'experience', 'rating']}
+          placeholder="Виберіть поле"
           selected={sortBy}
-          onChange={(value) => {
-            setSortBy(value);
-            handleSearch();
-          }}
+          onChange={(value) => setSortBy(value)}
         />
 
+        {/* Order dropdown */}
         <FilterDropdown<Order>
           label="Порядок"
           options={['ASC', 'DESC']}
+          placeholder="Виберіть поле"
           selected={order}
-          onChange={(value) => {
-            setOrder(value);
-            handleSearch();
-          }}
+          onChange={(value) => setOrder(value)}
         />
 
+        {/* Location input */}
         <div>
           <input
             type="text"
             placeholder="Країна або місто"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            onBlur={handleSearch}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
           />
+        </div>
+
+        {/* 🔍 Search button */}
+        <div className="flex items-center justify-center">
+          <button
+            disabled={isDisabled}
+            onClick={handleSearch}
+            className={`w-full md:w-auto px-6 py-2 font-semibold rounded-lg shadow-sm flex items-center justify-center gap-2 
+      ${
+        isDisabled
+          ? 'bg-gray-400 cursor-not-allowed'
+          : 'bg-green-600 hover:bg-green-700 text-white'
+      }
+    `}
+          >
+            <FaSearch />
+            Пошук
+          </button>
         </div>
       </div>
     </div>

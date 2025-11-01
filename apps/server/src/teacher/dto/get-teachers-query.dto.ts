@@ -24,7 +24,7 @@ export class GetTeachersQueryDto {
 
   @IsOptional()
   @IsString()
-  subjectId?: string;
+  subject?: string;
 
   @IsOptional()
   @IsString()

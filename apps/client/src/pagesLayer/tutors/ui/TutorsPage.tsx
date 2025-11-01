@@ -10,7 +10,7 @@ export const TutorsPage = () => {
     limit: 10,
     sortBy: 'createdAt',
     order: 'DESC',
-    subjectId: undefined,
+    subject: undefined,
     location: '',
     search: undefined,
   });
@@ -24,7 +24,10 @@ export const TutorsPage = () => {
       />
 
       <div className="flex">
-        <TutorListSection filters={filters} />
+        <TutorListSection
+          onPageChange={(page) => setFilters((prev) => ({ ...prev, page }))}
+          filters={filters}
+        />
       </div>
     </main>
   );

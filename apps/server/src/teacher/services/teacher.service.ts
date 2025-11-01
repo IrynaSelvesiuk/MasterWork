@@ -128,7 +128,7 @@ export class TeacherService {
     limit?: number;
     sortBy?: 'rating' | 'experience' | 'hourlyRate' | 'createdAt';
     order?: 'ASC' | 'DESC';
-    subjectId?: string;
+    subject?: string;
     location?: string;
   }) {
     const {
@@ -136,7 +136,7 @@ export class TeacherService {
       limit = 10,
       sortBy = 'createdAt',
       order = 'DESC',
-      subjectId,
+      subject,
       location,
     } = options;
 
@@ -150,8 +150,8 @@ export class TeacherService {
       .take(limit);
 
     // Filtering
-    if (subjectId) {
-      qb.andWhere('subject.id = :subjectId', { subjectId });
+    if (subject) {
+      qb.andWhere('subject.name ILIKE :subject', { subject: `%${subject}%` });
     }
 
     if (location) {
