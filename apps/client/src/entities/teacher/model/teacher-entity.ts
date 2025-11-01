@@ -55,3 +55,28 @@ export type Review = {
   rating: number;
   comment: string;
 };
+
+export interface TeacherDashboardResponse {
+  teacher: {
+    id: string;
+    name: string;
+    headline: string;
+    avatarUrl: string;
+  };
+  stats: {
+    totalBookings: number;
+    confirmed: number;
+    pending: number;
+    upcomingLessons: number;
+    pastLessons: number;
+  };
+  recentBookings: {
+    id: string;
+    date: string;
+    status: 'pending' | 'confirmed' | 'rejected' | 'cancelled';
+    student: {
+      id: string;
+      name: string;
+    };
+  }[];
+}

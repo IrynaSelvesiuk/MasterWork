@@ -6,9 +6,10 @@ import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { useEffect } from 'react';
 import { teacherService } from '@/entities/teacher/services/teacher-service';
+import { Booking } from '@/entities/booking';
 
 interface BookingModalProps {
-  booking: any;
+  booking: Booking;
   open: boolean;
   onClose: () => void;
 }
@@ -58,7 +59,7 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
         <div className="space-y-2 text-gray-700">
           <p>
             <span className="font-semibold">Студент:</span>{' '}
-            {booking.student.firstName} {booking.student.lastName}
+            {booking.student.user.firstName} {booking.student.user.lastName}
           </p>
           <p>
             <span className="font-semibold">Дата:</span>{' '}

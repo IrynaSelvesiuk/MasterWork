@@ -7,10 +7,11 @@ import { format } from 'date-fns';
 import { uk } from 'date-fns/locale';
 import { BookingModal } from '@/features/teacher/booking-modal';
 import { useState } from 'react';
+import { Booking } from '@/entities/booking';
 
 export function MyStudentsPage() {
   const { data: bookings, isLoading } = useGetMyBookings();
-  const [selectedBooking, setSelectedBooking] = useState<any | null>(null);
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
 
   if (isLoading) return <LoadingSpinner />;
   if (!bookings?.length) return <p>No bookings yet.</p>;
@@ -66,12 +67,13 @@ export function MyStudentsPage() {
           </div>
         </div>
       ))}
-
-      <BookingModal
-        booking={selectedBooking}
-        open={!!selectedBooking}
-        onClose={() => setSelectedBooking(null)}
-      />
+      {selectedBooking && (
+        <BookingModal
+          booking={selectedBooking}
+          open={!!selectedBooking}
+          onClose={() => setSelectedBooking(null)}
+        />
+      )}
     </div>
   );
 }

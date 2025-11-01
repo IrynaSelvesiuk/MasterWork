@@ -3,9 +3,9 @@
 import { FaHeart, FaGlobe, FaMapMarkedAlt } from 'react-icons/fa';
 import { TutorBadge } from './TutorBadge';
 import { TutorActions } from './TutorActions';
-import { TutorStats } from './TutorStats';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface Props {
   teacher: TeacherProfile;
@@ -22,9 +22,11 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
       <div className="flex-shrink-0 flex flex-col items-center w-36">
         <div className="w-28 h-28 mb-3">
           <Link href={`/teacher-profile/${teacher.id}`}>
-            <img
+            <Image
               src={teacher.avatarUrl || '/placeholder-avatar.png'}
               alt={displayName}
+              width={64}
+              height={64}
               className="w-full h-full object-cover rounded-full border-4 border-green-500"
             />
           </Link>
@@ -58,11 +60,6 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
           <p className="text-gray-700 mt-2 line-clamp-3 ml-4">
             {teacher.bio || teacher.headline || 'Немає опису'}
           </p>
-
-          {/* <TutorStats
-            lessonsCount={teacher.experience || 0}
-            studentsCount={teacher.reviewsCount}
-          /> */}
         </div>
 
         <div className="mt-3">

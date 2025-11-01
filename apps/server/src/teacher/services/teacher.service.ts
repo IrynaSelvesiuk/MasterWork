@@ -8,6 +8,8 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { Education } from '../entities/education.entity';
 import { Experience } from '../entities/experience.entity';
 import { UpdateTeacherProfileDto } from '../dto/update-teacher-profile.dto';
+import { BookingService } from 'src/bookings/booking.service';
+import { BookingStatus } from 'src/bookings/booking.entity';
 
 @Injectable()
 export class TeacherService {
@@ -19,6 +21,7 @@ export class TeacherService {
     @InjectRepository(Experience)
     private readonly experienceRepository: Repository<Experience>,
     private readonly subjectService: SubjectService,
+    private readonly bookingService: BookingService,
   ) {}
 
   async createTeacher(
@@ -189,6 +192,50 @@ export class TeacherService {
       page,
       limit,
       totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async getDashboard(id: string) {
+    const teacher = await this.findProfileByUserId(id);
+
+    if (!teacher) throw new NotFoundException('Teacher not found');
+
+    const bookings = await this.bookingService.getBookingsForTeacher(id);
+
+    const confirmed = bookings.filter(
+      (b) => b.status === BookingStatus.CONFIRMED,
+    );
+    const pending = bookings.filter((b) => b.status === BookingStatus.PENDING);
+
+    const upcoming = confirmed.filter((b) => new Date(b.date) > new Date());
+    const past = confirmed.filter((b) => new Date(b.date) <= new Date());
+
+    return {
+      teacher: {
+        id: teacher.id,
+        name: teacher.user?.firstName + ' ' + teacher.user?.lastName,
+        headline: teacher.headline,
+        avatarUrl: teacher.avatarUrl,
+      },
+      stats: {
+        totalBookings: bookings.length,
+        confirmed: confirmed.length,
+        pending: pending.length,
+        upcomingLessons: upcoming.length,
+        pastLessons: past.length,
+      },
+      recentBookings: bookings
+        .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+        .slice(0, 5)
+        .map((b) => ({
+          id: b.id,
+          date: b.date,
+          status: b.status,
+          student: {
+            id: b.student.id,
+            name: `${b.student.user?.firstName} ${b.student.user?.lastName}`,
+          },
+        })),
     };
   }
 }

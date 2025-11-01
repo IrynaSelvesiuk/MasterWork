@@ -1,7 +1,6 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import {
-  FaPlayCircle,
   FaStar,
   FaCheckCircle,
   FaLanguage,
@@ -16,6 +15,7 @@ import {
 import { ProfileSection } from '@/features/teacher/public-profile/ui/profile-section';
 import { ReviewCard } from '@/features/teacher/public-profile/ui/review-card';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
+import Image from 'next/image';
 
 async function getTeacherProfile(id: string): Promise<TeacherProfile> {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
@@ -36,7 +36,6 @@ interface Props {
 }
 
 export async function TeacherPublicProfilePage({ params }: Props) {
-  console.log(params);
   const rawTeacher = await getTeacherProfile(params.id);
 
   const teacher = {
@@ -58,18 +57,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           <aside className="lg:col-span-1">
             <div className="sticky top-8 space-y-6">
-              {/* Відео/Фото */}
-              <div className="aspect-video w-full overflow-hidden rounded-xl bg-gray-200 shadow-lg">
-                <div className="flex h-full w-full items-center justify-center">
-                  <img
-                    src={teacher.avatarUrl || 'https://placehold.co/400x400'}
-                    alt={teacher.name}
-                    className="h-full w-full object-cover"
-                  />
-                  <FaPlayCircle className="absolute h-16 w-16 text-white opacity-70" />
-                </div>
-              </div>
-
               {/* Картка з ціною та бронюванням */}
               <div className="rounded-xl border bg-white p-6 shadow-lg">
                 <div className="flex items-baseline justify-between">
@@ -78,7 +65,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   </span>
                   <span className="text-gray-500">/ година</span>
                 </div>
-                {/* ❗️ В майбутньому цей блок треба буде винести в 'use client' компонент для інтерактивності */}
                 <button className="mt-6 w-full rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                   Забронювати пробний урок
                 </button>
@@ -131,10 +117,12 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                     {teacher.headline}
                   </p>
                 </div>
-                <img
+                <Image
                   src={teacher.avatarUrl || 'https://placehold.co/400x400'}
                   alt={teacher.name}
-                  className="mb-4 h-24 w-24 rounded-full border-4 border-white shadow-md sm:mb-0"
+                  height={96}
+                  width={96}
+                  className="mb-4 rounded-full border-4 border-white shadow-md sm:mb-0"
                 />
               </div>
 

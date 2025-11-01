@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  forwardRef,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking, BookingStatus } from './booking.entity';
 import { Repository } from 'typeorm';
@@ -12,6 +17,7 @@ export class BookingService {
   constructor(
     @InjectRepository(Booking)
     private readonly bookingRepository: Repository<Booking>,
+    @Inject(forwardRef(() => TeacherService))
     private readonly teacherService: TeacherService,
     private readonly studentService: StudentService,
     private readonly mailService: MailService,
@@ -38,7 +44,7 @@ export class BookingService {
 
     return this.bookingRepository.find({
       where: { teacher: { id: teacher.id } },
-      relations: { student: true },
+      relations: { student: { user: true } },
       order: { date: 'ASC' },
     });
   }

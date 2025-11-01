@@ -61,4 +61,12 @@ export class TeacherController {
   async getTeachers(@Query() query: GetTeachersQueryDto) {
     return this.teacherService.findAllSorted(query);
   }
+
+  @Get('dashboard')
+  @UseGuards(JwtAuthGuard)
+  async getDashboard(@Req() req: RequestWithUser) {
+    const userId = req.user?.id;
+
+    return this.teacherService.getDashboard(userId);
+  }
 }

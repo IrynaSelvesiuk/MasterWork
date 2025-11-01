@@ -3,7 +3,6 @@
 import { useBookLesson } from '@/entities/student/hooks/mutations/useBookLesson';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
 
 interface TutorActionsProps {
   pricePer60Min: number;

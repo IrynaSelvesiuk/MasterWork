@@ -1,5 +1,7 @@
+import { TeacherCalendarPage } from '@/pagesLayer/teacher/calendar';
+
 const page = () => {
-  return <div>123</div>;
+  return <TeacherCalendarPage />;
 };
 
 export default page;

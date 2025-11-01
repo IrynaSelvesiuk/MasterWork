@@ -12,13 +12,13 @@ import { MailModule } from 'src/shared/mail/mail.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Booking]),
-    MailModule,
     forwardRef(() => TeacherModule),
     forwardRef(() => StudentModule),
     forwardRef(() => AuthModule),
     forwardRef(() => UserModule),
+    forwardRef(() => MailModule),
   ],
-  exports: [],
+  exports: [BookingService],
   controllers: [BookingController],
   providers: [BookingService],
 })

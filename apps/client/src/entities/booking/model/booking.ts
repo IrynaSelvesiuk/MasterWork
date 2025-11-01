@@ -1,3 +1,5 @@
+import { User } from '@/entities/user';
+
 export interface StudentInfo {
   id: string;
   avatarUrl: string | null;
@@ -6,6 +8,7 @@ export interface StudentInfo {
   languages: string[];
   learningGoals: string;
   walletBalance: number;
+  user: User;
 }
 
 export interface TeacherInfo {

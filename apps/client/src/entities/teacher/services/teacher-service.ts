@@ -1,5 +1,9 @@
 import { axiosClient } from '@/shared/config/axios-config';
-import { TeacherProfile, TeacherResponse } from '../model/teacher-entity';
+import {
+  TeacherDashboardResponse,
+  TeacherProfile,
+  TeacherResponse,
+} from '../model/teacher-entity';
 import { API_URL } from '@/shared/constants/api-url';
 import { TeacherProfileFormSchema } from '../schemas/teacher-profile-form-schema';
 import { TutorQueryParams } from '../types/tutor-query-params';
@@ -42,6 +46,14 @@ class TeacherService {
     const response = await axiosClient.patch(
       API_URL.BOOKINGS.BASE_ID(id),
       status
+    );
+
+    return response.data;
+  }
+
+  async getDashboard() {
+    const response = await axiosClient.get<TeacherDashboardResponse>(
+      API_URL.TEACHER.DASHBOARD
     );
 
     return response.data;

@@ -8,8 +8,7 @@ import { useMemo } from 'react';
 
 export function TeacherSidebar() {
   const pathname = usePathname();
-  const { data: teacher, isLoading } = useGetMyProfile();
-  console.log(teacher);
+  const { data: teacher } = useGetMyProfile();
   const links = useMemo(() => {
     const teacherId = teacher?.id;
 

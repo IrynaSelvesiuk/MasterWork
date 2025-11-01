@@ -33,7 +33,7 @@ export const TeacherActions = () => (
     <TeacherProfileIcon />
 
     <Link
-      href={ROUTES.TEACHER_SCHEDULE || '#'}
+      href={ROUTES.TEACHER.CALENDAR || '#'}
       className="text-gray-600 hover:text-green-700 transition-colors p-2"
       title="Мій розклад"
     >
@@ -41,7 +41,7 @@ export const TeacherActions = () => (
     </Link>
 
     <Link
-      href={ROUTES.TEACHER_STUDENTS || '#'}
+      href={ROUTES.TEACHER.MY_STUDENTS || '#'}
       className="text-gray-600 hover:text-green-700 transition-colors p-2"
       title="Мої студенти"
     >
