@@ -23,6 +23,7 @@ export const RegisterForm = () => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors, isSubmitting },
     reset,
   } = useForm<RegisterFormData>({
@@ -43,37 +44,37 @@ export const RegisterForm = () => {
   const { user, setUser } = useAuthStore();
 
   const onSubmit = (data: RegisterFormData) => {
-    mutate(
-      { ...data, avatarUrl: avatarUrl || '' },
-      {
-        onSuccess: (responseData) => {
-          reset();
-          setUser({
-            id: responseData.userDto.id,
-            firstName: responseData.userDto.firstName,
-            lastName: responseData.userDto.lastName,
-            email: responseData.userDto.email,
-            createdAt: responseData.userDto.createdAt,
-            role: responseData.userDto.role,
-            image: null,
-          });
+    console.log(data);
+    mutate(data, {
+      onSuccess: (responseData) => {
+        reset();
+        setUser({
+          id: responseData.userDto.id,
+          firstName: responseData.userDto.firstName,
+          lastName: responseData.userDto.lastName,
+          email: responseData.userDto.email,
+          createdAt: responseData.userDto.createdAt,
+          role: responseData.userDto.role,
+          image: null,
+        });
 
-          toast.success(`Привіт ${user?.firstName}!`);
-          router.push(ROUTES.TUTORS);
-        },
-        onError: () => {
-          toast.error(
-            error?.message || 'Something went wrong while registering'
-          );
-        },
-      }
-    );
+        toast.success(`Привіт ${user?.firstName}!`);
+        router.push(ROUTES.TUTORS);
+      },
+      onError: () => {
+        toast.error(error?.message || 'Something went wrong while registering');
+      },
+    });
   };
-  console.log(avatarUrl);
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div className="md:col-span-2 flex flex-col items-center gap-3">
-        <ImagePicker onUpload={(url) => setAvatarUrl(url)} />
+        <ImagePicker
+          onUpload={(url) => {
+            setAvatarUrl(url);
+            setValue('avatarUrl', url);
+          }}
+        />
         {avatarUrl && (
           <p className="text-sm text-green-600">Фото завантажено ✅</p>
         )}
@@ -194,7 +195,6 @@ export const RegisterForm = () => {
         )}
       </div>
 
-      {/* 5. 👇 Додайте поле Choose Languages */}
       <ChooseLanguagesInput<RegisterFormData>
         label="Мови, якими ви володієте"
         name="languages"

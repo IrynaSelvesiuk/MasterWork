@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export const ImagePicker = ({
   onUpload,
@@ -22,18 +23,24 @@ export const ImagePicker = ({
     const formData = new FormData();
     formData.append('file', file);
 
-    const res = await fetch('/api/upload', {
-      method: 'POST',
-      body: formData,
-    });
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
 
-    if (!res.ok) throw new Error('Upload failed');
+      if (!res.ok) throw new Error('Upload failed');
 
-    const data = await res.json();
-    setUploading(false);
+      const data = await res.json();
+      setUploading(false);
 
-    if (data.url) {
-      onUpload(data.url);
+      if (data.url) {
+        onUpload(data.url);
+      }
+    } catch (err) {
+      console.error('Upload failed:', err);
+      setUploading(false);
+      toast.error('Не вдалося завантажити фото. Спробуйте ще раз.');
     }
   };
 
@@ -49,7 +56,12 @@ export const ImagePicker = ({
 
       <label className="cursor-pointer px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition">
         {uploading ? 'Завантаження...' : 'Вибрати фото'}
-        <input type="file" className="hidden" onChange={handleFileChange} />
+        <input
+          type="file"
+          className="hidden"
+          onChange={handleFileChange}
+          disabled={uploading}
+        />
       </label>
     </div>
   );

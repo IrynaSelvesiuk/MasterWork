@@ -16,7 +16,7 @@ export class CreateTeacherDto extends CreateUserDto {
 
   @IsOptional()
   @IsString()
-  avatarUrl: string;
+  avatarUrl?: string;
 
   @IsOptional()
   @IsArray()

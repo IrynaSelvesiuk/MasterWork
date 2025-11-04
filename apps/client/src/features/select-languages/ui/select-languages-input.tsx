@@ -74,11 +74,11 @@ export const ChooseLanguagesInput = <T extends FieldValues>({
         }}
         render={({ field }) => {
           const selectedValue = options.filter((option) =>
-            field.value?.includes(option.value)
+            field.value?.includes(option.label)
           );
 
           const handleChange = (selectedOptions: readonly LanguageOption[]) => {
-            field.onChange(selectedOptions.map((option) => option.value));
+            field.onChange(selectedOptions.map((option) => option.label));
           };
 
           return (

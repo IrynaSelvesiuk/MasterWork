@@ -1,12 +1,17 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 
 export class CreateStudentDto extends CreateUserDto {
   @IsString()
   @IsOptional()
-  avatarUrl: string;
+  avatarUrl?: string;
 
   @IsString()
   @IsOptional()
   learningGoals?: string;
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  languages?: string[];
 }

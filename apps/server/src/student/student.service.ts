@@ -45,8 +45,9 @@ export class StudentService {
   async createStudent(data: CreateStudentDto, user: User) {
     const newStudent = this.studentRepository.create({
       learningGoals: data?.learningGoals || '',
+      avatarUrl: data.avatarUrl || '',
       walletBalance: 0,
-      languages: [],
+      languages: data.languages || [],
       user,
     });
 
