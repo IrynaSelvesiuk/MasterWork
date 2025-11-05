@@ -26,28 +26,28 @@ export function DashboardPage() {
   return (
     <div className="space-y-8">
       <h1 className="text-4xl font-bold text-gray-900">
-        Вітаємо, {teacher.name ?? 'Вчителю'}!
+        Вітаємо, {teacher?.name ?? 'Вчителю'}!
       </h1>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           title="Всього студентів"
-          value={stats.totalBookings}
+          value={stats?.totalBookings}
           icon={FaUsers}
         />
         <StatCard
           title="Найближчі уроки"
-          value={stats.upcomingLessons}
+          value={stats?.upcomingLessons}
           icon={FaCalendarAlt}
         />
         <StatCard
           title="Підтверджені уроки"
-          value={stats.confirmed}
+          value={stats?.confirmed}
           icon={FaBookOpen}
         />
         <StatCard
           title="Минулі уроки"
-          value={stats.pastLessons}
+          value={stats?.pastLessons}
           icon={FaDollarSign}
         />
       </div>
@@ -60,7 +60,7 @@ export function DashboardPage() {
           </h2>
           <div className="mt-4 flow-root">
             <ul role="list" className="divide-y divide-gray-200">
-              {recentBookings.map((lesson) => (
+              {recentBookings?.map((lesson) => (
                 <li key={lesson.id} className="flex py-4">
                   <div className="flex-1">
                     <p className="font-medium text-gray-900">

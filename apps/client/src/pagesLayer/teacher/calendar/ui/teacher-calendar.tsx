@@ -84,12 +84,14 @@ export function TeacherCalendarPage() {
   const { data: bookings = [], isLoading } = useGetMyBookings();
   const [selectedView, setSelectedView] = useState<View>('month');
 
-  const events = bookings.map((b) => ({
-    title: `${b.student.user.firstName} ${b.student.user.lastName}`,
-    start: new Date(b.date),
-    end: new Date(new Date(b.date).getTime() + 60 * 60 * 1000),
-    status: b.status,
-  }));
+  const events = Array.isArray(bookings)
+    ? bookings.map((b) => ({
+        title: `${b.student.user.firstName} ${b.student.user.lastName}`,
+        start: new Date(b.date),
+        end: new Date(new Date(b.date).getTime() + 60 * 60 * 1000),
+        status: b.status,
+      }))
+    : [];
 
   if (isLoading) return <p>Завантаження...</p>;
 

@@ -22,7 +22,7 @@ const TeacherProfileIcon = () => (
 export const TeacherActions = () => (
   <nav className="flex items-center space-x-6">
     <Link
-      href={ROUTES.NOTIFICATIONS || '#'}
+      href={ROUTES.TEACHER.NOTIFICATIONS || '#'}
       className="text-gray-600 hover:text-green-700 transition-colors p-2 relative"
       title="Сповіщення"
     >
