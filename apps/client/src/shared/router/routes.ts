@@ -20,9 +20,9 @@ export const ROUTES = {
     ME: '/teacher-me',
     MY_STUDENTS: '/my-students',
     NOTIFICATIONS: '/teacher-notifications',
+    CLASSES: '/classes',
   },
 
-  TEACHER_CLASSES: '/teacher/classes',
   TEACHER_STUDENTS: '/teacher/students',
   TEACHER_SCHEDULE: '/teacher/schedule',
 

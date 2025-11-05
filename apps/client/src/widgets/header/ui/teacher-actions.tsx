@@ -49,7 +49,7 @@ export const TeacherActions = () => (
     </Link>
 
     <Link
-      href={ROUTES.TEACHER_CLASSES || '#'}
+      href={ROUTES.TEACHER.CLASSES || '#'}
       className="text-gray-600 hover:text-green-700 transition-colors p-2"
       title="Мої уроки"
     >
