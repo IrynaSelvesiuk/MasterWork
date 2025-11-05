@@ -52,9 +52,6 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
         <div>
           <div className="flex justify-between items-start mb-2 relative w-full">
             <TutorBadge isNew={isNew} />
-            <button className="text-gray-400 hover:text-red-500 transition absolute right-0">
-              <FaHeart className="w-6 h-6" />
-            </button>
           </div>
 
           <p className="text-gray-700 mt-2 line-clamp-3 ml-4">

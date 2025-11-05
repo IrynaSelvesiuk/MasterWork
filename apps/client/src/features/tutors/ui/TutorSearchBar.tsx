@@ -5,6 +5,18 @@ import { FilterDropdown } from '@/widgets/filter-dropdown';
 import React, { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
+const sortOptions = [
+  { label: 'Дата створення', value: 'createdAt' },
+  { label: 'Погодинна ставка', value: 'hourlyRate' },
+  { label: 'Досвід', value: 'experience' },
+  { label: 'Рейтинг', value: 'rating' },
+] as const;
+
+const sortOptionsAsc = [
+  { label: 'Зростання', value: 'ASC' },
+  { label: 'Спадання', value: 'DESC' },
+] as const;
+
 type SortBy = TutorQueryParams['sortBy'];
 type Order = TutorQueryParams['order'];
 
@@ -51,7 +63,7 @@ export const TutorSearchBar = ({
         {/* Sort dropdown */}
         <FilterDropdown<SortBy>
           label="Сортувати"
-          options={['createdAt', 'hourlyRate', 'experience', 'rating']}
+          options={sortOptions}
           placeholder="Виберіть поле"
           selected={sortBy}
           onChange={(value) => setSortBy(value)}
@@ -60,7 +72,7 @@ export const TutorSearchBar = ({
         {/* Order dropdown */}
         <FilterDropdown<Order>
           label="Порядок"
-          options={['ASC', 'DESC']}
+          options={sortOptionsAsc}
           placeholder="Виберіть поле"
           selected={order}
           onChange={(value) => setOrder(value)}

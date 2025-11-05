@@ -3,9 +3,14 @@
 import { useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 
+interface Option<T extends string> {
+  label: string;
+  value: T;
+}
+
 interface FilterDropdownProps<T extends string> {
   label: string;
-  options: T[];
+  options: readonly Option<T>[];
   selected: T | undefined;
   placeholder: string;
   onChange: (value: T) => void;
@@ -19,6 +24,9 @@ export const FilterDropdown = <T extends string>({
 }: FilterDropdownProps<T>) => {
   const [open, setOpen] = useState(false);
 
+  const selectedLabel =
+    options.find((opt) => opt.value === selected)?.label || 'Не вибрано';
+
   return (
     <div className="relative w-full">
       <button
@@ -26,7 +34,7 @@ export const FilterDropdown = <T extends string>({
         className="inline-flex justify-between items-center w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
       >
         <span>
-          {label}: <span className="font-semibold">{selected}</span>
+          {label}: <span className="font-semibold">{selectedLabel}</span>
         </span>
         <FaChevronRight className="ml-2 h-4 w-4" />
       </button>
@@ -35,16 +43,16 @@ export const FilterDropdown = <T extends string>({
         <div className="absolute z-10 mt-2 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
           {options.map((option) => (
             <button
-              key={option}
+              key={option.value}
               onClick={() => {
-                onChange(option as T);
+                onChange(option.value);
                 setOpen(false);
               }}
               className={`block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 ${
-                selected === option ? 'font-semibold text-green-600' : ''
+                selected === option.value ? 'font-semibold text-green-600' : ''
               }`}
             >
-              {option}
+              {option.label}
             </button>
           ))}
         </div>

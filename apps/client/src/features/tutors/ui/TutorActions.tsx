@@ -43,7 +43,11 @@ export const TutorActions = ({
       <div className="text-right mr-6">
         <div className="text-sm text-gray-500">1 год/заняття</div>
         <div className="text-3xl font-extrabold text-green-600">
-          {pricePer60Min.toLocaleString('uk-UA')} ₴
+          {pricePer60Min.toLocaleString('uk-UA', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })}{' '}
+          ₴
         </div>
       </div>
 
