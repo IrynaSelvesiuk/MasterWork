@@ -16,6 +16,8 @@ import { ProfileSection } from '@/features/teacher/public-profile/ui/profile-sec
 import { ReviewCard } from '@/features/teacher/public-profile/ui/review-card';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import Image from 'next/image';
+import { ReviewForm } from '@/widgets/review-form';
+import { ReviewSection } from '@/features/review-section/ui/review-section';
 
 async function getTeacherProfile(id: string): Promise<TeacherProfile> {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
@@ -50,7 +52,7 @@ export async function TeacherPublicProfilePage({ params }: Props) {
 
     hourlyRate: Number(rawTeacher.hourlyRate) || 0,
   };
-
+  console.log(teacher);
   return (
     <div className="bg-gray-50">
       <div className="container mx-auto max-w-7xl px-4 lg:px-8">
@@ -59,9 +61,9 @@ export async function TeacherPublicProfilePage({ params }: Props) {
             <div className="sticky top-8 space-y-6">
               {/* Картка з ціною та бронюванням */}
               <div className="rounded-xl border bg-white p-6 shadow-lg">
-                <div className="flex items-baseline justify-between">
+                <div className="flex items-baseline">
                   <span className="text-3xl font-bold text-gray-900">
-                    ${teacher.hourlyRate}
+                    {Math.round(teacher.hourlyRate)} ₴
                   </span>
                   <span className="text-gray-500">/ година</span>
                 </div>
@@ -73,7 +75,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                 </button>
               </div>
 
-              {/* Мови та Розташування */}
               <div className="rounded-xl border bg-white p-6 shadow-lg">
                 <h3 className="flex items-center text-lg font-semibold">
                   <FaLanguage className="mr-2 h-5 w-5 text-gray-500" />
@@ -127,16 +128,21 @@ export async function TeacherPublicProfilePage({ params }: Props) {
               </div>
 
               {/* Рейтинг */}
-              <div className="mt-5 flex items-center gap-4 border-t pt-5">
-                <div className="flex items-center gap-1">
-                  <FaStar className="h-6 w-6 text-yellow-400" />
-                  <span className="text-xl font-bold text-gray-800">
-                    {teacher.rating}
+              <div className="mt-5 border-t pt-5">
+                {/* Rating summary */}
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="flex items-center gap-1">
+                    <FaStar className="h-6 w-6 text-yellow-400" />
+                    <span className="text-xl font-bold text-gray-800">
+                      {teacher?.rating ? teacher.rating.toFixed(1) : '—'}
+                    </span>
+                  </div>
+                  <span className="text-lg text-gray-600">
+                    ({teacher?.reviewsCount ?? 0} відгуків)
                   </span>
                 </div>
-                <span className="text-lg text-gray-600">
-                  ({teacher.reviewsCount} відгуків)
-                </span>
+
+                <ReviewSection teacherId={teacher.id} />
               </div>
 
               {/* Секція "Про мене" */}

@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { User } from 'src/user/user.entity';
+import { Student } from 'src/student/student.entity';
 
 @Entity('review')
 export class Review {
@@ -26,9 +26,9 @@ export class Review {
   @JoinColumn({ name: 'teacher_id' })
   teacher: Teacher;
 
-  @ManyToOne(() => User, { onDelete: 'SET NULL' })
+  @ManyToOne(() => Student, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'student_id' })
-  student: User;
+  student: Student;
 
   @CreateDateColumn()
   createdAt: Date;

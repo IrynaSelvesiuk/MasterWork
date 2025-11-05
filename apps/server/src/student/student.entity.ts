@@ -1,4 +1,5 @@
 import { Booking } from 'src/bookings/booking.entity';
+import { Review } from 'src/teacher/entities/review.entity';
 import { User } from 'src/user/user.entity';
 import {
   Column,
@@ -43,4 +44,7 @@ export class Student {
 
   @OneToMany(() => Booking, (booking) => booking.student)
   bookings: Booking[];
+
+  @OneToMany(() => Review, (review) => review.student)
+  reviews: Review[];
 }
