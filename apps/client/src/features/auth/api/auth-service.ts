@@ -31,6 +31,18 @@ class AuthService {
     await axiosClient.post(API_URL.AUTH_LOGOUT);
   }
 
+  async changePassword(
+    currentPassword: string,
+    newPassword: string
+  ): Promise<{ success: boolean; message: string }> {
+    const response = await axiosClient.patch(API_URL.AUTH_CHANGE_PASSWORD, {
+      currentPassword,
+      newPassword,
+    });
+
+    return response.data;
+  }
+
   async getMe() {}
 }
 

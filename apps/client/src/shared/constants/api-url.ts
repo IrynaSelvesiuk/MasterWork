@@ -4,6 +4,7 @@ export const API_URL = {
   AUTH_LOGIN: '/auth/login',
   AUTH_LOGOUT: '/auth/logout',
   AUTH_ME: '/auth/me',
+  AUTH_CHANGE_PASSWORD: '/auth/change-password',
 
   SUBJECT: {
     ALL: '/subjects',

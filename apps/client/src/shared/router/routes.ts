@@ -27,4 +27,9 @@ export const ROUTES = {
 
   TUTORS: '/tutors',
   TUTOR_ONBOARDING: '/tutor/onboarding',
+
+  STUDENT: {
+    PAYMENTS_HISTORY: '/payments-history',
+    ADD_MONEY: '/add-money',
+  },
 } as const;

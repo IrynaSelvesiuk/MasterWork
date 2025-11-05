@@ -5,6 +5,9 @@ import {
   Res,
   HttpCode,
   HttpStatus,
+  UseGuards,
+  Patch,
+  Req,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { AuthService } from '../services/auth.service';
@@ -18,10 +21,16 @@ import { LoginUserDto } from 'src/user/dto/login-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { UserResponseDto } from 'src/user/dto/user-response.dto';
 import { CreateTeacherDto } from 'src/teacher/dto/create-teacher.dto';
+import { JwtAuthGuard } from '../jwt-auth-guard';
+import { RequestWithUser } from 'src/shared/types/request-with-user';
+import { UserService } from 'src/user/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService,
+  ) {}
 
   @Post('register')
   async register(@Body() data: CreateTeacherDto, @Res() res: Response) {
@@ -81,5 +90,20 @@ export class AuthController {
     res.clearCookie(TokenName.ACCESS);
     res.clearCookie(TokenName.REFRESH);
     return res.send({ message: 'Logged out successfully' });
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Patch('change-password')
+  async changePassword(
+    @Req() req: RequestWithUser,
+    @Body() body: { currentPassword: string; newPassword: string },
+  ) {
+    const userId = req.user.id;
+
+    return this.userService.updatePassword(
+      userId,
+      body.currentPassword,
+      body.newPassword,
+    );
   }
 }

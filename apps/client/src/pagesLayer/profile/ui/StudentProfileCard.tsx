@@ -1,4 +1,5 @@
 import { StudentResponse } from '@/entities/student/model/student';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FaUserEdit, FaGlobe } from 'react-icons/fa';
 
@@ -8,9 +9,11 @@ interface Props {
 
 export const StudentProfileCard = ({ student }: Props) => (
   <div className="bg-white p-6 rounded-xl shadow-lg text-center border-t-4 border-green-500">
-    <img
-      src={student.avatarUrl}
+    <Image
+      src={student.avatarUrl || ''}
       alt={student.user.firstName}
+      width={96}
+      height={96}
       className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-gray-100"
     />
     <h2 className="text-2xl font-bold text-gray-800">

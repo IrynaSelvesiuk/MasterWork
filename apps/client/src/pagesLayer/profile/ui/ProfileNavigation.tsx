@@ -1,11 +1,10 @@
 import {
   FaRegCreditCard,
-  FaEnvelope,
   FaSignOutAlt,
   FaChalkboardTeacher,
 } from 'react-icons/fa';
 import { ROUTES } from '@/shared/router/routes';
-import { NavItem } from './NavItem'; // Import the isolated NavItem
+import { NavItem } from './NavItem';
 
 const handleLogout = () => {
   console.log('User logged out!');
@@ -22,11 +21,6 @@ export const ProfileNavigation = () => (
       icon={FaRegCreditCard}
       label="Гаманець / Оплата"
       href={ROUTES.WALLET || '#'}
-    />
-    <NavItem
-      icon={FaEnvelope}
-      label="Повідомлення"
-      href={ROUTES.MESSAGES || '#'}
     />
     <NavItem
       icon={FaSignOutAlt}

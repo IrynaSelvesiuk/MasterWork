@@ -1,3 +1,5 @@
+import { ROUTES } from '@/shared/router/routes';
+import Link from 'next/link';
 import { FaRegCreditCard } from 'react-icons/fa';
 
 interface WalletSummaryProps {
@@ -15,14 +17,20 @@ export const WalletSummary = ({ walletBalance }: WalletSummaryProps) => (
     </div>
     <p className="text-sm text-gray-500 mt-1">Доступно для оплати уроків</p>
 
-    <div className="mt-4 flex space-x-3">
-      <button className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition text-sm">
+    <div className="flex gap-3 mt-2">
+      <Link
+        href={ROUTES.STUDENT.ADD_MONEY}
+        className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition text-sm text-center"
+      >
         Поповнити
-      </button>
+      </Link>
 
-      <button className="border border-green-500 text-green-700 py-2 px-4 rounded-lg hover:bg-green-50 transition text-sm">
+      <Link
+        href={ROUTES.STUDENT.PAYMENTS_HISTORY}
+        className="border border-green-500 text-green-700 py-2 px-4 rounded-lg hover:bg-green-50 transition text-sm text-center"
+      >
         Історія платежів
-      </button>
+      </Link>
     </div>
   </div>
 );

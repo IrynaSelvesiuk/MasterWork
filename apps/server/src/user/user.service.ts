@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
@@ -108,5 +109,29 @@ export class UserService {
       console.error(error);
       return { success: false, message: 'User was not deleted' };
     }
+  }
+
+  async updatePassword(
+    userId: string,
+    currentPassword: string,
+    newPassword: string,
+  ) {
+    const user = await this.userRepository.findOneBy({ id: userId });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const isMatch = await this.hashService.compare(
+      currentPassword,
+      user.password,
+    );
+    if (!isMatch) {
+      throw new BadRequestException('Passwords do not match');
+    }
+
+    user.password = await this.hashService.hash(newPassword);
+    await this.userRepository.save(user);
+
+    return { success: true, message: 'Password updated successfully' };
   }
 }
