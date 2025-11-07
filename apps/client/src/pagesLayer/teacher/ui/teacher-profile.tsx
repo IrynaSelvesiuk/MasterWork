@@ -70,9 +70,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                 <button className="mt-6 w-full rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                   Забронювати пробний урок
                 </button>
-                <button className="mt-3 w-full rounded-full border border-green-600 px-6 py-3 text-lg font-semibold text-green-600 transition hover:bg-green-50">
-                  Написати повідомлення
-                </button>
               </div>
 
               <div className="rounded-xl border bg-white p-6 shadow-lg">
@@ -119,7 +116,7 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   </p>
                 </div>
                 <Image
-                  src={teacher.avatarUrl || 'https://placehold.co/400x400'}
+                  src={teacher.avatarUrl || '/default-avatar.png'}
                   alt={teacher.name}
                   height={96}
                   width={96}

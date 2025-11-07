@@ -18,11 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`antialiased`}>
+      <body className={`antialiased flex flex-col min-h-screen bg-gray-50`}>
         <QueryProvider>
           <StoreHydrator />
           <Header />
-          {children}
+          <main className="flex-grow">{children}</main>
           <Footer />
           <Toaster />
         </QueryProvider>

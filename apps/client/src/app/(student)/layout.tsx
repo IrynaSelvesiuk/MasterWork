@@ -35,7 +35,7 @@ export default function StudentLayout({
 
   if (isStudent && user) {
     return (
-      <div className="flex h-screen bg-white">
+      <div className="flex bg-white">
         <main className="flex-1 overflow-y-auto p-8">{children}</main>
       </div>
     );

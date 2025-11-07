@@ -30,6 +30,7 @@ export const ROUTES = {
   TUTOR_ONBOARDING: '/tutor/onboarding',
 
   STUDENT: {
+    UPDATE_PROFILE: '/update-profile',
     PAYMENTS_HISTORY: '/payments-history',
     ADD_MONEY: '/add-money',
   },

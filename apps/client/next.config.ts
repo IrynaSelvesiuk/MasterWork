@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
       'res.cloudinary.com',
       'cdn.jsdelivr.net',
       'avatars.githubusercontent.com',
+      'placehold.co',
     ],
     remotePatterns: [
       {
