@@ -42,10 +42,9 @@ class TeacherService {
   }
 
   async updateBooking(id: string, status: BookingStatus) {
-    const response = await axiosClient.patch(
-      API_URL.BOOKINGS.BASE_ID(id),
-      status
-    );
+    const response = await axiosClient.patch(API_URL.BOOKINGS.BASE_ID(id), {
+      status,
+    });
 
     return response.data;
   }

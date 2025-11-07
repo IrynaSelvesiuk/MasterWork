@@ -14,8 +14,8 @@ export function MyStudentsPage() {
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
 
   if (isLoading) return <LoadingSpinner />;
-  if (!bookings?.length) return <p>No bookings yet.</p>;
-
+  if (!bookings?.length) return <p>Поки немає бронювань</p>;
+  console.log(bookings);
   return (
     <div className="space-y-4">
       {bookings.map((booking) => (
@@ -33,9 +33,12 @@ export function MyStudentsPage() {
               className="rounded-full object-cover"
             />
             <div>
-              <p className="font-semibold">Student ID: {booking.student.id}</p>
+              <p className="font-semibold">
+                Студент: {booking.student.user.firstName}{' '}
+                {booking.student.user.lastName}
+              </p>
               <p className="text-sm text-gray-500">
-                Goals: {booking.student.learningGoals}
+                Ціль: {booking.student.learningGoals}
               </p>
             </div>
           </div>

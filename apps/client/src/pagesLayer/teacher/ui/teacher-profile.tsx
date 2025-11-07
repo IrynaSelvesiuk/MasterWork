@@ -5,7 +5,6 @@ import {
   FaCheckCircle,
   FaLanguage,
   FaMapMarkedAlt,
-  FaCalendarAlt,
   FaBriefcase,
   FaGraduationCap,
   FaBookOpen,
@@ -16,7 +15,6 @@ import { ProfileSection } from '@/features/teacher/public-profile/ui/profile-sec
 import { ReviewCard } from '@/features/teacher/public-profile/ui/review-card';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import Image from 'next/image';
-import { ReviewForm } from '@/widgets/review-form';
 import { ReviewSection } from '@/features/review-section/ui/review-section';
 
 async function getTeacherProfile(id: string): Promise<TeacherProfile> {
@@ -123,7 +121,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   className="mb-4 rounded-full border-4 border-white shadow-md sm:mb-0"
                 />
               </div>
-
               {/* Рейтинг */}
               <div className="mt-5 border-t pt-5">
                 {/* Rating summary */}
@@ -141,7 +138,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
 
                 <ReviewSection teacherId={teacher.id} />
               </div>
-
               {/* Секція "Про мене" */}
               {teacher.bio && (
                 <ProfileSection title="Про мене" icon={FaChalkboardTeacher}>
@@ -150,7 +146,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   </p>
                 </ProfileSection>
               )}
-
               {/* Секція "Предмети" */}
               <ProfileSection title="Предмети" icon={FaBookOpen}>
                 {teacher.subjects.length > 0 ? (
@@ -178,7 +173,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   <p>Предмети ще не додані.</p>
                 )}
               </ProfileSection>
-
               {/* Секція "Освіта" */}
               <ProfileSection title="Освіта" icon={FaGraduationCap}>
                 {teacher.education.length > 0 ? (
@@ -197,7 +191,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   <p>Дані про освіту ще не додані.</p>
                 )}
               </ProfileSection>
-
               {/* Секція "Досвід роботи" */}
               <ProfileSection title="Досвід роботи" icon={FaBriefcase}>
                 {teacher.experience.length > 0 ? (
@@ -222,7 +215,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                 )}
               </ProfileSection>
 
-              {/* Секція "Відгуки" (у вас вже була) */}
               <ProfileSection title="Відгуки студентів" icon={FaStar}>
                 {teacher.reviews.length > 0 ? (
                   <ul className="space-y-6">
@@ -233,18 +225,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                 ) : (
                   <p>Цей вчитель ще не має відгуків.</p>
                 )}
-              </ProfileSection>
-
-              {/* Секція "Розклад" */}
-              <ProfileSection title="Мій розклад" icon={FaCalendarAlt}>
-                <p>
-                  Тут буде вбудований компонент календаря (наприклад,
-                  react-calendar або Calendly), де студент може побачити вільні
-                  слоти вчителя.
-                </p>
-                <div className="mt-4 h-64 w-full rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
-                  (Placeholder для календаря)
-                </div>
               </ProfileSection>
             </div>
           </main>
