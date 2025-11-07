@@ -5,7 +5,7 @@ interface SliderButtonProps {
 
 const SliderButton = ({ direction, onClick }: SliderButtonProps) => {
   const icon = direction === 'left' ? '<' : '>';
-  const positionClass = direction === 'left' ? 'left-0' : 'right-0';
+  const positionClass = direction === 'left' ? '-left-9' : '-right-9';
 
   return (
     <button

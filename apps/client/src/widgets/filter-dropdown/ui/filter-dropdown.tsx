@@ -31,12 +31,12 @@ export const FilterDropdown = <T extends string>({
     <div className="relative w-full">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex justify-between items-center w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+        className="inline-flex justify-between items-center w-full rounded-lg border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 h-10"
       >
-        <span>
+        <span className="truncate max-w-[85%]">
           {label}: <span className="font-semibold">{selectedLabel}</span>
         </span>
-        <FaChevronRight className="ml-2 h-4 w-4" />
+        <FaChevronRight className="ml-2 h-4 w-4 shrink-0" />
       </button>
 
       {open && (

@@ -2,7 +2,7 @@
 
 import { TutorQueryParams } from '@/entities/teacher/types/tutor-query-params';
 import { FilterDropdown } from '@/widgets/filter-dropdown';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 const sortOptions = [
@@ -20,15 +20,27 @@ const sortOptionsAsc = [
 type SortBy = TutorQueryParams['sortBy'];
 type Order = TutorQueryParams['order'];
 
-export const TutorSearchBar = ({
-  onFilterChange,
-}: {
+interface Props {
   onFilterChange: (filters: Partial<TutorQueryParams>) => void;
-}) => {
-  const [sortBy, setSortBy] = useState<SortBy | undefined>(undefined);
-  const [order, setOrder] = useState<Order | undefined>(undefined);
-  const [subject, setSubject] = useState<string>('');
-  const [location, setLocation] = useState<string>('');
+  initialFilters: TutorQueryParams;
+}
+
+export const TutorSearchBar = ({ onFilterChange, initialFilters }: Props) => {
+  const [sortBy, setSortBy] = useState<SortBy | undefined>(
+    initialFilters.sortBy
+  );
+  const [order, setOrder] = useState<Order | undefined>(initialFilters.order);
+  const [subject, setSubject] = useState<string>(initialFilters.subject ?? '');
+  const [location, setLocation] = useState<string>(
+    initialFilters.location ?? ''
+  );
+
+  useEffect(() => {
+    setSortBy(initialFilters.sortBy);
+    setOrder(initialFilters.order);
+    setSubject(initialFilters.subject ?? '');
+    setLocation(initialFilters.location ?? '');
+  }, [initialFilters]);
 
   const handleSearch = () => {
     onFilterChange({
