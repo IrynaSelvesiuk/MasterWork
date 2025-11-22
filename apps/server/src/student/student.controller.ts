@@ -20,7 +20,7 @@ export class StudentController {
   @UseGuards(JwtAuthGuard)
   async updateMe(@Body() data: UpdateStudentDto, @Req() req: RequestWithUser) {
     const userId = req.user.id;
-
+    console.log(data);
     const student = await this.studentService.findOneByUserId(userId);
 
     return this.studentService.updateStudent(student.id, data);

@@ -64,9 +64,9 @@ export class StudentService {
       throw new NotFoundException(`Student with id ${id} not found`);
     }
 
-    const updatedStudent = this.studentRepository.merge(student, data);
+    Object.assign(student, data);
 
-    return this.studentRepository.save(updatedStudent);
+    return this.studentRepository.save(student);
   }
 
   async delete(id: string): Promise<DeleteResult> {
