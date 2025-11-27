@@ -32,7 +32,9 @@ export class BookingController {
   @UseGuards(JwtAuthGuard)
   async getTeacherBookings(@Req() req: RequestWithUser) {
     const teacherId = req.user.id;
-    return this.bookingService.getBookingsForTeacher(teacherId);
+    const bookings = await this.bookingService.getBookingsForTeacher(teacherId);
+    console.log(bookings);
+    return bookings;
   }
 
   @Patch(':id')
@@ -42,5 +44,12 @@ export class BookingController {
     @Body('status') status: 'confirmed' | 'rejected',
   ) {
     return this.bookingService.updateBookingStatus(id, status);
+  }
+
+  @Get('student')
+  @UseGuards(JwtAuthGuard)
+  async getStudentBookings(@Req() req: RequestWithUser) {
+    const userId = req.user.id;
+    return this.bookingService.getBookingsForStudent(userId);
   }
 }

@@ -1,21 +1,29 @@
 'use client';
 
-import { useAuthStore } from '@/entities/user/model/store';
+import { BookingModal } from '@/features/booking-modal/ui/booking-modal';
+import { useState } from 'react';
 
-export function BookingButton({ teacherUserId }: { teacherUserId: string }) {
-  const { user } = useAuthStore();
-  const isSelf = teacherUserId === user?.id;
+interface BookingButtonProps {
+  teacherUserId: string;
+}
+
+export const BookingButton = ({ teacherUserId }: BookingButtonProps) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <button
-      disabled={isSelf}
-      className={
-        isSelf
-          ? 'bg-gray-400 text-gray-700 cursor-not-allowed py-3 px-4 rounded-xl'
-          : 'bg-green-500 text-white py-3 px-4 rounded-xl hover:bg-green-600'
-      }
-    >
-      Забронювати пробний урок
-    </button>
+    <>
+      <button
+        onClick={() => setIsOpen(true)}
+        className="w-full mt-4 flex justify-center rounded-xl bg-green-500 py-3 font-bold text-white transition hover:bg-green-600 shadow-sm active:scale-95"
+      >
+        Забронювати урок
+      </button>
+
+      <BookingModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        teacherId={teacherUserId}
+      />
+    </>
   );
-}
+};

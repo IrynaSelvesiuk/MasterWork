@@ -24,7 +24,7 @@ export const TutorListSection = ({ filters, onPageChange }: Props) => {
   return (
     <section className="flex-grow">
       <h2 className="text-2xl font-bold text-gray-800 mb-6">
-        Англійська: знайдено{' '}
+        {filters.subject ? `${filters.subject}: з` : 'З'}найдено{' '}
         <span className="text-green-600">{total ?? 0}</span> репетитора/-ку
       </h2>
       <div className="space-y-6">

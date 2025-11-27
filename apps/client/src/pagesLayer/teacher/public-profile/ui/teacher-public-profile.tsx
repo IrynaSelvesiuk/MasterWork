@@ -58,7 +58,6 @@ export async function TeacherPublicProfilePage({ params }: Props) {
             <TeacherHeader teacher={teacher} />
             <TeacherRating teacher={teacher} />
             <TeacherAbout teacher={teacher} />
-            <TeacherSidebar teacher={teacher} />
             <TeacherEducation education={teacher.education} />
             <TeacherExperience experience={teacher.experience} />
             <TeacherReviews reviews={teacher.reviews} />

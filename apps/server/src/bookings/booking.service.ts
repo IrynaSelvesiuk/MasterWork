@@ -24,11 +24,24 @@ export class BookingService {
   ) {}
 
   async createBooking(studentId: string, dto: CreateBookingDto) {
+    console.log(dto);
     const student = await this.studentService.findOneByUserId(studentId);
-    const teacher = await this.teacherService.findById(dto.teacherId);
+    if (!student) {
+      console.error(`Student not found for userId: ${studentId}`);
+      throw new NotFoundException(
+        `Student profile not found for user ${studentId}`,
+      );
+    }
 
-    if (!student || !teacher) throw new NotFoundException('User not found');
-
+    const teacher = await this.teacherService.findProfileByUserId(
+      dto.teacherId,
+    );
+    if (!teacher) {
+      console.error(`Teacher not found for id: ${dto.teacherId}`);
+      throw new NotFoundException(
+        `Teacher profile not found for id ${dto.teacherId}`,
+      );
+    }
     const booking = this.bookingRepository.create({
       student,
       teacher,
@@ -78,5 +91,25 @@ export class BookingService {
     );
 
     return booking;
+  }
+
+  async getBookingsForStudent(userId: string) {
+    return this.bookingRepository.find({
+      where: {
+        student: {
+          user: {
+            id: userId, // TypeORM magic: filters student by their linked User ID
+          },
+        },
+      },
+      relations: {
+        teacher: {
+          user: true, // Load teacher details (name, email)
+        },
+      },
+      order: {
+        date: 'DESC', // Show newest bookings first
+      },
+    });
   }
 }
