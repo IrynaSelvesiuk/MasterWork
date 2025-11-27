@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 interface TutorActionsProps {
   pricePer60Min: number;
   teacherId: string;
+  isSelf: boolean;
 }
 
 interface BookingForm {
@@ -17,6 +18,7 @@ interface BookingForm {
 export const TutorActions = ({
   pricePer60Min,
   teacherId,
+  isSelf,
 }: TutorActionsProps) => {
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, reset } = useForm<BookingForm>();
@@ -54,7 +56,15 @@ export const TutorActions = ({
       {/* Book button */}
       <button
         onClick={() => setOpen(true)}
-        className="bg-green-500 text-white font-semibold py-3 px-6 rounded-xl hover:bg-green-600 transition shadow-md"
+        disabled={isSelf}
+        className={`
+    font-semibold py-3 px-6 rounded-xl transition shadow-md 
+    ${
+      isSelf
+        ? 'bg-gray-400 cursor-not-allowed'
+        : 'bg-green-500 text-white hover:bg-green-600 cursor-pointer'
+    }
+  `}
       >
         Забронювати пробний урок
       </button>

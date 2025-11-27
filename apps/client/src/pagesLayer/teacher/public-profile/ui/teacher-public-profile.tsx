@@ -16,6 +16,7 @@ import { ReviewCard } from '@/features/teacher/public-profile/ui/review-card';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import Image from 'next/image';
 import { ReviewSection } from '@/features/review-section/ui/review-section';
+import { BookingButton } from '../_components/booking-button';
 
 async function getTeacherProfile(id: string): Promise<TeacherProfile> {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
@@ -65,9 +66,7 @@ export async function TeacherPublicProfilePage({ params }: Props) {
                   </span>
                   <span className="text-gray-500">/ година</span>
                 </div>
-                <button className="mt-6 w-full rounded-full bg-green-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                  Забронювати пробний урок
-                </button>
+                <BookingButton teacherUserId={teacher.user.id} />
               </div>
 
               <div className="rounded-xl border bg-white p-6 shadow-lg">

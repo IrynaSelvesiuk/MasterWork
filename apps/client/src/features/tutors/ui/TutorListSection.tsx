@@ -3,6 +3,7 @@
 import { TutorQueryParams } from '@/entities/teacher/types/tutor-query-params';
 import { TutorCard } from './TutorCard';
 import { useGetTeachers } from '@/entities/teacher/hooks/useGetTeachers';
+import { useAuthStore } from '@/entities/user/model/store';
 
 interface Props {
   filters: TutorQueryParams;
@@ -11,10 +12,11 @@ interface Props {
 
 export const TutorListSection = ({ filters, onPageChange }: Props) => {
   const { data, isLoading, isError } = useGetTeachers(filters);
-
+  const { user } = useAuthStore();
+  console.log('User', user);
   if (isLoading) return <p>Завантаження репетиторів...</p>;
   if (isError) return <p>Помилка при завантаженні.</p>;
-  console.log(data);
+  console.log('Data', data);
   const tutors = data?.data ?? [];
   const total = data?.total ?? 0;
   const totalPages = data?.totalPages ?? 1;
@@ -39,7 +41,7 @@ export const TutorListSection = ({ filters, onPageChange }: Props) => {
 
       {/* Pagination controls */}
       {totalPages > 1 && (
-        <div className="flex justify-center gap-4 mt-8">
+        <div className="flex justify-center items-center gap-4 mt-8">
           <button
             onClick={() => onPageChange(filters.page - 1)}
             disabled={filters.page === 1}

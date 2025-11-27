@@ -1,11 +1,12 @@
 'use client';
 
-import { FaHeart, FaGlobe, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaGlobe, FaMapMarkedAlt } from 'react-icons/fa';
 import { TutorBadge } from './TutorBadge';
 import { TutorActions } from './TutorActions';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useAuthStore } from '@/entities/user/model/store';
 
 interface Props {
   teacher: TeacherProfile;
@@ -13,9 +14,12 @@ interface Props {
 }
 
 export const TutorCard = ({ teacher, isNew = false }: Props) => {
+  const { user } = useAuthStore();
   const displayName = `${teacher.user.firstName} ${teacher.user.lastName}`;
   const subjectNames =
     teacher.subjects.map((s) => s.name).join(', ') || 'Немає';
+
+  const isSelf = teacher.user.id === user?.id;
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-md hover:shadow-lg transition duration-300 flex space-x-5 relative">
@@ -54,6 +58,8 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
             <TutorBadge isNew={isNew} />
           </div>
 
+          <p className="text-gray-700 mt-2 ml-4 font-semibold">Про мене:</p>
+
           <p className="text-gray-700 mt-2 line-clamp-3 ml-4">
             {teacher.bio || teacher.headline || 'Немає опису'}
           </p>
@@ -63,6 +69,7 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
           <TutorActions
             teacherId={teacher.id}
             pricePer60Min={teacher.hourlyRate ? Number(teacher.hourlyRate) : 0}
+            isSelf={isSelf}
           />
         </div>
       </div>
