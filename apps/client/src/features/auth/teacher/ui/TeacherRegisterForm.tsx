@@ -65,14 +65,12 @@ const TeacherRegisterForm = () => {
           router.push(ROUTES.TUTORS);
         },
         onError: () => {
-          toast.error(
-            error?.message || 'Something went wrong while registering'
-          );
+          toast.error(error?.message || 'Трапилась помилка під час реєстрації');
         },
       }
     );
   };
-  console.log(avatarUrl);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -86,28 +84,28 @@ const TeacherRegisterForm = () => {
       </div>
       {/* Personal info */}
       <InputForm
-        label="First Name"
+        label="Ім'я"
         type="text"
         register={register('firstName')}
         error={errors.firstName}
       />
 
       <InputForm
-        label="Last Name"
+        label="Прізвище"
         type="text"
         register={register('lastName')}
         error={errors.lastName}
       />
 
       <InputForm
-        label="Email"
+        label="Електронна адреса"
         type="email"
         register={register('email')}
         error={errors.email}
       />
 
       <InputForm
-        label="Password"
+        label="Пароль"
         type="password"
         register={register('password')}
         error={errors.password}
@@ -115,14 +113,14 @@ const TeacherRegisterForm = () => {
 
       {/* Numeric fields */}
       <InputForm
-        label="Years of Experience"
+        label="Досвід (у роках)"
         type="number"
         register={register('yearsOfExperience', { valueAsNumber: true })}
         error={errors.yearsOfExperience}
       />
 
       <InputForm
-        label="Hourly Rate"
+        label="Погодинна оплата (у грн)"
         type="number"
         register={register('hourlyRate', { valueAsNumber: true })}
         error={errors.hourlyRate}
@@ -131,7 +129,7 @@ const TeacherRegisterForm = () => {
       {/* Full-width fields */}
       <div className="md:col-span-2">
         <InputForm
-          label="Location"
+          label="Розташування"
           type="text"
           register={register('location')}
           error={errors.location}
@@ -140,7 +138,7 @@ const TeacherRegisterForm = () => {
 
       <div className="md:col-span-2">
         <TextAreaForm
-          label="Bio"
+          label="Про себе"
           register={register('bio')}
           error={errors.bio}
         />
@@ -148,7 +146,7 @@ const TeacherRegisterForm = () => {
 
       <div className="md:col-span-2">
         <ChooseSubjectsInput
-          label="Subjects"
+          label="Предмети"
           name="subjectIds"
           control={control}
           errors={errors}
@@ -162,7 +160,7 @@ const TeacherRegisterForm = () => {
           disabled={isSubmitting}
           className="w-full md:w-auto px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:opacity-50"
         >
-          {isSubmitting ? 'Registering...' : 'Register as Teacher'}
+          {isSubmitting ? 'Реєстрація...' : 'Зареєструватись як викладач'}
         </button>
       </div>
     </form>
