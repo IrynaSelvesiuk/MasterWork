@@ -1,7 +1,6 @@
 import { ROUTES } from '@/shared/router/routes';
 import Link from 'next/link';
 import {
-  FaBell,
   FaChalkboardTeacher,
   FaUsers,
   FaCalendarAlt,
@@ -21,15 +20,6 @@ const TeacherProfileIcon = () => (
 
 export const TeacherActions = () => (
   <nav className="flex items-center space-x-6">
-    <Link
-      href={ROUTES.TEACHER.NOTIFICATIONS || '#'}
-      className="text-gray-600 hover:text-green-700 transition-colors p-2 relative"
-      title="Сповіщення"
-    >
-      <FaBell size={20} />
-      <span className="absolute top-1 right-1 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500" />
-    </Link>
-
     <TeacherProfileIcon />
 
     <Link
