@@ -11,6 +11,7 @@ import { TeacherService } from 'src/teacher/services/teacher.service';
 import { StudentService } from 'src/student/student.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { MailService } from 'src/shared/mail/mail.service';
+import { GoogleCalendarService } from 'src/shared/mail/google-calendar.service';
 
 @Injectable()
 export class BookingService {
@@ -21,6 +22,7 @@ export class BookingService {
     private readonly teacherService: TeacherService,
     private readonly studentService: StudentService,
     private readonly mailService: MailService,
+    private readonly googleCalendarService: GoogleCalendarService,
   ) {}
 
   async createBooking(studentId: string, dto: CreateBookingDto) {
@@ -81,6 +83,21 @@ export class BookingService {
       status === 'confirmed' ? BookingStatus.CONFIRMED : BookingStatus.REJECTED;
 
     booking.status = mappedStatus;
+
+    if (mappedStatus === BookingStatus.CONFIRMED) {
+      const startTime = new Date(booking.date);
+      const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+
+      const meetLink = await this.googleCalendarService.createMeeting(
+        `Lesson with ${booking.teacher.user.firstName}`,
+        `Subject: 'General Lesson'`,
+        startTime,
+        endTime,
+      );
+
+      booking.meetingLink = meetLink;
+    }
+
     await this.bookingRepository.save(booking);
 
     await this.mailService.sendBookingStatusEmail(

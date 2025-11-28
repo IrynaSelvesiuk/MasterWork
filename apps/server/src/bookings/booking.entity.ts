@@ -46,6 +46,9 @@ export class Booking {
   })
   status: BookingStatus;
 
+  @Column({ type: 'text', nullable: true })
+  meetingLink: string | null;
+
   @CreateDateColumn()
   createdAt: Date;
 
