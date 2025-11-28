@@ -24,7 +24,7 @@ export class BookingService {
   ) {}
 
   async createBooking(studentId: string, dto: CreateBookingDto) {
-    console.log(dto);
+    console.log('dto', dto);
     const student = await this.studentService.findOneByUserId(studentId);
     if (!student) {
       console.error(`Student not found for userId: ${studentId}`);

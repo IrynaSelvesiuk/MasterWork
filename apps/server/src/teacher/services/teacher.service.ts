@@ -63,7 +63,11 @@ export class TeacherService {
         subjects: true,
         education: true,
         experience: true,
-        reviews: true,
+        reviews: {
+          student: {
+            user: true,
+          },
+        },
       },
     });
   }

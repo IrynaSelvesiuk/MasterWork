@@ -5,12 +5,21 @@ interface Props {
   rows?: number;
   register: UseFormRegisterReturn;
   error?: FieldError;
+  required?: boolean;
 }
 
-const TextAreaForm: React.FC<Props> = ({ label, rows, register, error }) => {
+const TextAreaForm: React.FC<Props> = ({
+  label,
+  rows,
+  register,
+  error,
+  required = false,
+}) => {
   return (
     <div>
-      <label className="block mb-1 font-medium">{label}</label>
+      <label className="block mb-1 font-medium">
+        {label} {required && <span className="text-red-600 ml-1">*</span>}
+      </label>
       <textarea
         rows={rows}
         {...register}

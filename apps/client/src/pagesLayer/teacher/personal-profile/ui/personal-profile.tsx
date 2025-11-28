@@ -101,7 +101,7 @@ export function TeacherProfilePage() {
 
           <div className="rounded-xl border bg-white p-6 shadow-sm">
             <ChooseSubjectsInput
-              label="subjects"
+              label="Предмети"
               control={control}
               name="subjectIds"
               errors={errors.subjectIds}

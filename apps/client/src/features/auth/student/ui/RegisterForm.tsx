@@ -86,6 +86,7 @@ export const RegisterForm = () => {
           className="block text-sm font-medium text-green-800 mb-1"
         >
           Ім’я
+          <span className="text-red-600 ml-1">*</span>
         </label>
         <input
           id="name"
@@ -109,6 +110,7 @@ export const RegisterForm = () => {
           className="block text-sm font-medium text-green-800 mb-1"
         >
           Прізвище
+          <span className="text-red-600 ml-1">*</span>
         </label>
         <input
           id="name"
@@ -131,6 +133,7 @@ export const RegisterForm = () => {
           className="block text-sm font-medium text-green-800 mb-1"
         >
           Email
+          <span className="text-red-600 ml-1">*</span>
         </label>
         <input
           id="email"
@@ -154,6 +157,7 @@ export const RegisterForm = () => {
           className="block text-sm font-medium text-green-800 mb-1"
         >
           Пароль
+          <span className="text-red-600 ml-1">*</span>
         </label>
         <input
           id="password"

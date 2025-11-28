@@ -88,6 +88,7 @@ const TeacherRegisterForm = () => {
         type="text"
         register={register('firstName')}
         error={errors.firstName}
+        required
       />
 
       <InputForm
@@ -95,6 +96,7 @@ const TeacherRegisterForm = () => {
         type="text"
         register={register('lastName')}
         error={errors.lastName}
+        required
       />
 
       <InputForm
@@ -102,6 +104,7 @@ const TeacherRegisterForm = () => {
         type="email"
         register={register('email')}
         error={errors.email}
+        required
       />
 
       <InputForm
@@ -109,21 +112,23 @@ const TeacherRegisterForm = () => {
         type="password"
         register={register('password')}
         error={errors.password}
+        required
       />
 
       {/* Numeric fields */}
       <InputForm
-        label="Досвід (у роках)"
+        label="Педагогічний досвід (роки)"
         type="number"
         register={register('yearsOfExperience', { valueAsNumber: true })}
         error={errors.yearsOfExperience}
       />
 
       <InputForm
-        label="Погодинна оплата (у грн)"
+        label="Погодинна оплата (грн)"
         type="number"
         register={register('hourlyRate', { valueAsNumber: true })}
         error={errors.hourlyRate}
+        required
       />
 
       {/* Full-width fields */}
@@ -133,6 +138,7 @@ const TeacherRegisterForm = () => {
           type="text"
           register={register('location')}
           error={errors.location}
+          required
         />
       </div>
 
@@ -150,6 +156,7 @@ const TeacherRegisterForm = () => {
           name="subjectIds"
           control={control}
           errors={errors}
+          required
         />
       </div>
 

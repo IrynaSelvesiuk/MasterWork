@@ -5,6 +5,7 @@ interface Props {
   type?: string;
   register: UseFormRegisterReturn;
   error?: FieldError;
+  required?: boolean;
 }
 
 const InputForm: React.FC<Props> = ({
@@ -12,10 +13,13 @@ const InputForm: React.FC<Props> = ({
   type = 'text',
   register,
   error,
+  required = false,
 }) => {
   return (
     <div>
-      <label className="block mb-1 font-medium">{label}</label>
+      <label className="block mb-1 font-medium">
+        {label} {required && <span className="text-red-600 ml-1">*</span>}
+      </label>
       <input
         type={type}
         {...register}

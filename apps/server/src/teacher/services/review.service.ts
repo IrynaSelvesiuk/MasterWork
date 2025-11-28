@@ -41,7 +41,11 @@ export class ReviewService {
   async getTeacherReviews(teacherId: string) {
     return this.reviewRepo.find({
       where: { teacher: { id: teacherId } },
-      relations: ['student'],
+      relations: {
+        student: {
+          user: true,
+        },
+      },
       order: { createdAt: 'DESC' },
     });
   }

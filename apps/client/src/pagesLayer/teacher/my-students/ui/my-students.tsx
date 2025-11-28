@@ -26,7 +26,7 @@ export function MyStudentsPage() {
       </div>
     );
   }
-
+  console.log(bookings);
   if (!bookings?.length) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
@@ -93,7 +93,7 @@ const BookingCard = ({
       color: 'bg-emerald-100 text-emerald-700 border-emerald-200',
       label: 'Підтверджено',
     },
-    cancelled: {
+    rejected: {
       color: 'bg-rose-100 text-rose-700 border-rose-200',
       label: 'Скасовано',
     },

@@ -19,6 +19,7 @@ interface Props<T extends FieldValues> {
   name: Path<T>;
   control: Control<T>;
   errors?: FieldErrors<T>;
+  required?: boolean;
 }
 
 export const ChooseSubjectsInput = <T extends FieldValues>({
@@ -26,6 +27,7 @@ export const ChooseSubjectsInput = <T extends FieldValues>({
   name,
   control,
   errors,
+  required = false,
 }: Props<T>) => {
   const { data: subjects, isLoading, isError } = useGetSubjects();
 
@@ -52,7 +54,9 @@ export const ChooseSubjectsInput = <T extends FieldValues>({
 
   return (
     <div className="mb-4">
-      <label className="block mb-1 font-medium">{label}</label>
+      <label className="block mb-1 font-medium">
+        {label} {required && <span className="text-red-600 ml-1">*</span>}
+      </label>
 
       <Controller
         name={name}
