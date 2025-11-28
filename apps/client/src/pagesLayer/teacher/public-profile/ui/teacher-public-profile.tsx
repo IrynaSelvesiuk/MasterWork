@@ -54,12 +54,13 @@ export async function TeacherPublicProfilePage({ params }: Props) {
             <TeacherSidebar teacher={teacher} />
           </aside>
 
-          <main className="lg:col-span-2 space-y-10">
+          <main className="lg:col-span-3 space-y-10">
             <TeacherHeader teacher={teacher} />
-            <TeacherRating teacher={teacher} />
+
             <TeacherAbout teacher={teacher} />
             <TeacherEducation education={teacher.education} />
             <TeacherExperience experience={teacher.experience} />
+            <TeacherRating teacher={teacher} />
             <TeacherReviews reviews={teacher.reviews} />
           </main>
         </div>

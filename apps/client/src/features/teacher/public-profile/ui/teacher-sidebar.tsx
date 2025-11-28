@@ -19,11 +19,6 @@ export const TeacherSidebar = ({ teacher }: Props) => {
 
         <BookingButton teacherUserId={teacher.user.id} />
       </div>
-
-      <LanguagesSection
-        speaks={teacher.speaks || []}
-        location={teacher.location}
-      />
     </div>
   );
 };

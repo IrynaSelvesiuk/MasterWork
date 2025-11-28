@@ -19,7 +19,7 @@ export const TeacherRating = ({ teacher }: Props) => {
         <div className="flex items-center gap-1">
           <FaStar className="h-6 w-6 text-yellow-400" />
           <span className="text-xl font-bold text-gray-800">
-            {teacher.rating}
+            {teacher.reviews[0].rating}
           </span>
         </div>
 

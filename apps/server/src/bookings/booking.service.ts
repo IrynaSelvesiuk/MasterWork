@@ -105,6 +105,7 @@ export class BookingService {
       status,
       `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,
       booking.date,
+      booking.meetingLink as string,
     );
 
     return booking;

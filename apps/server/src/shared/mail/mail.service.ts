@@ -28,6 +28,7 @@ export class MailService {
     status: string,
     teacherName: string,
     date: Date,
+    meetingLink: string,
   ) {
     const subject =
       status === 'confirmed' ? 'Ваш урок підтверджено!' : 'Ваш урок відхилено';
@@ -37,6 +38,7 @@ export class MailService {
       <p>Викладач: <b>${teacherName}</b></p>
       <p>Дата уроку: ${new Date(date).toLocaleString('uk-UA')}</p>
       <p>Статус: <b>${status}</b></p>
+      ${meetingLink}}
     `;
 
     try {

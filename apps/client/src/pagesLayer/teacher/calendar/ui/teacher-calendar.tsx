@@ -1,12 +1,15 @@
 'use client';
 
 import { useTeacherCalendar } from '@/entities/teacher/hooks/useTeacherCalendar';
+import { BookingDetailsModal } from '@/features/teacher/calendar/ui/booking-detail-modal';
 import { CalendarToolbar } from '@/features/teacher/calendar/ui/calendar-toolbar';
 import { calendarMessages, localizer } from '@/shared/config/calendar.config';
+import { useCallback, useState } from 'react';
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 export function TeacherCalendarPage() {
+  const [date, setDate] = useState(new Date());
   const {
     events,
     isLoading,
@@ -14,8 +17,13 @@ export function TeacherCalendarPage() {
     setView,
     eventPropGetter,
     handleSelectEvent,
-    handleSelectSlot,
+    selectedEvent,
+    setSelectedEvent,
   } = useTeacherCalendar();
+
+  const onNavigate = useCallback((newDate: Date) => {
+    setDate(newDate);
+  }, []);
 
   if (isLoading) {
     return (
@@ -38,17 +46,25 @@ export function TeacherCalendarPage() {
           startAccessor="start"
           endAccessor="end"
           style={{ height: 650 }}
+          date={date}
+          onNavigate={onNavigate}
           view={view}
           onView={setView}
           components={{ toolbar: CalendarToolbar }}
           selectable
           onSelectEvent={handleSelectEvent}
-          onSelectSlot={handleSelectSlot}
           eventPropGetter={eventPropGetter}
           messages={calendarMessages}
           culture="uk"
         />
       </div>
+
+      {selectedEvent && (
+        <BookingDetailsModal
+          event={selectedEvent}
+          onClose={() => setSelectedEvent(null)}
+        />
+      )}
     </div>
   );
 }

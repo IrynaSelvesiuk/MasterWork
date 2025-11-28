@@ -1,8 +1,21 @@
 import { useState, useMemo } from 'react';
 import { View } from 'react-big-calendar';
 import { useGetMyBookings } from '@/entities/teacher/hooks/useGetMyBookings';
-import { format } from 'date-fns';
-import { uk } from 'date-fns/locale';
+
+export interface BookingResource {
+  id: string;
+  date: string;
+  status: 'pending' | 'confirmed' | 'rejected' | 'cancelled';
+  meetingLink: string | null;
+  student: {
+    user: {
+      firstName: string;
+      lastName: string;
+      email: string;
+    };
+  };
+  note?: string;
+}
 
 export interface LessonEvent {
   id: string;
@@ -16,10 +29,11 @@ export interface LessonEvent {
 export function useTeacherCalendar() {
   const { data: bookings = [], isLoading } = useGetMyBookings();
   const [view, setView] = useState<View>('month');
+  const [selectedEvent, setSelectedEvent] = useState<LessonEvent | null>(null);
 
   const events: LessonEvent[] = useMemo(() => {
     if (!Array.isArray(bookings)) return [];
-
+    console.log(bookings);
     return bookings.map((b) => ({
       id: b.id,
       title: `${b.student.user.firstName} ${b.student.user.lastName}`,
@@ -52,12 +66,7 @@ export function useTeacherCalendar() {
   };
 
   const handleSelectEvent = (event: LessonEvent) => {
-    alert(`Edit Lesson: ${event.title}`);
-  };
-
-  const handleSelectSlot = (slotInfo: { start: Date; end: Date }) => {
-    const dateStr = format(slotInfo.start, 'd MMMM yyyy', { locale: uk });
-    alert(`Create lesson on: ${dateStr}`);
+    setSelectedEvent(event);
   };
 
   return {
@@ -67,6 +76,7 @@ export function useTeacherCalendar() {
     setView,
     eventPropGetter,
     handleSelectEvent,
-    handleSelectSlot,
+    selectedEvent,
+    setSelectedEvent,
   };
 }
