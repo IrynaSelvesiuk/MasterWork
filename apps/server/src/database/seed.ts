@@ -1,17 +1,18 @@
 /* eslint-disable */
-import { Education } from 'src/teacher/entities/education.entity';
-import { Experience } from 'src/teacher/entities/experience.entity';
-import { Teacher } from 'src/teacher/entities/teacher.entity';
-import { User } from 'src/user/user.entity';
+
 import { DataSource } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { TeacherStatus } from 'src/teacher/types/teacher-status';
-import { Role } from 'src/enums/roles.enum';
-import { Subject } from 'src/subject/subject.entity';
-import { Booking } from 'src/bookings/booking.entity';
-import { Availability } from 'src/teacher/entities/availability.enitity';
-import { Student } from 'src/student/student.entity';
-import { Review } from 'src/teacher/entities/review.entity';
+import { Subject } from '../subject/subject.entity';
+import { Booking } from '../bookings/booking.entity';
+import { Role } from '../enums/roles.enum';
+import { Student } from '../student/student.entity';
+import { Availability } from '../teacher/entities/availability.enitity';
+import { Education } from '../teacher/entities/education.entity';
+import { Experience } from '../teacher/entities/experience.entity';
+import { Review } from '../teacher/entities/review.entity';
+import { Teacher } from '../teacher/entities/teacher.entity';
+import { TeacherStatus } from '../teacher/types/teacher-status';
+import { User } from '../user/user.entity';
 
 const AppDataSource = new DataSource({
   type: 'postgres',

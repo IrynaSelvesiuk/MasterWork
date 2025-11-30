@@ -1,4 +1,4 @@
-import { Environment } from 'src/enums/env.enum';
+import { Environment } from '../enums/env.enum';
 
 const configuration = () => ({
   port: Number(process.env.PORT),
