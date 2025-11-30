@@ -10,20 +10,20 @@ import {
   Req,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { AuthService } from '../services/auth.service';
-import { Environment } from 'src/enums/env.enum';
-import { TokenName } from '../enums/token-name.enum';
+import { plainToInstance } from 'class-transformer';
+import { Environment } from '../../enums/env.enum';
+import { RequestWithUser } from '../../shared/types/request-with-user';
+import { CreateTeacherDto } from '../../teacher/dto/create-teacher.dto';
+import { LoginUserDto } from '../../user/dto/login-user.dto';
+import { UserResponseDto } from '../../user/dto/user-response.dto';
+import { UserService } from '../../user/user.service';
 import {
   ACCESS_TOKEN_EXPIRATION,
   REFRESH_TOKEN_EXPIRATION,
 } from '../constants/token-maxAge';
-import { LoginUserDto } from 'src/user/dto/login-user.dto';
-import { plainToInstance } from 'class-transformer';
-import { UserResponseDto } from 'src/user/dto/user-response.dto';
-import { CreateTeacherDto } from 'src/teacher/dto/create-teacher.dto';
+import { TokenName } from '../enums/token-name.enum';
 import { JwtAuthGuard } from '../jwt-auth-guard';
-import { RequestWithUser } from 'src/shared/types/request-with-user';
-import { UserService } from 'src/user/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Controller('auth')
 export class AuthController {

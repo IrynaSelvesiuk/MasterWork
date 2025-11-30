@@ -1,5 +1,3 @@
-import { Subject } from 'src/subject/subject.entity';
-import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -16,7 +14,9 @@ import { Experience } from './experience.entity';
 import { Review } from './review.entity';
 import { Availability } from './availability.enitity';
 import { TeacherStatus } from '../types/teacher-status';
-import { Booking } from 'src/bookings/booking.entity';
+import { Booking } from '../../bookings/booking.entity';
+import { User } from '../../user/user.entity';
+import { Subject } from '../../subject/subject.entity';
 
 @Entity('teacher')
 export class Teacher {

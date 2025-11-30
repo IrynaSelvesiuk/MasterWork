@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
-import { ConfigType } from 'src/config/env.config';
+import { ConfigType } from '../../../config/env.config';
 
 @Injectable()
 export class HashService {

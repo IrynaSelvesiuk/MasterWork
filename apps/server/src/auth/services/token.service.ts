@@ -1,8 +1,8 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JsonWebTokenError, JwtService, TokenExpiredError } from '@nestjs/jwt';
-import { ConfigType } from 'src/config/env.config';
 import { JwtPayload } from '../types/jwt-payload.interface';
+import { ConfigType } from '../../config/env.config';
 
 @Injectable()
 export class TokenService {

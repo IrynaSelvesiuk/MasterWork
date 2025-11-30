@@ -6,8 +6,8 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Teacher } from 'src/teacher/entities/teacher.entity';
-import { Student } from 'src/student/student.entity';
+import { Student } from '../student/student.entity';
+import { Teacher } from '../teacher/entities/teacher.entity';
 
 export enum BookingStatus {
   PENDING = 'pending',

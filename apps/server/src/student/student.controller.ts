@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { StudentService } from './student.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
-import { RequestWithUser } from 'src/shared/types/request-with-user';
 import { UpdateStudentDto } from './dto/update-student.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth-guard';
+import { RequestWithUser } from '../shared/types/request-with-user';
 
 @Controller('students')
 export class StudentController {

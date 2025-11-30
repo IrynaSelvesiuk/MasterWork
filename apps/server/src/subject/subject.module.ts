@@ -1,9 +1,9 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Subject } from './subject.entity';
-import { TeacherModule } from 'src/teacher/teacher.module';
 import { SubjectService } from './subject.service';
 import { Subjectcontroller } from './subject.controller';
+import { TeacherModule } from '../teacher/teacher.module';
 
 @Module({
   imports: [

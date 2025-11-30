@@ -1,6 +1,3 @@
-import { Booking } from 'src/bookings/booking.entity';
-import { Review } from 'src/teacher/entities/review.entity';
-import { User } from 'src/user/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -11,6 +8,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Booking } from '../bookings/booking.entity';
+import { Review } from '../teacher/entities/review.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Student {

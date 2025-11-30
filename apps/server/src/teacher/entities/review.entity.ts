@@ -7,7 +7,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { Teacher } from './teacher.entity';
-import { Student } from 'src/student/student.entity';
+import { Student } from '../../student/student.entity';
 
 @Entity('review')
 export class Review {

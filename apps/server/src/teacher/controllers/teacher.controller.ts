@@ -10,11 +10,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { TeacherService } from '../services/teacher.service';
-import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
-import { RequestWithUser } from 'src/shared/types/request-with-user';
-import { UserService } from 'src/user/user.service';
+
 import { UpdateTeacherProfileDto } from '../dto/update-teacher-profile.dto';
 import { GetTeachersQueryDto } from '../dto/get-teachers-query.dto';
+import { RequestWithUser } from '../../shared/types/request-with-user';
+import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
+import { UserService } from '../../user/user.service';
 
 @Controller('teachers')
 export class TeacherController {

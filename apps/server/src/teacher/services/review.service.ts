@@ -4,7 +4,7 @@ import { Review } from '../entities/review.entity';
 import { Repository } from 'typeorm';
 import { Teacher } from '../entities/teacher.entity';
 import { CreateReviewDto } from '../dto/create-review.dto';
-import { StudentService } from 'src/student/student.service';
+import { StudentService } from '../../student/student.service';
 
 @Injectable()
 export class ReviewService {

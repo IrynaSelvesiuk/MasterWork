@@ -7,11 +7,11 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking, BookingStatus } from './booking.entity';
 import { Repository } from 'typeorm';
-import { TeacherService } from 'src/teacher/services/teacher.service';
-import { StudentService } from 'src/student/student.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
-import { MailService } from 'src/shared/mail/mail.service';
-import { GoogleCalendarService } from 'src/shared/mail/google-calendar.service';
+import { GoogleCalendarService } from '../shared/mail/google-calendar.service';
+import { MailService } from '../shared/mail/mail.service';
+import { StudentService } from '../student/student.service';
+import { TeacherService } from '../teacher/services/teacher.service';
 
 @Injectable()
 export class BookingService {

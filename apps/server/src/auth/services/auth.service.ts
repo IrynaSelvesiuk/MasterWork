@@ -1,18 +1,20 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { HashService } from 'src/shared/hash/services/hash.service';
+
 import { TokenService } from './token.service';
 import { JwtPayload } from '../types/jwt-payload.interface';
-import { UserService } from 'src/user/user.service';
-import { User } from 'src/user/user.entity';
-import { LoginUserDto } from 'src/user/dto/login-user.dto';
-import { TeacherService } from 'src/teacher/services/teacher.service';
+
 import { AuthResponse } from '../types/auth-response';
-import { CreateTeacherDto } from 'src/teacher/dto/create-teacher.dto';
-import { Role } from 'src/enums/roles.enum';
-import { Teacher } from 'src/teacher/entities/teacher.entity';
-import { StudentService } from 'src/student/student.service';
-import { Student } from 'src/student/student.entity';
-import { CreateStudentDto } from 'src/student/dto/create-student.dto';
+import { Role } from '../../enums/roles.enum';
+import { HashService } from '../../shared/hash/services/hash.service';
+import { Student } from '../../student/student.entity';
+import { StudentService } from '../../student/student.service';
+import { Teacher } from '../../teacher/entities/teacher.entity';
+import { TeacherService } from '../../teacher/services/teacher.service';
+import { LoginUserDto } from '../../user/dto/login-user.dto';
+import { User } from '../../user/user.entity';
+import { UserService } from '../../user/user.service';
+import { CreateStudentDto } from '../../student/dto/create-student.dto';
+import { CreateTeacherDto } from '../../teacher/dto/create-teacher.dto';
 
 @Injectable()
 export class AuthService {
@@ -72,6 +74,4 @@ export class AuthService {
 
     return { user, teacher, student, ...tokens };
   }
-
-  public async logout() {}
 }

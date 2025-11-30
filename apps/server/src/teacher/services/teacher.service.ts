@@ -3,14 +3,15 @@ import { Repository } from 'typeorm';
 import { Teacher } from '../entities/teacher.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTeacherDto } from '../dto/create-teacher.dto';
-import { SubjectService } from 'src/subject/subject.service';
-import { CreateUserDto } from 'src/user/dto/create-user.dto';
+
 import { Education } from '../entities/education.entity';
 import { Experience } from '../entities/experience.entity';
 import { UpdateTeacherProfileDto } from '../dto/update-teacher-profile.dto';
-import { BookingService } from 'src/bookings/booking.service';
-import { BookingStatus } from 'src/bookings/booking.entity';
-import { UserService } from 'src/user/user.service';
+import { SubjectService } from '../../subject/subject.service';
+import { BookingService } from '../../bookings/booking.service';
+import { UserService } from '../../user/user.service';
+import { CreateUserDto } from '../../user/dto/create-user.dto';
+import { BookingStatus } from '../../bookings/booking.entity';
 
 @Injectable()
 export class TeacherService {

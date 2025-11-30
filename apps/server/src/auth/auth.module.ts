@@ -1,13 +1,13 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
-import { HashModule } from 'src/shared/hash/hash.module';
 import { TokenService } from './services/token.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './controllers/auth.controller';
-import { UserModule } from 'src/user/user.module';
 import { JwtAuthGuard } from './jwt-auth-guard';
-import { TeacherModule } from 'src/teacher/teacher.module';
-import { StudentModule } from 'src/student/student.module';
+import { HashModule } from '../shared/hash/hash.module';
+import { StudentModule } from '../student/student.module';
+import { TeacherModule } from '../teacher/teacher.module';
+import { UserModule } from '../user/user.module';
 
 @Module({
   imports: [

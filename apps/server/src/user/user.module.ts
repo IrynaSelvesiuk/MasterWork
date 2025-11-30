@@ -1,12 +1,13 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { HashModule } from 'src/shared/hash/hash.module';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
-import { AuthModule } from 'src/auth/auth.module';
+
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { TeacherModule } from 'src/teacher/teacher.module';
-import { StudentModule } from 'src/student/student.module';
+import { AuthModule } from '../auth/auth.module';
+import { HashModule } from '../shared/hash/hash.module';
+import { StudentModule } from '../student/student.module';
+import { TeacherModule } from '../teacher/teacher.module';
 
 @Module({
   imports: [

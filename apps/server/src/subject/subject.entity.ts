@@ -1,4 +1,3 @@
-import { Teacher } from 'src/teacher/entities/teacher.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Teacher } from '../teacher/entities/teacher.entity';
 
 @Entity('subject')
 export class Subject {

@@ -7,10 +7,10 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
-import { RequestWithUser } from 'src/shared/types/request-with-user';
 import { ReviewService } from '../services/review.service';
 import { CreateReviewDto } from '../dto/create-review.dto';
+import { JwtAuthGuard } from '../../auth/jwt-auth-guard';
+import { RequestWithUser } from '../../shared/types/request-with-user';
 
 @Controller('reviews')
 export class ReviewController {

@@ -6,10 +6,10 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { HashService } from 'src/shared/hash/services/hash.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HashService } from '../shared/hash/services/hash.service';
 
 @Injectable()
 export class UserService {

@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,4 +14,7 @@ async function bootstrap() {
 
   await app.listen(process.env.PORT ?? 3005);
 }
-bootstrap();
+
+bootstrap()
+  .then(() => console.log('Server is listening on port ', process.env.PORT))
+  .catch((err) => console.error('Bootstrap failed', err));
