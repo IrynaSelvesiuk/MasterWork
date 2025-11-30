@@ -49,20 +49,21 @@ export async function TeacherPublicProfilePage({ params }: Props) {
   return (
     <div className="bg-gray-50">
       <div className="container mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
-          <aside className="lg:col-span-1">
-            <TeacherSidebar teacher={teacher} />
-          </aside>
-
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-4">
+          {/* Main content first */}
           <main className="lg:col-span-3 space-y-10">
             <TeacherHeader teacher={teacher} />
-
             <TeacherAbout teacher={teacher} />
             <TeacherEducation education={teacher.education} />
             <TeacherExperience experience={teacher.experience} />
             <TeacherRating teacher={teacher} />
             <TeacherReviews reviews={teacher.reviews} />
           </main>
+
+          {/* Sidebar on the right */}
+          <aside className="lg:col-span-1">
+            <TeacherSidebar teacher={teacher} />
+          </aside>
         </div>
       </div>
     </div>

@@ -29,6 +29,7 @@ import { StudentModule } from 'src/student/student.module';
     forwardRef(() => UserModule),
     forwardRef(() => BookingModule),
     forwardRef(() => StudentModule),
+    forwardRef(() => UserModule),
   ],
   exports: [TeacherService],
   controllers: [TeacherController, ReviewController],

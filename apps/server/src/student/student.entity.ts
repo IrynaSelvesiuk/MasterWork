@@ -39,12 +39,6 @@ export class Student {
   @Column()
   learningGoals: string;
 
-  @Column({
-    type: 'integer',
-    default: 0,
-  })
-  walletBalance: number;
-
   @OneToMany(() => Booking, (booking) => booking.student)
   bookings: Booking[];
 

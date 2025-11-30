@@ -38,7 +38,6 @@ export class StudentService {
     if (!student) {
       throw new NotFoundException('Student was not found');
     }
-
     return student;
   }
 
@@ -46,7 +45,6 @@ export class StudentService {
     const newStudent = this.studentRepository.create({
       learningGoals: data?.learningGoals || '',
       avatarUrl: data.avatarUrl || '',
-      walletBalance: 0,
       languages: data.languages || [],
       user,
     });

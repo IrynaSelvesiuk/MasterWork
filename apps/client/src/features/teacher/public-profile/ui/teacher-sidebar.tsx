@@ -1,6 +1,5 @@
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import { BookingButton } from './booking-button';
-import { LanguagesSection } from './language-section';
 
 interface Props {
   teacher: TeacherProfile;
@@ -9,7 +8,7 @@ interface Props {
 export const TeacherSidebar = ({ teacher }: Props) => {
   return (
     <div className="sticky top-8 space-y-6">
-      <div className="rounded-xl border bg-white p-6 shadow-lg">
+      <div className="rounded-xl border bg-white p-7 shadow-lg">
         <div className="flex items-baseline">
           <span className="text-3xl font-bold text-gray-900">
             {Math.round(teacher.hourlyRate)} ₴

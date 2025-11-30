@@ -58,6 +58,10 @@ export class UserService {
     return newUser;
   }
 
+  async save(user: User): Promise<User> {
+    return this.userRepository.save(user);
+  }
+
   async updateUser(
     id: string,
     data: UpdateUserDto,

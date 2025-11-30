@@ -43,23 +43,6 @@ export const ProfileMainContent = ({ student }: Props) => {
         </div>
       </div>
 
-      {/* Wallet */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 flex justify-between items-center">
-        <div>
-          <h3 className="text-lg font-semibold text-gray-800">Гаманець</h3>
-          <p className="text-gray-600">
-            Баланс:{' '}
-            <span className="font-semibold">{student.walletBalance} ₴</span>
-          </p>
-        </div>
-        <Link
-          href="/wallet"
-          className="text-sm font-medium text-green-600 hover:text-green-700"
-        >
-          Переглянути
-        </Link>
-      </div>
-
       {/* Actions */}
       <div className="flex flex-col sm:flex-row gap-3">
         <Link

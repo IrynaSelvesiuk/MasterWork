@@ -17,6 +17,14 @@ import { UpdateExperienceDto } from './update-experience.dto';
 export class UpdateTeacherProfileDto {
   @IsOptional()
   @IsString()
+  firstName: string;
+
+  @IsOptional()
+  @IsString()
+  lastName: string;
+
+  @IsOptional()
+  @IsString()
   bio?: string;
 
   @IsOptional()

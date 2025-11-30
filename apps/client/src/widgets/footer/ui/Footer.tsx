@@ -30,7 +30,7 @@ export const Footer = () => {
 
         {/* Copyright */}
         <div className="text-sm text-green-100 text-center md:text-right">
-          © {new Date().getFullYear()} TutorsApp. Всі права захищені.
+          © {new Date().getFullYear()} TutorsApp. Автор: Сельвесюк І.І.
         </div>
       </div>
     </footer>

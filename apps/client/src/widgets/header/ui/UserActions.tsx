@@ -16,13 +16,14 @@ const UserProfileIcon = () => (
 export const UserActions = () => {
   return (
     <nav className="flex items-center space-x-6">
+      <UserProfileIcon />
+
       <Link
         href={ROUTES.TUTORS || '/tutors'}
         className="text-gray-600 hover:text-green-700 transition-colors flex items-center gap-1"
         title="На головну"
       >
-        <FaHome size={20} />
-        <span className="hidden sm:inline font-medium">На головну</span>
+        <FaHome size={24} />
       </Link>
       <Link
         href={ROUTES.NOTIFICATIONS || '#'}
@@ -32,8 +33,6 @@ export const UserActions = () => {
         <FaBell size={20} />
         <span className="absolute top-1 right-1 block h-2 w-2 rounded-full ring-2 ring-white bg-red-500" />
       </Link>
-
-      <UserProfileIcon />
 
       <Link
         href={ROUTES.HELP}

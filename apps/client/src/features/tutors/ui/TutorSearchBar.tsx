@@ -56,7 +56,7 @@ export const TutorSearchBar = ({ onFilterChange, initialFilters }: Props) => {
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg mb-8">
       <h1 className="text-2xl font-bold text-gray-800 mb-4">
-        Знайдіть найкращого онлайн-репетитора 🚀
+        Знайдіть найкращого онлайн-репетитора
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">

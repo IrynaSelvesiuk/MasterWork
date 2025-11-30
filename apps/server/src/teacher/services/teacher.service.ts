@@ -10,6 +10,7 @@ import { Experience } from '../entities/experience.entity';
 import { UpdateTeacherProfileDto } from '../dto/update-teacher-profile.dto';
 import { BookingService } from 'src/bookings/booking.service';
 import { BookingStatus } from 'src/bookings/booking.entity';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class TeacherService {
@@ -23,6 +24,7 @@ export class TeacherService {
 
     private readonly subjectService: SubjectService,
     private readonly bookingService: BookingService,
+    private readonly userService: UserService,
   ) {}
 
   async createTeacher(
@@ -100,6 +102,15 @@ export class TeacherService {
 
     this.teacherRepository.merge(teacher, simpleProfileData);
     await this.teacherRepository.save(teacher);
+
+    if (dto.firstName || dto.lastName) {
+      const user = teacher.user;
+
+      if (dto.firstName) user.firstName = dto.firstName;
+      if (dto.lastName) user.lastName = dto.lastName;
+
+      await this.userService.save(user);
+    }
 
     if (subjectIds) {
       const subjects = await this.subjectService.findManyByIds(subjectIds);
