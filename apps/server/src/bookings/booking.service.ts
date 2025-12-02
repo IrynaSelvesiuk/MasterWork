@@ -35,9 +35,7 @@ export class BookingService {
       );
     }
 
-    const teacher = await this.teacherService.findProfileByUserId(
-      dto.teacherId,
-    );
+    const teacher = await this.teacherService.findById(dto.teacherId);
     if (!teacher) {
       console.error(`Teacher not found for id: ${dto.teacherId}`);
       throw new NotFoundException(

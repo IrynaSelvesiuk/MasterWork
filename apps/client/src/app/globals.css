@@ -18,3 +18,8 @@
     --foreground: #ededed;
   }
 }
+
+.text-outline {
+  -webkit-text-stroke: 1px white; /* Outline */
+  font-weight: bold;
+}

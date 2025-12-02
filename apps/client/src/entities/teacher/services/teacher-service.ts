@@ -15,7 +15,6 @@ class TeacherService {
 
   async getMe(): Promise<TeacherProfile> {
     const response = await axiosClient.get<TeacherProfile>(API_URL.TEACHER.ME);
-    console.log(response);
     return response.data;
   }
 

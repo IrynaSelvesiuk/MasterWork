@@ -4,18 +4,24 @@ import { WhyUsCard } from '@/widgets/why-us-card';
 
 const LandingPage = () => {
   return (
-    <div
-      className="min-h-screen font-sans"
-      style={{
-        background:
-          'linear-gradient(180deg, rgba(232, 255, 232, 1) 0%, rgba(210, 245, 210, 0.6) 50%, rgba(255, 255, 255, 1) 100%)',
-      }}
-    >
-      <main className="main-content">
+    <div className="relative min-h-screen font-sans">
+      {/* Background */}
+      <div
+        style={{
+          backgroundImage: `url('bg.jpg')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          filter: 'blur(5px)',
+        }}
+        className="absolute inset-0 z-0"
+      ></div>
+
+      {/* Main content */}
+      <main className="relative z-10">
         <SearchSection />
 
         <section className="mt-24 px-6 md:px-16 text-center">
-          <h2 className="text-3xl font-bold text-green-700 mb-10">
+          <h2 className="text-4xl font-bold text-white mb-10">
             Чому обрати саме нас?
           </h2>
 

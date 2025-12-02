@@ -231,12 +231,12 @@ export function TeacherProfilePage() {
           {experienceFields.fields.map((item, index) => (
             <div key={item.id} className="mb-2 border p-2 rounded">
               <input
-                {...register(`experience.${index}.position` as const)}
+                {...register(`experience.${index}.role` as const)}
                 placeholder="Посада"
                 className="w-full border px-2 py-1 rounded mb-1"
               />
               <input
-                {...register(`experience.${index}.company` as const)}
+                {...register(`experience.${index}.location` as const)}
                 placeholder="Компанія"
                 className="w-full border px-2 py-1 rounded mb-1"
               />
@@ -257,8 +257,8 @@ export function TeacherProfilePage() {
             type="button"
             onClick={() =>
               experienceFields.append({
-                position: '',
-                company: '',
+                role: '',
+                location: '',
                 years: '',
                 description: '',
               })

@@ -15,7 +15,7 @@ const categories = [
 const SearchSection = () => {
   return (
     <div className="flex flex-col items-center pt-8 pb-12 w-full max-w-5xl mx-auto">
-      <h1 className="text-5xl font-bold text-superprofText mt-12 mb-6 text-center text-green-700">
+      <h1 className="text-5xl font-bold text-superprofText mt-12 mb-6 text-center text-white">
         Знайдіть ідеального вчителя
       </h1>
 
