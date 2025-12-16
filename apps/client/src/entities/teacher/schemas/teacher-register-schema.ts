@@ -1,8 +1,8 @@
 import z from 'zod';
 
 export const teacherRegisterSchema = z.object({
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
+  firstName: z.string().min(2, 'Вкажіть хоча б 2 символи'),
+  lastName: z.string().min(2, 'Вкажіть хоча б 2 символи'),
   email: z.email('Невірна пошта'),
   password: z
     .string()
@@ -11,13 +11,13 @@ export const teacherRegisterSchema = z.object({
   avatarUrl: z.string().optional(),
   subjectIds: z.array(z.string().min(1, 'Виберіть хоча б 1 предмет')),
   yearsOfExperience: z
-    .number()
+    .number('Будь ласка, введіть значення')
     .min(0, 'Досвід повинен бути більше 0')
     .max(50, 'Складно в це повірити')
     .optional(),
   bio: z.string().max(200, 'Максимально - 200 символів').optional(),
   location: z.string(),
-  hourlyRate: z.number(),
+  hourlyRate: z.number('Будь ласка, введіть значення'),
 });
 
 export type TeacherRegisterSchema = z.infer<typeof teacherRegisterSchema>;

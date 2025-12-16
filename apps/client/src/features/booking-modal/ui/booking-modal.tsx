@@ -1,6 +1,8 @@
 'use client';
 
+import { useBookedSlots } from '@/entities/booking/queries/useBookedSlots';
 import { useBookLesson } from '@/entities/student/hooks/mutations/useBookLesson';
+import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 
 interface BookingModalProps {
@@ -10,9 +12,15 @@ interface BookingModalProps {
 }
 
 interface BookingForm {
-  date: string;
+  startTime: string;
   note?: string;
 }
+
+const getMinDateTime = () => {
+  const now = new Date();
+  now.setSeconds(0, 0); // remove seconds & ms
+  return now.toISOString().slice(0, 16);
+};
 
 export const BookingModal = ({
   isOpen,
@@ -21,12 +29,24 @@ export const BookingModal = ({
 }: BookingModalProps) => {
   const { register, handleSubmit, reset } = useForm<BookingForm>();
   const { mutate, isPending } = useBookLesson();
+  const { data: bookedSlots = [] } = useBookedSlots(teacherId);
+  console.log(bookedSlots);
+
+  const bookedMinutes = useMemo(() => {
+    return new Set(
+      bookedSlots.map((slot) => {
+        const d = new Date(slot);
+        d.setSeconds(0, 0); // drop seconds
+        return d.getTime();
+      })
+    );
+  }, [bookedSlots]);
 
   const onSubmit = (data: BookingForm) => {
     mutate(
       {
         teacherId,
-        date: data.date,
+        startTime: data.startTime,
         note: data.note,
       },
       {
@@ -62,7 +82,19 @@ export const BookingModal = ({
             </label>
             <input
               type="datetime-local"
-              {...register('date', { required: true })}
+              min={getMinDateTime()}
+              {...register('startTime', {
+                required: true,
+                validate: (value) => {
+                  const selected = new Date(value);
+                  selected.setSeconds(0, 0);
+
+                  return (
+                    !bookedMinutes.has(selected.getTime()) ||
+                    'Цей час вже заброньований'
+                  );
+                },
+              })}
               className="border rounded-lg p-2 w-full focus:ring-2 focus:ring-green-500 outline-none"
             />
           </div>

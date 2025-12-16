@@ -224,8 +224,10 @@ export class TeacherService {
     );
     const pending = bookings.filter((b) => b.status === BookingStatus.PENDING);
 
-    const upcoming = confirmed.filter((b) => new Date(b.date) > new Date());
-    const past = confirmed.filter((b) => new Date(b.date) <= new Date());
+    const now = new Date();
+
+    const upcoming = confirmed.filter((b) => b.startTime > now);
+    const past = confirmed.filter((b) => b.startTime <= now);
 
     return {
       teacher: {
@@ -242,11 +244,12 @@ export class TeacherService {
         pastLessons: past.length,
       },
       recentBookings: bookings
-        .sort((a, b) => +new Date(b.date) - +new Date(a.date))
+        .sort((a, b) => +new Date(b.startTime) - +new Date(a.startTime))
         .slice(0, 5)
         .map((b) => ({
           id: b.id,
-          date: b.date,
+          startTime: b.startTime,
+          endTime: b.endTime,
           status: b.status,
           student: {
             id: b.student.id,

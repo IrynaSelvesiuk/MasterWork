@@ -27,12 +27,14 @@ export interface TeacherInfo {
 export interface Booking {
   id: string;
   date: string;
+  startTime: string;
+  endTime: string;
   note?: string;
-  status: 'pending' | 'confirmed' | 'cancelled';
+  status: BookingStatus;
   createdAt: string;
   updatedAt: string;
   student: StudentInfo;
   teacher: TeacherInfo;
 }
 
-export type BookingStatus = 'confirmed' | 'rejected';
+export type BookingStatus = 'confirmed' | 'rejected' | 'pending';

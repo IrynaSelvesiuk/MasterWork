@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 
 import { ConfigService } from '@nestjs/config';
-import { Auth, calendar_v3, google } from 'googleapis';
+import { calendar_v3, google } from 'googleapis';
 import * as path from 'path';
 
 @Injectable()
@@ -22,12 +22,12 @@ export class GoogleCalendarService {
     const auth = new google.auth.GoogleAuth({
       keyFile: this.KEY_FILE_PATH,
       scopes: ['https://www.googleapis.com/auth/calendar'],
-    }) as Auth.GoogleAuth;
+    });
 
     this.calendar = google.calendar({
       version: 'v3',
       auth,
-    }) as calendar_v3.Calendar;
+    });
   }
 
   /**

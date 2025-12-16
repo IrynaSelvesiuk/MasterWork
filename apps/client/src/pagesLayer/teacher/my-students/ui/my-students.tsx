@@ -14,11 +14,12 @@ import {
   FaUserGraduate,
   FaInbox,
 } from 'react-icons/fa';
+import { BookingStatus } from '@/entities/booking/model/booking';
 
 export function MyStudentsPage() {
   const { data: bookings, isLoading } = useGetMyBookings();
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-
+  console.log(bookings);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -38,7 +39,7 @@ export function MyStudentsPage() {
         </h3>
         <p className="text-gray-500 max-w-sm mt-1">
           Ваш розклад наразі пустий. Щойно студенти забронюють урок, вони
-          з'являться тут.
+          з&apos;являться тут.
         </p>
       </div>
     );
@@ -74,6 +75,14 @@ export function MyStudentsPage() {
   );
 }
 
+type StatusConfig = Record<
+  BookingStatus,
+  {
+    color: string;
+    label: string;
+  }
+>;
+
 // Extracted Card Component for cleanliness
 const BookingCard = ({
   booking,
@@ -84,7 +93,7 @@ const BookingCard = ({
 }) => {
   const dateObj = new Date(booking.date);
 
-  const statusConfig = {
+  const statusConfig: StatusConfig = {
     pending: {
       color: 'bg-amber-100 text-amber-700 border-amber-200',
       label: 'Очікує підтвердження',
@@ -156,7 +165,7 @@ const BookingCard = ({
           <div className="flex items-start gap-2 text-sm text-gray-600 bg-gray-50/50 p-2 rounded-lg">
             <FaUserGraduate className="mt-1 text-green-500 shrink-0" />
             <p className="italic line-clamp-2 leading-snug">
-              {booking.student.learningGoals || 'Ціль не вказана'}
+              {booking.note || 'Ціль не вказана'}
             </p>
           </div>
         </div>

@@ -33,13 +33,12 @@ export function useTeacherCalendar() {
 
   const events: LessonEvent[] = useMemo(() => {
     if (!Array.isArray(bookings)) return [];
-    console.log(bookings);
+
     return bookings.map((b) => ({
       id: b.id,
       title: `${b.student.user.firstName} ${b.student.user.lastName}`,
-      start: new Date(b.date),
-      // TODO: Logic for duration. Currently hardcoded to 1 hour
-      end: new Date(new Date(b.date).getTime() + 60 * 60 * 1000),
+      start: new Date(b.startTime), // use startTime from backend
+      end: new Date(b.endTime), // use endTime from backend
       status: b.status,
       resource: b,
     }));

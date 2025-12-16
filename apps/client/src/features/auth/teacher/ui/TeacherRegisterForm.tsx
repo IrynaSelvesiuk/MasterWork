@@ -161,7 +161,7 @@ const TeacherRegisterForm = () => {
       </div>
 
       {/* Submit button */}
-      <div className="md:col-span-2 flex justify-end">
+      <div className="md:col-span-2 flex justify-center">
         <button
           type="submit"
           disabled={isSubmitting}

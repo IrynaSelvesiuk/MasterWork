@@ -19,7 +19,6 @@ export class MailService {
       },
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
     this.transporter = nodemailer.createTransport(options);
   }
 
@@ -42,9 +41,7 @@ export class MailService {
     `;
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const info: SMTPTransport.SentMessageInfo =
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
         await this.transporter.sendMail({
           from: `"MySchool" <${process.env.MAIL_USER!}>`,
           to,

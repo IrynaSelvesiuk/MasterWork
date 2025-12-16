@@ -5,7 +5,7 @@ export class CreateBookingDto {
   teacherId: string;
 
   @IsDateString()
-  date: string;
+  startTime: string;
 
   @IsOptional()
   @IsString()

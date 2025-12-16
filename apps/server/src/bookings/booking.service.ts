@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -6,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking, BookingStatus } from './booking.entity';
-import { Repository } from 'typeorm';
+import { LessThan, MoreThan, Repository } from 'typeorm';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { GoogleCalendarService } from '../shared/mail/google-calendar.service';
 import { MailService } from '../shared/mail/mail.service';
@@ -26,27 +27,42 @@ export class BookingService {
   ) {}
 
   async createBooking(studentId: string, dto: CreateBookingDto) {
-    console.log('dto', dto);
     const student = await this.studentService.findOneByUserId(studentId);
     if (!student) {
-      console.error(`Student not found for userId: ${studentId}`);
-      throw new NotFoundException(
-        `Student profile not found for user ${studentId}`,
-      );
+      throw new NotFoundException('Student not found');
     }
 
     const teacher = await this.teacherService.findById(dto.teacherId);
     if (!teacher) {
-      console.error(`Teacher not found for id: ${dto.teacherId}`);
-      throw new NotFoundException(
-        `Teacher profile not found for id ${dto.teacherId}`,
-      );
+      throw new NotFoundException('Teacher not found');
     }
+
+    const startTime = new Date(dto.startTime);
+    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+
+    if (startTime < new Date()) {
+      throw new BadRequestException('Дата вже минула');
+    }
+
+    const conflict = await this.bookingRepository.findOne({
+      where: {
+        teacher: { id: teacher.id },
+        startTime: LessThan(endTime),
+        endTime: MoreThan(startTime),
+      },
+    });
+
+    if (conflict) {
+      throw new BadRequestException('Цей слот вже зайнятий');
+    }
+
     const booking = this.bookingRepository.create({
       student,
       teacher,
-      date: new Date(dto.date),
+      startTime,
+      endTime,
       note: dto.note,
+      status: BookingStatus.PENDING,
     });
 
     return this.bookingRepository.save(booking);
@@ -58,7 +74,18 @@ export class BookingService {
     return this.bookingRepository.find({
       where: { teacher: { id: teacher.id } },
       relations: { student: { user: true } },
-      order: { date: 'ASC' },
+      order: { startTime: 'ASC' },
+    });
+  }
+
+  async getBookedSlotsForTeacher(teacherId: string) {
+    return this.bookingRepository.find({
+      where: {
+        teacher: { id: teacherId },
+        status: BookingStatus.CONFIRMED,
+      },
+      select: ['startTime', 'endTime'],
+      order: { startTime: 'ASC' },
     });
   }
 
@@ -66,16 +93,14 @@ export class BookingService {
     const booking = await this.bookingRepository.findOne({
       where: { id },
       relations: {
-        student: {
-          user: true,
-        },
-        teacher: {
-          user: true,
-        },
+        student: { user: true },
+        teacher: { user: true },
       },
     });
 
-    if (!booking) throw new NotFoundException('Booking not found');
+    if (!booking) {
+      throw new NotFoundException('Booking not found');
+    }
 
     const mappedStatus =
       status === 'confirmed' ? BookingStatus.CONFIRMED : BookingStatus.REJECTED;
@@ -83,14 +108,11 @@ export class BookingService {
     booking.status = mappedStatus;
 
     if (mappedStatus === BookingStatus.CONFIRMED) {
-      const startTime = new Date(booking.date);
-      const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
-
       const meetLink = await this.googleCalendarService.createMeeting(
         `Lesson with ${booking.teacher.user.firstName}`,
-        `Subject: 'General Lesson'`,
-        startTime,
-        endTime,
+        `General Lesson`,
+        booking.startTime,
+        booking.endTime,
       );
 
       booking.meetingLink = meetLink;
@@ -102,8 +124,8 @@ export class BookingService {
       booking.student.user.email,
       status,
       `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,
-      booking.date,
-      booking.meetingLink as string,
+      booking.startTime,
+      booking.meetingLink || '',
     );
 
     return booking;
@@ -124,7 +146,7 @@ export class BookingService {
         },
       },
       order: {
-        date: 'DESC', // Show newest bookings first
+        startTime: 'DESC', // Show newest bookings first
       },
     });
   }

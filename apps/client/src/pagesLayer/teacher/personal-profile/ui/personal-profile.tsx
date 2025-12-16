@@ -64,7 +64,7 @@ export function TeacherProfilePage() {
         toast.success('Профіль успішно оновлено!');
         queryClient.invalidateQueries({ queryKey: ['my-teacher-profile'] });
       },
-      onError: (err: any) => {
+      onError: (err) => {
         toast.error('Помилка при збереженні: ' + err.message);
       },
     });
@@ -93,7 +93,7 @@ export function TeacherProfilePage() {
       <div className="flex flex-col gap-4">
         {/* First Name */}
         <div>
-          <label className="font-semibold mb-1 block">Ім'я</label>
+          <label className="font-semibold mb-1 block">Ім&apos;я</label>
           <input
             {...register('firstName')}
             className="w-full border px-3 py-2 rounded"

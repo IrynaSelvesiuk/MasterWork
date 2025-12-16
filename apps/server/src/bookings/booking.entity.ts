@@ -33,8 +33,11 @@ export class Booking {
   })
   teacher: Teacher;
 
-  @Column({ type: 'timestamp' })
-  date: Date;
+  @Column({ type: 'timestamp', default: () => 'NOW()' })
+  startTime: Date;
+
+  @Column({ type: 'timestamp', default: () => 'NOW()' })
+  endTime: Date;
 
   @Column({ type: 'text', nullable: true })
   note?: string;

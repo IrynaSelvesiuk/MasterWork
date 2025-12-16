@@ -5,7 +5,7 @@ import { UpdateStudentSchema } from '../schemas/update-student-schema';
 
 export type BookingRequest = {
   teacherId: string;
-  date: string;
+  startTime: string;
   note?: string;
 };
 class StudentService {
@@ -26,11 +26,11 @@ class StudentService {
     return response.data;
   }
 
-  async bookLesson({ teacherId, date, note }: BookingRequest) {
-    console.log({ teacherId, date, note });
+  async bookLesson({ teacherId, startTime, note }: BookingRequest) {
+    console.log({ teacherId, startTime, note });
     const res = await axiosClient.post(API_URL.BOOKINGS.BASE, {
       teacherId,
-      date,
+      startTime,
       note,
     });
     return res.data;

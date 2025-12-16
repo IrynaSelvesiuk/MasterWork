@@ -33,8 +33,18 @@ export class BookingController {
   async getTeacherBookings(@Req() req: RequestWithUser) {
     const teacherId = req.user.id;
     const bookings = await this.bookingService.getBookingsForTeacher(teacherId);
-    console.log(bookings);
     return bookings;
+  }
+
+  @Get('teacher/:teacherId/booked-slots')
+  async getTeacherBookedSlots(@Param('teacherId') teacherId: string) {
+    const bookings =
+      await this.bookingService.getBookedSlotsForTeacher(teacherId);
+
+    return bookings.map((b) => ({
+      startTime: b.startTime,
+      endTime: b.endTime,
+    }));
   }
 
   @Patch(':id')
