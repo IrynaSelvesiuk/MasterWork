@@ -76,7 +76,8 @@ export interface TeacherDashboardResponse {
   };
   recentBookings: {
     id: string;
-    date: string;
+    startTime: string;
+    endTime: string;
     status: 'pending' | 'confirmed' | 'rejected' | 'cancelled';
     student: {
       id: string;

@@ -8,18 +8,12 @@ import { uk } from 'date-fns/locale';
 import { BookingModal } from '@/features/teacher/booking-modal';
 import { useState } from 'react';
 import { Booking } from '@/entities/booking';
-import {
-  FaCalendarAlt,
-  FaClock,
-  FaUserGraduate,
-  FaInbox,
-} from 'react-icons/fa';
+import { FaClock, FaUserGraduate, FaInbox } from 'react-icons/fa';
 import { BookingStatus } from '@/entities/booking/model/booking';
 
 export function MyStudentsPage() {
   const { data: bookings, isLoading } = useGetMyBookings();
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
-  console.log(bookings);
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -27,7 +21,6 @@ export function MyStudentsPage() {
       </div>
     );
   }
-  console.log(bookings);
   if (!bookings?.length) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
@@ -91,8 +84,6 @@ const BookingCard = ({
   booking: Booking;
   onClick: () => void;
 }) => {
-  const dateObj = new Date(booking.date);
-
   const statusConfig: StatusConfig = {
     pending: {
       color: 'bg-amber-100 text-amber-700 border-amber-200',
@@ -126,7 +117,7 @@ const BookingCard = ({
         {/* Avatar */}
         <div className="relative shrink-0">
           <Image
-            src={booking.student.avatarUrl || '/default-avatar.png'}
+            src={'/default-avatar.png'}
             alt="Student avatar"
             width={56}
             height={56}
@@ -147,19 +138,12 @@ const BookingCard = ({
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-gray-500 mb-3">
-            <div className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md">
-              <FaCalendarAlt className="text-gray-400" />
-              <span className="font-medium text-gray-700">
-                {format(dateObj, 'd MMM yyyy', { locale: uk })}
-              </span>
-            </div>
-            <div className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md">
-              <FaClock className="text-gray-400" />
-              <span className="font-medium text-gray-700">
-                {format(dateObj, 'HH:mm', { locale: uk })}
-              </span>
-            </div>
+          <div className="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md">
+            <FaClock className="text-gray-400" />
+            <span className="font-medium text-gray-700">
+              {format(new Date(booking.startTime), 'HH:mm', { locale: uk })} –{' '}
+              {format(new Date(booking.endTime), 'HH:mm', { locale: uk })}
+            </span>
           </div>
 
           <div className="flex items-start gap-2 text-sm text-gray-600 bg-gray-50/50 p-2 rounded-lg">

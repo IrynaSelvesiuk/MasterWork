@@ -18,7 +18,7 @@ import { Badge } from '@/widgets/teacher/badge';
 
 export function DashboardPage() {
   const { data, isLoading } = useGetTeacherDashboard();
-
+  console.log(data);
   if (isLoading) return <LoadingSpinner />;
   if (!data) return <p>No dashboard data available.</p>;
 
@@ -70,7 +70,7 @@ export function DashboardPage() {
                   </div>
                   <div className="flex flex-col items-end">
                     <p className="text-sm font-medium text-gray-700">
-                      {new Date(lesson.date).toLocaleString('uk-UA')}
+                      {new Date(lesson.startTime).toLocaleString('uk-UA')}
                     </p>
                     <a
                       href="#"
