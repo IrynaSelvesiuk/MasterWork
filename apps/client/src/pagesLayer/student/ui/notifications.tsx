@@ -61,7 +61,7 @@ export const StudentNotificationsPage = () => {
             const config = getNotificationConfig(
               booking.status,
               `${booking.teacher.user.firstName} ${booking.teacher.user.lastName}`,
-              booking.date
+              booking.startTime
             );
 
             return (
@@ -77,7 +77,7 @@ export const StudentNotificationsPage = () => {
                   <p className="text-sm text-gray-600">{config.message}</p>
                   <p className="text-xs text-gray-400 mt-1">
                     Створено:{' '}
-                    {format(new Date(booking.createdAt), 'd MMM yyyy, HH:mm', {
+                    {format(new Date(booking.startTime), 'd MMM yyyy, HH:mm', {
                       locale: uk,
                     })}
                   </p>

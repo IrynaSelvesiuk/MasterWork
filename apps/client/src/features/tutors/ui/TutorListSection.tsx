@@ -28,11 +28,7 @@ export const TutorListSection = ({ filters, onPageChange }: Props) => {
         {tutors
           .filter((tutor) => !!tutor.user)
           .map((tutor) => {
-            const isNew =
-              new Date(tutor.createdAt) >
-              new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-
-            return <TutorCard key={tutor.id} teacher={tutor} isNew={isNew} />;
+            return <TutorCard key={tutor.id} teacher={tutor} />;
           })}
       </div>
 

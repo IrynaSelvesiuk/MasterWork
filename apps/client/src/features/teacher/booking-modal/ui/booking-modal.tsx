@@ -78,7 +78,7 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
             <div className="relative h-16 w-16 shrink-0">
               {booking.student.avatarUrl ? (
                 <Image
-                  src={booking.student.avatarUrl}
+                  src={'/default-avatar.png'}
                   alt="Avatar"
                   fill
                   className="rounded-full object-cover shadow-sm border border-gray-100"
@@ -108,7 +108,9 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
                 <span className="font-semibold text-sm">Дата</span>
               </div>
               <p className="text-gray-800 font-medium capitalize">
-                {format(new Date(booking.date), 'd MMMM yyyy', { locale: uk })}
+                {format(new Date(booking.startTime), 'd MMMM yyyy', {
+                  locale: uk,
+                })}
               </p>
             </div>
             <div className="bg-orange-50 p-3 rounded-xl border border-orange-100">
@@ -117,7 +119,7 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
                 <span className="font-semibold text-sm">Час</span>
               </div>
               <p className="text-gray-800 font-medium">
-                {format(new Date(booking.date), 'HH:mm', { locale: uk })}
+                {format(new Date(booking.endTime), 'HH:mm', { locale: uk })}
               </p>
             </div>
           </div>

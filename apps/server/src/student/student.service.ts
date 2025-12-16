@@ -58,11 +58,19 @@ export class StudentService {
       relations: { user: true },
     });
 
-    if (!student) {
+    if (!student)
       throw new NotFoundException(`Student with id ${id} not found`);
-    }
 
-    Object.assign(student, data);
+    // Split data for student vs user
+    const { firstName, lastName, email, ...studentData } = data;
+
+    // Update student fields
+    Object.assign(student, studentData);
+
+    // Update user fields if provided
+    if (firstName !== undefined) student.user.firstName = firstName;
+    if (lastName !== undefined) student.user.lastName = lastName;
+    if (email !== undefined) student.user.email = email;
 
     return this.studentRepository.save(student);
   }

@@ -25,7 +25,7 @@ export const ProfileMainContent = ({ student }: Props) => {
         <div className="flex flex-col gap-4">
           <div className="flex-shrink-0">
             <Image
-              src={student.avatarUrl || '/default-avatar.png'}
+              src={'/default-avatar.png'}
               alt={`${student.user.firstName} ${student.user.lastName}`}
               width={100}
               height={100}

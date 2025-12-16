@@ -13,13 +13,14 @@ export const TeacherHeader = ({ teacher }: Props) => (
         <p className="text-lg text-gray-600 mt-3">{teacher.headline}</p>
       </div>
 
-      <Image
-        src={teacher.avatarUrl || '/default-avatar.png'}
-        alt={teacher.name || 'teacher-name'}
-        width={96}
-        height={96}
-        className="rounded-full border-4 border-white shadow-md"
-      />
+      <div className="w-24 h-24 relative rounded-full overflow-hidden border-4 border-white shadow-md">
+        <Image
+          src={teacher.avatarUrl || '/default-avatar.png'}
+          alt={teacher.name || 'teacher-name'}
+          fill
+          className="object-cover"
+        />
+      </div>
     </div>
   </div>
 );

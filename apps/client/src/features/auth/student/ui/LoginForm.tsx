@@ -39,7 +39,9 @@ export const LoginForm = () => {
           createdAt: response.userDto.createAt,
           role: response.userDto.role,
         });
-        toast.success('Logged in successfully!');
+        toast.success(
+          `Вітаю, ${response.userDto.firstName} ${response.userDto.lastName}`
+        );
         reset();
         router.push(ROUTES.TUTORS);
       },
