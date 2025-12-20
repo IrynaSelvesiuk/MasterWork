@@ -30,11 +30,13 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
     }) => teacherService.updateBooking(id, status),
     onSuccess: () => {
       toast.success('Статус оновлено');
-      // Invalidate both lists so UI updates everywhere
       queryClient.invalidateQueries({ queryKey: ['myBookings'] });
       onClose();
     },
-    onError: () => toast.error('Не вдалося оновити статус'),
+    onError: (error) => {
+      console.log(error);
+      toast.error('Не вдалося оновити статус');
+    },
   });
 
   // 2. Close on Escape Key

@@ -8,8 +8,6 @@ import {
   FaCalendarAlt,
   FaDollarSign,
   FaBookOpen,
-  FaArrowRight,
-  FaEdit,
 } from 'react-icons/fa';
 import { StatCard } from './stat-card';
 import { useGetTeacherDashboard } from '@/entities/teacher/hooks/useGetTeacherDashboard';
