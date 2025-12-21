@@ -2,15 +2,13 @@
 
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import { BookingButton } from './booking-button';
-import { useAuthStore } from '@/entities/user/model/store';
+import { Role } from '@/shared/enums/role.enum';
 
 interface Props {
   teacher: TeacherProfile;
 }
 
 export const TeacherSidebar = ({ teacher }: Props) => {
-  const { user } = useAuthStore();
-
   return (
     <div className="sticky top-8 space-y-6">
       <div className="rounded-xl border bg-white p-7 shadow-lg">
@@ -21,8 +19,8 @@ export const TeacherSidebar = ({ teacher }: Props) => {
           <span className="text-gray-500">/ година</span>
         </div>
 
-        {user?.id !== teacher.user.id && (
-          <BookingButton teacherUserId={teacher.user.id} />
+        {!teacher.user.role.includes(Role.Teacher) && (
+          <BookingButton teacherUserId={teacher.id} />
         )}
       </div>
     </div>

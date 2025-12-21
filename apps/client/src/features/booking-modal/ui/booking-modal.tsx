@@ -30,7 +30,7 @@ export const BookingModal = ({
   const { register, handleSubmit, reset } = useForm<BookingForm>();
   const { mutate, isPending } = useBookLesson();
   const { data: bookedSlots = [] } = useBookedSlots(teacherId);
-
+  console.log('teacher ID', teacherId);
   const bookedMinutes = useMemo(() => {
     return new Set(
       bookedSlots.map((slot) => {

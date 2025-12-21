@@ -1,8 +1,11 @@
 'use client';
+
 import { axiosClient } from '@/shared/config/axios-config';
 import { API_URL } from '@/shared/constants/api-url';
 import React, { useState } from 'react';
 import { FaStar } from 'react-icons/fa';
+import { toast } from 'react-hot-toast';
+import { useRouter } from 'next/navigation'; // <-- імпорт
 
 interface ReviewFormProps {
   teacherId: string;
@@ -14,30 +17,28 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ teacherId }) => {
   const [text, setText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const router = useRouter();
+
   const handleSubmit = async () => {
-    console.log({
-      teacherId,
-      rating,
-      comment: text,
-    });
     if (!rating || !text.trim()) return;
 
     setIsSubmitting(true);
     try {
-      const res = await axiosClient.post(API_URL.REVIEWS.BASE, {
+      await axiosClient.post(API_URL.REVIEWS.BASE, {
         teacherId,
         rating,
         comment: text,
       });
 
-      console.log('✅ Review created:', res.data);
+      toast.success('Відгук успішно додано!');
 
       setText('');
       setRating(0);
-      alert('Відгук надіслано!');
+
+      router.refresh();
     } catch (err) {
       console.error('❌ Failed to send review:', err);
-      alert('Не вдалося надіслати відгук');
+      toast.error('Не вдалося надіслати відгук');
     } finally {
       setIsSubmitting(false);
     }
@@ -71,11 +72,10 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({ teacherId }) => {
         onChange={(e) => setText(e.target.value)}
       />
 
-      {/* Submit button */}
       <button
-        disabled={!rating || !text || isSubmitting}
+        disabled={!rating || !text.trim() || isSubmitting}
         onClick={handleSubmit}
-        className="w-full"
+        className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 disabled:opacity-60"
       >
         {isSubmitting ? 'Надсилаємо...' : 'Надіслати'}
       </button>

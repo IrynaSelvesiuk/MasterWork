@@ -50,7 +50,8 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
 
   if (!open || !booking) return null;
 
-  const isBookingPending = booking.status === 'pending';
+  const isPastBooking = new Date(booking.endTime) < new Date();
+  const isBookingPending = booking.status === 'pending' && !isPastBooking;
 
   return (
     <div
@@ -149,7 +150,6 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
             Закрити
           </button>
 
-          {/* 👇 LOGIC: If status is PENDING, show Action Buttons. Else, show Status Badge. */}
           {isBookingPending ? (
             <>
               <button
@@ -167,15 +167,19 @@ export function BookingModal({ booking, open, onClose }: BookingModalProps) {
                 {isPending ? 'Обробка...' : 'Підтвердити'}
               </button>
             </>
+          ) : isPastBooking ? (
+            <span className="px-4 py-2 rounded-lg font-bold border bg-gray-100 text-gray-500">
+              Бронювання вже минуло
+            </span>
           ) : (
             <div
               className={`px-4 py-2 rounded-lg font-bold border flex items-center gap-2
-              ${
-                booking.status === 'confirmed'
-                  ? 'bg-green-100 text-green-800 border-green-200'
-                  : 'bg-red-100 text-red-800 border-red-200'
-              }
-            `}
+      ${
+        booking.status === 'confirmed'
+          ? 'bg-green-100 text-green-800 border-green-200'
+          : 'bg-red-100 text-red-800 border-red-200'
+      }
+    `}
             >
               <span>
                 {booking.status === 'confirmed'

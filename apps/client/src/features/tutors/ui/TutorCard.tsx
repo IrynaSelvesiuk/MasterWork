@@ -1,12 +1,13 @@
 'use client';
 
-import { FaGlobe, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaBriefcase, FaGlobe, FaMapMarkedAlt, FaStar } from 'react-icons/fa';
 import { TutorBadge } from './TutorBadge';
 import { TutorActions } from './TutorActions';
 import { TeacherProfile } from '@/entities/teacher/model/teacher-entity';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuthStore } from '@/entities/user/model/store';
+import { getAverageRating } from '@/shared/utils/getAverageRating';
 
 interface Props {
   teacher: TeacherProfile;
@@ -18,8 +19,11 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
   const displayName = `${teacher.user.firstName} ${teacher.user.lastName}`;
   const subjectNames =
     teacher.subjects.map((s) => s.name).join(', ') || 'Немає';
-
+  console.log(teacher);
   const isSelf = teacher.user.id === user?.id;
+  console.log('User ROLE', user);
+  const rating = getAverageRating(teacher.reviews);
+  const reviewsCount = teacher.reviews.length;
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-5 shadow-md hover:shadow-lg transition duration-300 flex space-x-5 relative">
@@ -65,12 +69,38 @@ export const TutorCard = ({ teacher, isNew = false }: Props) => {
           </p>
         </div>
 
-        <div className="mt-3">
-          <TutorActions
-            teacherId={teacher.id}
-            pricePer60Min={teacher.hourlyRate ? Number(teacher.hourlyRate) : 0}
-            isSelf={isSelf}
-          />
+        <div className="mt-4 flex items-center justify-between gap-4 rounded-lg bg-gray-50 px-4 py-3">
+          {/* Experience */}
+          <div className="flex items-center gap-2 text-sm text-gray-700 min-w-[90px]">
+            <FaBriefcase className="text-gray-500" />
+            <span className="font-medium">
+              {teacher.yearsOfExperience ?? 0} р.
+            </span>
+            <span className="text-gray-500">досвіду</span>
+          </div>
+
+          {/* Rating */}
+          {rating ? (
+            <span className="flex items-center gap-1">
+              <FaStar className="text-yellow-400" />
+              <span className="font-semibold">{rating.toFixed(1)}</span>
+              <span className="text-gray-500">({reviewsCount})</span>
+            </span>
+          ) : (
+            <span className="text-gray-400">Новий</span>
+          )}
+
+          {/* Actions / Price */}
+          <div className="flex justify-end min-w-[140px]">
+            <TutorActions
+              teacherRole={user?.role}
+              teacherId={teacher.id}
+              pricePer60Min={
+                teacher.hourlyRate ? Number(teacher.hourlyRate) : 0
+              }
+              isSelf={isSelf}
+            />
+          </div>
         </div>
       </div>
     </div>

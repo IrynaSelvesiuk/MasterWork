@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 
 const sortOptions = [
-  { label: 'Дата створення', value: 'createdAt' },
+  { label: 'Дата реєстрації', value: 'createdAt' },
   { label: 'Погодинна ставка', value: 'hourlyRate' },
   { label: 'Досвід', value: 'experience' },
   { label: 'Рейтинг', value: 'rating' },

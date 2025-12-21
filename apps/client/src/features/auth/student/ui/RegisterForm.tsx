@@ -41,7 +41,7 @@ export const RegisterForm = () => {
 
   const { mutate, isPending, error } = useRegister();
   const router = useRouter();
-  const { user, setUser } = useAuthStore();
+  const { setUser } = useAuthStore();
 
   const onSubmit = (data: RegisterFormData) => {
     console.log(data);
@@ -58,7 +58,7 @@ export const RegisterForm = () => {
           image: null,
         });
 
-        toast.success(`Привіт ${user?.firstName}!`);
+        toast.success(`Привіт ${responseData.userDto.firstName}!`);
         router.push(ROUTES.TUTORS);
       },
       onError: () => {

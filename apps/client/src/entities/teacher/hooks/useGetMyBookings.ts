@@ -5,5 +5,7 @@ export const useGetMyBookings = () => {
   return useQuery({
     queryKey: ['myBookings'],
     queryFn: () => teacherService.getMyBookings(),
+    refetchOnMount: 'always', // 🔥 завжди робить запит при монтованні
+    refetchOnWindowFocus: true, // оновлює, коли користувач повертається на вкладку
   });
 };
