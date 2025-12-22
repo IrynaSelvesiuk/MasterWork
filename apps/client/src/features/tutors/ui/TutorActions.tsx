@@ -1,5 +1,6 @@
 'use client';
 
+import { useAuthStore } from '@/entities/user/model/store';
 import { BookingModal } from '@/features/booking-modal/ui/booking-modal';
 import { useState } from 'react';
 
@@ -16,9 +17,10 @@ export const TutorActions = ({
   isSelf,
   teacherRole,
 }: TutorActionsProps) => {
+  const { user } = useAuthStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isBookingDisabled = teacherRole?.includes('TEACHER');
+  const isBookingDisabled = teacherRole?.includes('TEACHER') || !user;
 
   return (
     <div className="flex items-center justify-end mt-4 pt-4 border-t border-gray-100 relative">
